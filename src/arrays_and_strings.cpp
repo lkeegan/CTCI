@@ -97,10 +97,6 @@ bool is_permutation_of_palindrome(const std::string &str) {
   // average: O(N)
   // worst case: O(N)
 
-  // ignoring spaces, given n chars, can make palindrome iff:
-  // -for even n: each char comes in pairs, i.e. even count, e.g abbssbba
-  // -if n is odd: single char with odd count, the rest even, e.g. atzta
-
   // get frequency count of chars
   std::unordered_map<char, int> char_count;
   int n_chars = 0;
@@ -117,11 +113,82 @@ bool is_permutation_of_palindrome(const std::string &str) {
       ++odd_count_chars;
     }
   }
-  if (n_chars % 2 == 0 && odd_count_chars == 0) {
-    return true;
-  } else if (n_chars % 2 == 1 && odd_count_chars == 1) {
+  // can make palindrome iff:
+  // -for even n_chars: even count of each char, i.e. no odd counts, e.g. abba
+  // -if n is odd: single char with odd count, the rest even, e.g. aba
+  if (n_chars % 2 == odd_count_chars) {
     return true;
   } else {
     return false;
+  }
+}
+
+bool one_away(const std::string &strA, const std::string &strB) {
+  // best case: O(N)
+  // average: O(N)
+  // worst case: O(N)
+
+  int n_A = static_cast<int>(strA.size());
+  int n_B = static_cast<int>(strB.size());
+  int diff = n_A - n_B;
+  // +1: can try removing one char from A
+  //  0: can try replacing one char in A
+  // -1: can try inserting one char to A
+  // otherwise: more than one edit away
+  if (abs(diff) > 1) {
+    return false;
+  }
+  int n_changes = 0;
+  for (int i = 0; i < n_A; ++i) {
+    if (strA[i] != strB[i - n_changes * diff]) {
+      ++n_changes;
+      if (n_changes > 1) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+std::string string_compression(const std::string &str) {
+  // best case: O(N)
+  // average: O(N)
+  // worst case: O(N)
+  std::string str_compressed;
+  int chars_compressed = 0;
+  for (std::string::const_iterator i = str.begin(); i != str.end(); ++i) {
+    str_compressed += *i;
+    int count = 1;
+    while (i != str.end() && *(i + 1) == *i) {
+      ++count;
+      ++i;
+    }
+    str_compressed += std::to_string(count);
+    chars_compressed += count - 2;
+  }
+  if (chars_compressed > 0) {
+    return str_compressed;
+  } else {
+    return str;
+  }
+}
+
+void rotate_matrix(matrix &M) {
+  int N = static_cast<int>(M.size());
+  // for x,y modulo N-1, 4x90deg rotations form a closed set:
+  // M(x,y) -> M(y,-x)
+  // M(y,-x) -> M(-x,-y)
+  // M(-x,-y) -> M(-y,x)
+  // M(-y,x) -> M(x,y)
+  // So can rotate the above 4 elements
+  // by 90deg with 3 swaps
+  // without affecting the rest of the matrix
+  // Repeat for all x,y in upper left corner to rotate all elements
+  for (int x = 0; x < (N + 1) / 2; ++x) {
+    for (int y = 0; y < N / 2; ++y) {
+      std::swap(M[x][y], M[y][N - 1 - x]);
+      std::swap(M[x][y], M[N - 1 - x][N - 1 - y]);
+      std::swap(M[x][y], M[N - 1 - y][x]);
+    }
   }
 }

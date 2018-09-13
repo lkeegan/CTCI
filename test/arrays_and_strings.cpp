@@ -74,3 +74,65 @@ TEST_CASE("is_permutation_of_palindrome", "[arrays_and_strings]") {
   REQUIRE(is_permutation_of_palindrome("aaa") == true);
   REQUIRE(is_permutation_of_palindrome("ksjdhf") == false);
 }
+
+TEST_CASE("one_away", "[arrays_and_strings]") {
+  REQUIRE(one_away("", "") == true);
+  REQUIRE(one_away("abc", "abc") == true);
+  REQUIRE(one_away("abc", "abd") == true);
+  REQUIRE(one_away("abc", "ab") == true);
+  REQUIRE(one_away("abc", "bc") == true);
+  REQUIRE(one_away("abc", "ac") == true);
+  REQUIRE(one_away("abcd", "bcd") == true);
+  REQUIRE(one_away("ab", "abr") == true);
+  REQUIRE(one_away("cd", "Qcd") == true);
+  REQUIRE(one_away("cd", "cQd") == true);
+  REQUIRE(one_away("", "  ") == false);
+  REQUIRE(one_away("abc", "acb") == false);
+  REQUIRE(one_away("abc", "abcde") == false);
+  REQUIRE(one_away("abc", "ba") == false);
+  REQUIRE(one_away("abc", "bca") == false);
+  REQUIRE(one_away("abc", "a") == false);
+  REQUIRE(one_away("abcd", "bdca") == false);
+  REQUIRE(one_away("ab", "a b ") == false);
+  REQUIRE(one_away("cd", "cd  ") == false);
+  REQUIRE(one_away("cd", " cd ") == false);
+}
+
+TEST_CASE("string_compression", "[arrays_and_strings]") {
+  REQUIRE(string_compression("abc") == "abc");
+  REQUIRE(string_compression("aaabbc") == "aaabbc");
+  REQUIRE(string_compression("aaabbbc") == "a3b3c1");
+  REQUIRE(string_compression("aaaaabbbcCCC") == "a5b3c1C3");
+}
+
+TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
+  matrix m1(1);
+  m1[0] = {1};
+  rotate_matrix(m1);
+  matrix m1r(1);
+  m1r[0] = {1};
+  REQUIRE(m1[0] == m1r[0]);
+
+  matrix m2(2);
+  m2[0] = {1, 2};
+  m2[1] = {3, 4};
+  rotate_matrix(m2);
+  matrix m2r(2);
+  m2r[0] = {3, 1};
+  m2r[1] = {4, 2};
+  REQUIRE(m2[0] == m2r[0]);
+  REQUIRE(m2[1] == m2r[1]);
+
+  matrix m3(3);
+  m3[0] = {1, 2, 3};
+  m3[1] = {4, 5, 6};
+  m3[2] = {7, 8, 9};
+  rotate_matrix(m3);
+  matrix m3r(3);
+  m3r[0] = {7, 4, 1};
+  m3r[1] = {8, 5, 2};
+  m3r[2] = {9, 6, 3};
+  REQUIRE(m3[0] == m3r[0]);
+  REQUIRE(m3[1] == m3r[1]);
+  REQUIRE(m3[2] == m3r[2]);
+}

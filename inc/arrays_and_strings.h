@@ -29,4 +29,21 @@ void URLify(std::string &str, int length);
 bool is_permutation_of_palindrome(const std::string &str);
 
 // 1.5
+// check if strings can be made equal by either inserting,
+// removing or replacing at most 1 character
+bool one_away(const std::string &strA, const std::string &strB);
+
+// 1.6
+// compress string: replace repeated letters with letter&count,
+// e.g. aaabb -> a3b2
+// if "compressed" string not shorter than original, return original
+std::string string_compression(const std::string &str);
+
+// 1.7
+// NxN matrix, each element 4 bytes
+// implemented as 2-d vector mat[row][col]
+// rotate in-place by 90 degrees, i.e. M_(x,y) -> M_(y,N-1-x)
+typedef std::vector<std::vector<int>> matrix;
+void rotate_matrix(matrix &M);
+
 #endif  // LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H
