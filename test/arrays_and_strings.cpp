@@ -136,3 +136,58 @@ TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
   REQUIRE(m3[1] == m3r[1]);
   REQUIRE(m3[2] == m3r[2]);
 }
+
+TEST_CASE("zero_matrix", "[arrays_and_strings]") {
+  matrix m1(1);
+  m1[0] = {1};
+  zero_matrix(m1);
+  matrix m1r(1);
+  m1r[0] = {1};
+  REQUIRE(m1[0] == m1r[0]);
+
+  m1 = matrix(1);
+  m1[0] = {0};
+  zero_matrix(m1);
+  m1r = matrix(1);
+  m1r[0] = {0};
+  REQUIRE(m1[0] == m1r[0]);
+
+  matrix m2(2);
+  m2[0] = {1, 0};
+  m2[1] = {3, 4};
+  zero_matrix(m2);
+  matrix m2r(2);
+  m2r[0] = {0, 0};
+  m2r[1] = {3, 0};
+  REQUIRE(m2[0] == m2r[0]);
+  REQUIRE(m2[1] == m2r[1]);
+
+  m2 = matrix(2);
+  m2[0] = {1, 2};
+  m2[1] = {3, 4};
+  zero_matrix(m2);
+  m2r = matrix(2);
+  m2r[0] = {1, 2};
+  m2r[1] = {3, 4};
+  REQUIRE(m2[0] == m2r[0]);
+  REQUIRE(m2[1] == m2r[1]);
+
+  matrix m3(5);
+  m3[0] = {1, 2, 0};
+  m3[1] = {4, 0, 2};
+  m3[2] = {7, 8, 9};
+  m3[3] = {4, 1, 2};
+  m3[4] = {8, 5, 3};
+  zero_matrix(m3);
+  matrix m3r(5);
+  m3r[0] = {0, 0, 0};
+  m3r[1] = {0, 0, 0};
+  m3r[2] = {7, 0, 0};
+  m3r[3] = {4, 0, 0};
+  m3r[4] = {8, 0, 0};
+  REQUIRE(m3[0] == m3r[0]);
+  REQUIRE(m3[1] == m3r[1]);
+  REQUIRE(m3[2] == m3r[2]);
+  REQUIRE(m3[3] == m3r[3]);
+  REQUIRE(m3[4] == m3r[4]);
+}

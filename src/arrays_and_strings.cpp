@@ -174,6 +174,9 @@ std::string string_compression(const std::string &str) {
 }
 
 void rotate_matrix(matrix &M) {
+  // best case: O(N) [where N is number of matrix elements]
+  // average: O(N)
+  // worst case: O(N)
   int N = static_cast<int>(M.size());
   // for x,y modulo N-1, 4x90deg rotations form a closed set:
   // M(x,y) -> M(y,-x)
@@ -189,6 +192,31 @@ void rotate_matrix(matrix &M) {
       std::swap(M[x][y], M[y][N - 1 - x]);
       std::swap(M[x][y], M[N - 1 - x][N - 1 - y]);
       std::swap(M[x][y], M[N - 1 - y][x]);
+    }
+  }
+}
+
+void zero_matrix(matrix &M) {
+  // best case: O(MN) [where ML is number of matrix elements]
+  // average: O(MN)
+  // worst case: O(MN)
+  int n_rows = static_cast<int>(M.size());
+  int n_cols = static_cast<int>(M[0].size());
+  std::vector<int> zero_rows(n_rows, 1);
+  std::vector<int> zero_cols(n_cols, 1);
+  // first pass: look for rows/columns containing zeros
+  for (int row = 0; row < n_rows; ++row) {
+    for (int col = 0; col < n_cols; ++col) {
+      if (M[row][col] == 0) {
+        zero_rows[row] = 0;
+        zero_cols[col] = 0;
+      }
+    }
+  }
+  // second pass: apply zeros
+  for (int row = 0; row < n_rows; ++row) {
+    for (int col = 0; col < n_cols; ++col) {
+      M[row][col] *= zero_rows[row] * zero_cols[col];
     }
   }
 }

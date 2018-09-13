@@ -46,4 +46,9 @@ std::string string_compression(const std::string &str);
 typedef std::vector<std::vector<int>> matrix;
 void rotate_matrix(matrix &M);
 
+// 1.8
+// MxN matrix: if an element is zero, set row and column
+// containing element to zero
+void zero_matrix(matrix &M);
+
 #endif  // LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H
