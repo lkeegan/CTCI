@@ -220,3 +220,14 @@ void zero_matrix(matrix &M) {
     }
   }
 }
+
+bool is_rotation(const std::string &strA, const std::string &strB) {
+  if (strA.size() != strB.size()) {
+    return false;
+  }
+  // if we can cyclically permute strA to form strB,
+  // then strA must be contained in strB + strB, e.g.
+  // "abcd" <-> "bcd[a""bcd]a"
+  std::string strB_doubled = strB + strB;
+  return is_substring(strA, strB_doubled);
+}

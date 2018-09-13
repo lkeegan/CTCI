@@ -51,4 +51,14 @@ void rotate_matrix(matrix &M);
 // containing element to zero
 void zero_matrix(matrix &M);
 
+// 1.9
+// check if strA can be rotated (cyclically permuted) into strB
+// using one call to is_substring: which determines if a string
+// is a substring of another
+inline bool is_substring(const std::string &strA, const std::string &strB) {
+  return strB.find(strA) != std::string::npos;
+}
+
+bool is_rotation(const std::string &strA, const std::string &strB);
+
 #endif  // LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H

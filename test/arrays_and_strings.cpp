@@ -191,3 +191,11 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
   REQUIRE(m3[3] == m3r[3]);
   REQUIRE(m3[4] == m3r[4]);
 }
+
+TEST_CASE("is_rotation", "[arrays_and_strings]") {
+  REQUIRE(is_rotation("abc", "bca") == true);
+  REQUIRE(is_rotation("abc", "acb") == false);
+  REQUIRE(is_rotation("abcde", "cdeab") == true);
+  REQUIRE(is_rotation("abcde", "eacbd") == false);
+  REQUIRE(is_rotation("abc-d e", " eabc-d") == true);
+}
