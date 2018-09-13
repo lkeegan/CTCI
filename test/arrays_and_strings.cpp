@@ -61,3 +61,16 @@ TEST_CASE("URLify", "[arrays_and_strings]") {
   URLify(str, 5);
   REQUIRE(str == "a%20%20%20b           ");
 }
+
+TEST_CASE("is_permutation_of_palindrome", "[arrays_and_strings]") {
+  REQUIRE(is_permutation_of_palindrome("") == true);
+  REQUIRE(is_permutation_of_palindrome("a") == true);
+  REQUIRE(is_permutation_of_palindrome("aa") == true);
+  REQUIRE(is_permutation_of_palindrome("aba") == true);
+  REQUIRE(is_permutation_of_palindrome("cacaca") == false);
+  REQUIRE(is_permutation_of_palindrome("b aa") == true);
+  REQUIRE(is_permutation_of_palindrome("Zs qZZsq sqZq s") == true);
+  REQUIRE(is_permutation_of_palindrome("abasdfRQ") == false);
+  REQUIRE(is_permutation_of_palindrome("aaa") == true);
+  REQUIRE(is_permutation_of_palindrome("ksjdhf") == false);
+}

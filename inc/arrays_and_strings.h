@@ -24,4 +24,9 @@ bool check_permutation(const std::string &strA, const std::string &strB);
 // and that length of string (without this buffer) is supplied
 void URLify(std::string &str, int length);
 
+// 1.4
+// check if string can be permuted into a palindrome (ignoring spaces)
+bool is_permutation_of_palindrome(const std::string &str);
+
+// 1.5
 #endif  // LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H

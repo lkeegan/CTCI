@@ -91,3 +91,37 @@ void URLify(std::string &str, int length) {
     --n_spaces;
   }
 }
+
+bool is_permutation_of_palindrome(const std::string &str) {
+  // best case: O(N)
+  // average: O(N)
+  // worst case: O(N)
+
+  // ignoring spaces, given n chars, can make palindrome iff:
+  // -for even n: each char comes in pairs, i.e. even count, e.g abbssbba
+  // -if n is odd: single char with odd count, the rest even, e.g. atzta
+
+  // get frequency count of chars
+  std::unordered_map<char, int> char_count;
+  int n_chars = 0;
+  for (char c : str) {
+    if (c != ' ') {
+      ++char_count[c];
+      ++n_chars;
+    }
+  }
+  // count chars with odd frequency counts
+  int odd_count_chars = 0;
+  for (const auto &pair : char_count) {
+    if (pair.second % 2 == 1) {
+      ++odd_count_chars;
+    }
+  }
+  if (n_chars % 2 == 0 && odd_count_chars == 0) {
+    return true;
+  } else if (n_chars % 2 == 1 && odd_count_chars == 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
