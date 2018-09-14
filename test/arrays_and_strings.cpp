@@ -1,4 +1,4 @@
-#include "arrays_and_strings.h"
+#include "arrays_and_strings.hpp"
 #include "catch.hpp"
 
 // Unit tests

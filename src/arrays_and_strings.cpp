@@ -1,4 +1,4 @@
-#include "arrays_and_strings.h"
+#include "arrays_and_strings.hpp"
 
 bool is_unique_a(const std::string &str) {
   // use hash table to check if char has already been seen.
