@@ -117,7 +117,6 @@ void partition(typename std::list<T>& lst, const T& x) {
     std::swap(*smaller, *larger);
   }
 }
-#endif  // LKEEGAN_CTCI_LINKED_LISTS_H
 
 // 2.5
 // sum two numbers represented by digits listed in reverse order
@@ -129,3 +128,70 @@ std::list<int> sum_lists_backwards(const std::list<int>& lstA,
 // 341+182=523: 3->4->1 + 1->8->2 = 5->2->3
 std::list<int> sum_lists_forwards(const std::list<int>& lstA,
                                   const std::list<int>& lstB);
+
+// 2.6
+// check if list is palindrome
+template <class T>
+bool palindrome(const typename std::list<T>& lst) {
+  // O(N)
+  typename std::list<T>::const_iterator fwds = lst.begin();
+  typename std::list<T>::const_iterator back = lst.end();
+  --back;
+  while (fwds != back) {
+    // check items match
+    if (*fwds != *back) {
+      return false;
+    }
+    // increment in both directions
+    ++fwds;
+    if (fwds != back) {
+      --back;
+    }
+  }
+  return true;
+}
+
+// 2.7
+// check if two single-link lists (of pointers) intersect, i.e.
+// both contain a pointer to the same address,
+// and return this address
+template <class T>
+T intersection(const typename std::forward_list<T>& lstA,
+               const typename std::forward_list<T>& lstB) {
+  // average: O(N)
+  // worst case: O(N^2)
+  // hash map of pointers in A
+  std::unordered_map<T, bool> seen_pointer;
+  for (T a : lstA) {
+    seen_pointer[a] = true;
+  }
+  // iterate through B, checking if each item was in A
+  for (T b : lstB) {
+    if (seen_pointer[b]) {
+      return b;
+    }
+  }
+  // if not found, return default (i.e. nullptr if T is a pointer)
+  return T();
+}
+
+// 2.7
+// check if two single-link lists (of pointers) intersect, i.e.
+// both contain a pointer to the same address,
+// and return this address
+template <class T>
+T loop_detection(const typename std::forward_list<T>& lstA) {
+  // average: O(N)
+  // worst case: O(N^2)
+  // hash map of pointers in A
+  std::unordered_map<T, int> pointer_count;
+  for (T a : lstA) {
+    ++pointer_count[a];
+    if (pointer_count[a] > 1) {
+      return a;
+    }
+  }
+  // if not found, return default (i.e. nullptr if T is a pointer)
+  return T();
+}
+#endif  // LKEEGAN_CTCI_LINKED_LISTS_H

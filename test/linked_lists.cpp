@@ -118,3 +118,39 @@ TEST_CASE("sum_lists", "[linked_lists]") {
   REQUIRE(sum_lists_forwards(lstA, lstB) == lstS_f);
   REQUIRE(sum_lists_forwards(lstB, lstA) == lstS_f);
 }
+
+TEST_CASE("palindrome", "[linked_lists]") {
+  REQUIRE(palindrome(std::list<char>{}) == true);
+  REQUIRE(palindrome(std::list<char>{'a'}) == true);
+  REQUIRE(palindrome(std::list<char>{'a', 'a'}) == true);
+  REQUIRE(palindrome(std::list<char>{'a', 'b'}) == false);
+  REQUIRE(palindrome(std::list<char>{'a', 'b', 'a'}) == true);
+  REQUIRE(palindrome(std::list<char>{'a', 'b', 'b', 'a'}) == true);
+  REQUIRE(palindrome(std::list<char>{'a', 'b', '?', 'b', 'a'}) == true);
+  REQUIRE(palindrome(std::list<char>{'a', 'b', 'c'}) == false);
+  REQUIRE(palindrome(std::list<char>{'a', 'a', 'b'}) == false);
+}
+
+TEST_CASE("intersection", "[linked_lists]") {
+  double a = 1.0;
+  double b = 3.0;
+  double c = 5.0;
+  double d = 8.0;
+  double e = 8.0;
+  std::forward_list<double*> lstA{&a, &b, &c};
+  std::forward_list<double*> lstB{&d, &a};
+  std::forward_list<double*> lstC{&b, &e};
+  REQUIRE(intersection(lstA, lstB) == &a);
+  REQUIRE(intersection(lstA, lstC) == &b);
+  REQUIRE(intersection(lstB, lstC) == nullptr);
+}
+
+TEST_CASE("loop_detection", "[linked_lists]") {
+  double a = 1.0;
+  double b = 3.0;
+  double c = 5.0;
+  double d = 8.0;
+  double e = 8.0;
+  std::forward_list<double*> lst{&a, &b, &c, &d, &e, &b};
+  REQUIRE(loop_detection(lst) == &b);
+}
