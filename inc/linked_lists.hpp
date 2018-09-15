@@ -78,4 +78,54 @@ T kth_to_last(const std::forward_list<T>& lst, int k = 0) {
   // return item k items before last
   return *k_before_last;
 }
+
+// 2.3
+// "delete" given node without altering any other nodes
+// if we can't modify the previous one that points to this one
+// then put data from next one here and set this one to point to the one after?
+// might be missing the point of this one?
+template <class T>
+void delete_middle_node(typename std::forward_list<T>& lst,
+                        const typename std::forward_list<T>::iterator& i) {
+  // O(1)
+  typename std::forward_list<T>::iterator next = i;
+  ++next;
+  *i = *next;
+  std::cerr << *i << std::endl;
+  lst.erase_after(i);
+}
+
+// 2.4
+// rearrange order of list such that all items < x
+// come before all items >= x
+template <class T>
+void partition(typename std::list<T>& lst, const T& x) {
+  // O(N)
+  typename std::list<T>::iterator smaller = lst.begin();
+  typename std::list<T>::iterator larger = lst.end();
+  --larger;
+  while (smaller != larger) {
+    // iterate forwards to an item >= x
+    while (*smaller < x) {
+      ++smaller;
+    }
+    // iterate backwards to an item < x
+    while (*larger >= x && larger != smaller) {
+      --larger;
+    }
+    // swap items
+    std::swap(*smaller, *larger);
+  }
+}
 #endif  // LKEEGAN_CTCI_LINKED_LISTS_H
+
+// 2.5
+// sum two numbers represented by digits listed in reverse order
+// return sum in same format, e.g.
+// 341+182=523: 1->4->3 + 2->8->1 = 3->2->5
+std::list<int> sum_lists_backwards(const std::list<int>& lstA,
+                                   const std::list<int>& lstB);
+// ditto but with opposite ordering, e.g.
+// 341+182=523: 3->4->1 + 1->8->2 = 5->2->3
+std::list<int> sum_lists_forwards(const std::list<int>& lstA,
+                                  const std::list<int>& lstB);
