@@ -22,7 +22,7 @@ std::list<int> sum_lists_backwards(const std::list<int>& lstA,
   }
   lstS.push_back(carry);
   // remove leading zeros
-  std::list<int>::const_iterator s = lstS.end();
+  std::list<int>::iterator s = lstS.end();
   while (*(--s) == 0) {
     lstS.erase(s);
   }
@@ -51,7 +51,7 @@ std::list<int> sum_lists_forwards(const std::list<int>& lstA,
   }
   lstS.push_front(carry);
   // remove leading zeros
-  std::list<int>::const_iterator s = lstS.begin();
+  std::list<int>::iterator s = lstS.begin();
   while (*s == 0) {
     s = lstS.erase(s);
   }
