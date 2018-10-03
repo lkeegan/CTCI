@@ -21,3 +21,43 @@ TEST_CASE("three_in_one", "[stacks_and_queues]") {
   REQUIRE(s.pop(2) == -1.0);
   REQUIRE(s.is_empty(2) == true);
 }
+
+TEST_CASE("stack_min", "[stacks_and_queues]") {
+  stack_min<int> s;
+  REQUIRE(s.empty() == true);
+  s.push(2);
+  REQUIRE(s.top() == 2);
+  REQUIRE(s.min() == 2);
+  REQUIRE(s.size() == 1);
+  REQUIRE(s.empty() == false);
+  s.push(4);
+  REQUIRE(s.top() == 4);
+  REQUIRE(s.min() == 2);
+  s.push(1);
+  REQUIRE(s.top() == 1);
+  REQUIRE(s.min() == 1);
+  s.push(7);
+  REQUIRE(s.top() == 7);
+  REQUIRE(s.min() == 1);
+  s.push(-1);
+  REQUIRE(s.top() == -1);
+  REQUIRE(s.min() == -1);
+  s.push(1);
+  REQUIRE(s.top() == 1);
+  REQUIRE(s.min() == -1);
+  s.pop();
+  REQUIRE(s.top() == -1);
+  REQUIRE(s.min() == -1);
+  s.pop();
+  REQUIRE(s.top() == 7);
+  REQUIRE(s.min() == 1);
+  s.pop();
+  s.pop();
+  REQUIRE(s.top() == 4);
+  REQUIRE(s.min() == 2);
+  s.pop();
+  REQUIRE(s.top() == 2);
+  REQUIRE(s.min() == 2);
+  s.pop();
+  REQUIRE(s.empty() == true);
+}

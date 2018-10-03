@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <deque>
 #include <queue>
+#include <stack>
 #include <vector>
 
 // 3.1
@@ -39,7 +40,7 @@ class n_in_one {
 
   // add item to stack in constant time
   // NB amortised constant, as we might have to grow array
-  void push(const T &item, int stack_index) {
+  void push(const T& item, int stack_index) {
     if (top_index(stack_index) + n_stacks >= array_size) {
       grow_array();
     }
@@ -55,6 +56,35 @@ class n_in_one {
     return tmp;
   }
   bool is_empty(int stack_index) const { return (i_top[stack_index] < 0); }
+};
+
+// 3.2
+// a stack that can also return minimum element in O(1) time
+// here we use 2 stacks, one is the usual stack
+// the second is a stack of the current minimum element
+template <class T>
+class stack_min {
+ private:
+  std::stack<T> s;
+  std::stack<T> s_min;
+
+ public:
+  const T& min() const { return s_min.top(); }
+  const T& top() const { return s.top(); }
+  void push(const T& item) {
+    s.push(item);
+    if (s_min.empty() || item < s_min.top()) {
+      s_min.push(item);
+    } else {
+      s_min.push(s_min.top());
+    }
+  }
+  void pop() {
+    s.pop();
+    s_min.pop();
+  }
+  bool empty() { return s.empty(); }
+  typename std::stack<T>::size_type size() { return s.size(); }
 };
 
 #endif  // LKEEGAN_CTCI_STACKS_AND_QUEUES_H
