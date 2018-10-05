@@ -2,9 +2,11 @@
 #define LKEEGAN_CTCI_STACKS_AND_QUEUES_H
 #include <algorithm>
 #include <deque>
+#include <forward_list>
 #include <limits>
 #include <queue>
 #include <stack>
+#include <string>
 #include <vector>
 
 // 3.1
@@ -132,7 +134,29 @@ class set_of_stacks {
 // queue (FIFO) implemented using two (LIFO) stacks
 template <class T>
 class queue_via_stacks {
-  // TODO
+  // average: O(1)
+  // worst case: O(n)
+  // queue.push: push to back stack
+  // queue.pop: pop from front stack
+  // if front stack is empty pop all items
+  // from back stack and push to front stack
+ private:
+  std::stack<T> back, front;
+
+ public:
+  void push(const T& item) { back.push(item); }
+  T pop() {
+    if (front.empty()) {
+      while (!back.empty()) {
+        front.push(back.top());
+        back.pop();
+      }
+    }
+    T item = front.top();
+    front.pop();
+    return item;
+  }
+  bool empty() { return front.empty() && back.empty(); }
 };
 
 // 3.5
@@ -205,5 +229,31 @@ void sort_stack(std::stack<T>& s) {
     t.pop();
   }
 }
+
+// 3.6
+// FIFO using linked list
+// can either dequeue oldest animal of given species,
+// or oldest animal of any species
+namespace animal_shelter {
+enum Species { CAT, DOG };
+class animal {
+ public:
+  Species species;
+  std::string name;
+  explicit animal(Species species = CAT, const std::string& name = "")
+      : species(species), name(name) {}
+};
+class queue {
+ private:
+  std::forward_list<animal> animal_list;
+  std::forward_list<animal>::iterator oldest_animal =
+      animal_list.before_begin();
+
+ public:
+  void enqueue(const animal& item);
+  animal dequeue_any();
+  animal dequeue(Species species);
+};
+}  // namespace animal_shelter
 
 #endif  // LKEEGAN_CTCI_STACKS_AND_QUEUES_H

@@ -111,6 +111,25 @@ TEST_CASE("set_of_stacks", "[stacks_and_queues]") {
   REQUIRE(s.empty() == true);
 }
 
+TEST_CASE("queue_via_stacks", "[stacks_and_queues]") {
+  queue_via_stacks<int> q;
+  REQUIRE(q.empty() == true);
+  q.push(1);
+  REQUIRE(q.pop() == 1);
+  REQUIRE(q.empty() == true);
+  q.push(1);
+  q.push(2);
+  q.push(3);
+  REQUIRE(q.pop() == 1);
+  REQUIRE(q.pop() == 2);
+  q.push(45);
+  q.push(-11);
+  REQUIRE(q.pop() == 3);
+  REQUIRE(q.pop() == 45);
+  REQUIRE(q.pop() == -11);
+  REQUIRE(q.empty() == true);
+}
+
 TEST_CASE("sort_stack", "[stacks_and_queues]") {
   // sort stack using only another stack as temp storage
   std::stack<int> s;
@@ -162,4 +181,36 @@ TEST_CASE("sort_stack", "[stacks_and_queues]") {
   REQUIRE(s.top() == 12);
   s.pop();
   REQUIRE(s.empty() == true);
+}
+
+TEST_CASE("animal_shelter", "stacks_and_queues") {
+  using namespace animal_shelter;
+  queue shelter;
+  animal dq;
+  shelter.enqueue(animal(CAT, "sam"));
+  shelter.enqueue(animal(DOG, "jeff"));
+  shelter.enqueue(animal(CAT, "jo"));
+  shelter.enqueue(animal(CAT, "bob"));
+  shelter.enqueue(animal(DOG, "kim"));
+  shelter.enqueue(animal(DOG, "rex"));
+  shelter.enqueue(animal(CAT, "pog"));
+  shelter.enqueue(animal(DOG, "bill"));
+  dq = shelter.dequeue_any();
+  REQUIRE(dq.species == CAT);
+  REQUIRE(dq.name == "sam");
+  dq = shelter.dequeue(DOG);
+  REQUIRE(dq.species == DOG);
+  REQUIRE(dq.name == "jeff");
+  dq = shelter.dequeue(DOG);
+  REQUIRE(dq.species == DOG);
+  REQUIRE(dq.name == "kim");
+  dq = shelter.dequeue(CAT);
+  REQUIRE(dq.species == CAT);
+  REQUIRE(dq.name == "jo");
+  dq = shelter.dequeue_any();
+  REQUIRE(dq.species == CAT);
+  REQUIRE(dq.name == "bob");
+  dq = shelter.dequeue(CAT);
+  REQUIRE(dq.species == CAT);
+  REQUIRE(dq.name == "pog");
 }
