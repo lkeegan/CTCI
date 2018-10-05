@@ -2,6 +2,7 @@
 #define LKEEGAN_CTCI_STACKS_AND_QUEUES_H
 #include <algorithm>
 #include <deque>
+#include <limits>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -60,7 +61,7 @@ class n_in_one {
 
 // 3.2
 // a stack that can also return minimum element in O(1) time
-// here we use 2 stacks, one is the usual stack
+// implemented as 2 stacks, one is the usual stack
 // the second is a stack of the current minimum element
 template <class T>
 class stack_min {
@@ -86,5 +87,123 @@ class stack_min {
   bool empty() { return s.empty(); }
   typename std::stack<T>::size_type size() { return s.size(); }
 };
+
+// 3.3
+// a set of stacks that behaves like a normal stack
+// but additionally one can pop from a sub-stack
+// implemented as a vector of stacks
+template <class T>
+class set_of_stacks {
+  using stack = std::stack<T>;
+
+ private:
+  std::vector<stack> s;
+  typename stack::size_type max_stack_size;
+  int element_count = 0;
+
+ public:
+  explicit set_of_stacks(typename stack::size_type max_size = 1024)
+      : max_stack_size(max_size) {}
+  void push(const T& item) {
+    if (empty() || s.back().size() == max_stack_size) {
+      s.push_back(stack());
+    }
+    s.back().push(item);
+    ++element_count;
+  }
+  const T& peek() { return s.back().top(); }
+  const T& peekAt(int index) { return s[index].top(); }
+  T pop() { return popAt(s.size() - 1); }
+  T popAt(int index) {
+    typename std::vector<stack>::iterator it = s.begin() + index;
+    T temp = (*it).top();
+    (*it).pop();
+    if ((*it).empty()) {
+      s.erase(it);
+    }
+    --element_count;
+    return temp;
+  }
+  bool empty() { return s.empty(); }
+  int size() { return element_count; }
+};
+
+// 3.4
+// queue (FIFO) implemented using two (LIFO) stacks
+template <class T>
+class queue_via_stacks {
+  // TODO
+};
+
+// 3.5
+// sort stack -> smallest items at top (using only another temporary stack)
+template <class T>
+void sort_stack(std::stack<T>& s) {
+  // O(n^2)
+  // bubble sort the items between the two stacks
+  // such that bottom half are in s in ascending order
+  // and top half are in t is descending order
+  // then combine to give all in s in ascending order
+  std::stack<T> t;
+  T lhs, rhs;
+  // NB assuming we do not know the number of items in stack s
+  int items_to_sort = std::numeric_limits<int>::max();
+  // check for empty stack
+  if (s.empty()) {
+    return;
+  }
+  while (items_to_sort > 1) {
+    // pop all unsorted items in s, push all except largest to t
+    lhs = s.top();
+    s.pop();
+    // check for single item stack
+    if (s.empty()) {
+      items_to_sort = 1;
+    }
+    for (int i_item = 1; i_item < items_to_sort; ++i_item) {
+      rhs = s.top();
+      s.pop();
+      if (lhs > rhs) {
+        t.push(rhs);
+      } else {
+        t.push(lhs);
+        lhs = rhs;
+      }
+      // for the first pass items_to_sort is not known
+      // so we just keep iterating until s is empty
+      // and count the number of items we have seen
+      if (s.empty()) {
+        items_to_sort = i_item + 1;
+        break;
+      }
+    }
+    // push largest to s
+    s.push(lhs);
+    --items_to_sort;
+    // pop all unsorted items in t, push all except smallest to s
+    if (items_to_sort > 1) {
+      lhs = t.top();
+      t.pop();
+      for (int i_item = 1; i_item < items_to_sort; ++i_item) {
+        rhs = t.top();
+        t.pop();
+        if (lhs < rhs) {
+          s.push(rhs);
+        } else {
+          s.push(lhs);
+          lhs = rhs;
+        }
+      }
+      // push smallest to t
+      t.push(lhs);
+      --items_to_sort;
+    }
+  }
+  // finally combine the two sorted stacks
+  while (!t.empty()) {
+    s.push(t.top());
+    t.pop();
+  }
+}
 
 #endif  // LKEEGAN_CTCI_STACKS_AND_QUEUES_H

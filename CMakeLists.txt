@@ -18,8 +18,6 @@ include_directories(inc)
 # set common source files
 set (SRCS ${SRCS} src/arrays_and_strings.cpp src/linked_lists.cpp src/stacks_and_queues)
 
-add_executable(benchmark benchmark.cpp ${SRCS})
-
 # make unit test executable
 set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/stacks_and_queues.cpp)
 add_executable(tests test/main.cpp ${TEST_SRCS})
