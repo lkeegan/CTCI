@@ -41,4 +41,11 @@ int conversion(int A, int B);
 // pairwise swap odd/even bits: 0<->1, 2<->3, etc
 // e.g. 0110101101 -> 1001011110
 int pairwise_swap(int x);
+
+// 5.8 TODO
+// drawline on screen, which represents each pixel as a bit
+// from (x1, y) to (x2, y)
+// assume x-y ordering starts from top-left corner in screen
+// void draw_line(std::vector<char> &screen, int width, int x1, int x2, int y);
+
 #endif  // LKEEGAN_CTCI_BIT_MANIPULATION_H

@@ -7,7 +7,7 @@ std::list<int> sum_lists_backwards(const std::list<int>& lstA,
   std::list<int>::const_iterator a = lstA.begin();
   std::list<int>::const_iterator b = lstB.begin();
   int carry = 0;
-  while (a != lstA.end() || b != lstB.end()) {
+  while ((a != lstA.end()) || (b != lstB.end())) {
     int sum = carry;
     if (a != lstA.end()) {
       sum += *a;
@@ -22,9 +22,8 @@ std::list<int> sum_lists_backwards(const std::list<int>& lstA,
   }
   lstS.push_back(carry);
   // remove leading zeros
-  std::list<int>::iterator s = lstS.end();
-  while (*(--s) == 0) {
-    lstS.erase(s);
+  while ((lstS.back() == 0) && (!lstS.empty())) {
+    lstS.pop_back();
   }
   return lstS;
 }
@@ -51,9 +50,8 @@ std::list<int> sum_lists_forwards(const std::list<int>& lstA,
   }
   lstS.push_front(carry);
   // remove leading zeros
-  std::list<int>::iterator s = lstS.begin();
-  while (*s == 0) {
-    s = lstS.erase(s);
+  while ((lstS.front() == 0) && (!lstS.empty())) {
+    lstS.pop_front();
   }
   return lstS;
 }

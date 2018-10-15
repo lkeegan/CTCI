@@ -16,10 +16,10 @@ target_include_directories(Catch INTERFACE catch)
 include_directories(inc)
 
 # set common source files
-set (SRCS ${SRCS} src/arrays_and_strings.cpp src/linked_lists.cpp src/stacks_and_queues src/bit_manipulation.cpp)
+set (SRCS ${SRCS} src/arrays_and_strings.cpp src/linked_lists.cpp src/stacks_and_queues src/bit_manipulation.cpp src/c_and_cpp.cpp)
 
 # make unit test executable
-set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/stacks_and_queues.cpp test/bit_manipulation.cpp)
+set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/stacks_and_queues.cpp test/bit_manipulation.cpp test/c_and_cpp.cpp)
 add_executable(tests test/main.cpp ${TEST_SRCS})
 target_link_libraries(tests Catch)
 
