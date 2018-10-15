@@ -3,6 +3,8 @@
 #include <bitset>
 #include <cmath>
 #include <iostream>
+#include <stdexcept>
+
 // 5.1
 // insert M into N starting at bit j and ending at bit i
 // e.g. [..N..[j..M..i]..]
