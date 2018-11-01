@@ -118,6 +118,106 @@ class dblvec_deep {
 // in an infinite loop, even if not_ready is changed
 // to false at some point by some external process
 
+// 12.8 copy a node structure where each node contains
+// pointers to two other nodes
+
+// simple node structure
+template <class T>
+struct node {
+  // use unique_ptrs to child nodes:
+  // no need for custom destructor, they
+  // be automatically cleaned up when they
+  // go out of scope
+  std::unique_ptr<node> left;
+  std::unique_ptr<node> right;
+  T data;
+};
+
+template <class T>
+std::unique_ptr<node<T>> copy_node(const std::unique_ptr<node<T>>& other_node) {
+  std::unique_ptr<node<T>> new_node(new node<T>);
+  new_node->data = other_node->data;
+  if (other_node->left) {
+    new_node->left = copy_node(other_node->left);
+  }
+  if (other_node->right) {
+    new_node->right = copy_node(other_node->right);
+  }
+  return new_node;
+}
+
+// 12.9 implement a smart (shared) pointer
+template <class T>
+class SmartPointer {
+ private:
+  int* reference_count_ptr;
+  T* data_ptr;
+  friend void swap(SmartPointer& left, SmartPointer& right) {
+    std::swap(left.reference_count_ptr, right.reference_count_ptr);
+    std::swap(left.data_ptr, right.data_ptr);
+  }
+
+ public:
+  // constructor from pointer to allocated data
+  // NB takes ownership of data
+  // user must not call delete on this pointer
+  explicit SmartPointer(T* ptr = nullptr)
+      : reference_count_ptr(ptr ? new int(1) : nullptr),
+        data_ptr(ptr ? ptr : nullptr) {
+    if (ptr) std::cout << "inc" << std::endl;
+  }
+  // copy constructor: copy pointer to data & increment ref count
+  SmartPointer(const SmartPointer& other)
+      : reference_count_ptr(other.reference_count_ptr),
+        data_ptr(other.data_ptr) {
+    std::cout << "inc" << std::endl;
+    ++(*reference_count_ptr);
+  }
+  // move constructor (do not increment reference count)
+  SmartPointer(SmartPointer&& other)
+      : reference_count_ptr(other.reference_count_ptr),
+        data_ptr(other.data_ptr) {
+    // set pointers in other to null
+    // so destructor doesn't change ref count
+    other.reference_count_ptr = nullptr;
+    other.data_ptr = nullptr;
+  }
+  // assignment constructor: copy&swap
+  SmartPointer& operator=(const SmartPointer& other) {
+    SmartPointer tmp(other);
+    swap(*this, tmp);
+    return *this;
+  }
+  // move assignment constructor (do not increment reference count)
+  SmartPointer& operator=(SmartPointer&& other) {
+    // 'steal' pointers from other
+    reference_count_ptr = other.reference_count_ptr;
+    data_ptr = other.data_ptr;
+    // then set pointers in other to null
+    // so destructor doesn't change ref count
+    other.reference_count_ptr = nullptr;
+    other.data_ptr = nullptr;
+    return *this;
+  }
+  // de-reference data pointer
+  T& operator*() const { return *data_ptr; }
+  // get count of references to data
+  int reference_count() const { return *reference_count_ptr; }
+  // if our reference_count_prt is not a nullptr,
+  // and it was 1, i.e. this was the last reference to the data
+  // then delete both data and reference count in destructor
+  ~SmartPointer() {
+    if (reference_count_ptr) {
+      std::cout << "dec" << std::endl;
+      --(*reference_count_ptr);
+      if (*reference_count_ptr == 0) {
+        delete data_ptr;
+        delete reference_count_ptr;
+      }
+    }
+  }
+};
+
 // 12.10
 void* align_malloc(uintptr_t n_bytes, uintptr_t alignment_boundary);
 void aligned_free(void* p);

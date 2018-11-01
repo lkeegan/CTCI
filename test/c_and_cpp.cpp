@@ -78,6 +78,61 @@ TEST_CASE("shallow_vs_deep_copy", "[c_and_cpp]") {
   REQUIRE(d2[2] == 3.0);
 }
 
+TEST_CASE("copy_node", "[c_and_cpp]") {
+  std::unique_ptr<node<double>> head(new node<double>);
+  head->data = 0.354;
+  head->left.reset(new node<double>);
+  head->left->data = 0.123;
+  head->left->left.reset(new node<double>);
+  head->left->left->data = 9.123;
+  head->right.reset(new node<double>);
+  head->right->data = 0.923;
+
+  std::unique_ptr<node<double>> copy = copy_node<double>(head);
+
+  REQUIRE(copy->data == head->data);
+  REQUIRE(copy->left->data == head->left->data);
+  REQUIRE(copy->right->data == head->right->data);
+  REQUIRE(copy->left->left->data == head->left->left->data);
+  REQUIRE(copy->left->right == nullptr);
+}
+
+TEST_CASE("SmartPointer", "[c_and_cpp]") {
+  SmartPointer<double> p1(new double(4.0));
+  REQUIRE(*p1 == 4.0);
+  REQUIRE(p1.reference_count() == 1);
+  {
+    SmartPointer<double> p2(p1);
+    *p2 = 5.0;
+    REQUIRE(*p1 == 5.0);
+    REQUIRE(*p2 == 5.0);
+    REQUIRE(p1.reference_count() == 2);
+    REQUIRE(p2.reference_count() == 2);
+    {
+      SmartPointer<double> p3 = p2;
+      // use move constructor
+      SmartPointer<double> p4(std::move(p2));
+      // reference count unchanged,
+      // we have a new pointer p4,
+      // but since p2 was moved it is now out of scope
+      *p4 += 1.0;
+      // same story with move assignment constructor:
+      // p4 now out of scope, ref count unchanged
+      SmartPointer<double> p5;
+      p5 = std::move(p4);
+      REQUIRE(*p1 == 6.0);
+      REQUIRE(*p3 == 6.0);
+      REQUIRE(*p5 == 6.0);
+      REQUIRE(p1.reference_count() == 3);
+      REQUIRE(p3.reference_count() == 3);
+      REQUIRE(p5.reference_count() == 3);
+    }
+    // p3, p5 out of scope
+    REQUIRE(p1.reference_count() == 1);
+  }
+  REQUIRE(p1.reference_count() == 1);
+}
+
 TEST_CASE("align_malloc", "[c_and_cpp]") {
   constexpr int ALIGNMENT_BOUNDARY = 512;
   double *data =
