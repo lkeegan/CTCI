@@ -46,6 +46,23 @@ TEST_CASE("word_frequency", "[moderate]") {
   REQUIRE(counts["the"] == 10);
 }
 
+TEST_CASE("Intersection", "[moderate]") {
+  using namespace MyIntersection;
+  point intersect_point;
+  line l1({0.0, 0.0}, {5.0, 5.0});
+  line l2({0.0, 5.0}, {5.0, 0.0});
+  REQUIRE(intersect(l1, l2) == true);
+  REQUIRE(intersect(l1, l2, &intersect_point) == true);
+  REQUIRE(intersect_point.x == 2.5);
+  REQUIRE(intersect_point.y == 2.5);
+
+  l2 = line({0.0, 5.0}, {1.0, 4.0});
+  REQUIRE(intersect(l1, l2) == false);
+
+  l2 = line({0.0, 5.0}, {2.5, 2.5});
+  REQUIRE(intersect(l1, l2, &intersect_point) == true);
+}
+
 TEST_CASE("tic_tac_win", "[moderate]") {
   tic_tac_toe<3> T;
   REQUIRE(T.cross_wins() == false);

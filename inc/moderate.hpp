@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 
@@ -21,9 +22,31 @@ void number_swapper(T& left, T& right) {
 int word_frequency(const std::string& word, const std::string& book,
                    const std::string& delims = " ,.;:-?");
 // for many words, can instead generate hash map of frequency counts for
-// all words in book: O(n) cost to set up, then O(1) look-up (but O(n) space)
+// all words in book: O(n) computation & O(n) space to set up,
+// then O(1) for each word look-up
 std::unordered_map<std::string, int> word_frequency_map(
     const std::string& book, const std::string& delims = " ,.;:-?");
+
+// 16.3
+
+namespace MyIntersection {
+
+struct point {
+  double x;
+  double y;
+  point(double x = 0.0, double y = 0.0) : x(x), y(y) {}
+};
+
+struct line {
+  point start;
+  point end;
+  line(const point& start = point(), const point& end = point())
+      : start(start), end(end) {}
+};
+
+bool intersect(const line& a, const line& b,
+               point* intersection_point = nullptr);
+}  // namespace MyIntersection
 
 // 16.4 Tic-tac-toe win
 // NxN board contains:
@@ -34,8 +57,8 @@ template <std::size_t N>
 class tic_tac_toe {
  private:
   std::array<std::array<char, N>, N> board;
-  std::array<int, N> row_count;
-  std::array<int, N> col_count;
+  std::array<int, N> row_count{};
+  std::array<int, N> col_count{};
   int diag_r_count = 0;
   int diag_l_count = 0;
   int winner = 0;
