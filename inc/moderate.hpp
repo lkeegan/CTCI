@@ -172,4 +172,8 @@ T number_max(T a, T b) {
   return (a * a_factor + b * b_factor) / (a_factor + b_factor);
 }
 
+// 16.8
+// print number as text
+std::string english_int(unsigned long long int number);
+
 #endif  // LKEEGAN_CTCI_MODERATE_H

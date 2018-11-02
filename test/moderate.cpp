@@ -135,3 +135,39 @@ TEST_CASE("number_max", "[moderate]") {
   REQUIRE(number_max(4.3f, 4.299f) == 4.3f);
   REQUIRE(number_max(4.3f, 4.3f) == 4.3f);
 }
+
+TEST_CASE("english_int", "[moderate]") {
+  REQUIRE(english_int(1) == "One");
+  REQUIRE(english_int(6) == "Six");
+  REQUIRE(english_int(12) == "Twelve");
+  REQUIRE(english_int(18) == "Eighteen");
+  REQUIRE(english_int(20) == "Twenty");
+  REQUIRE(english_int(21) == "Twenty One");
+  REQUIRE(english_int(48) == "Forty Eight");
+  REQUIRE(english_int(82) == "Eighty Two");
+  REQUIRE(english_int(99) == "Ninety Nine");
+  REQUIRE(english_int(100) == "One Hundred");
+  REQUIRE(english_int(101) == "One Hundred One");
+  REQUIRE(english_int(107) == "One Hundred Seven");
+  REQUIRE(english_int(113) == "One Hundred Thirteen");
+  REQUIRE(english_int(127) == "One Hundred Twenty Seven");
+  REQUIRE(english_int(735) == "Seven Hundred Thirty Five");
+  REQUIRE(english_int(1000) == "One Thousand");
+  REQUIRE(english_int(1001) == "One Thousand One");
+  REQUIRE(english_int(1011) == "One Thousand Eleven");
+  REQUIRE(english_int(1028) == "One Thousand Twenty Eight");
+  REQUIRE(english_int(1828) == "One Thousand Eight Hundred Twenty Eight");
+  REQUIRE(english_int(74828) ==
+          "Seventy Four Thousand Eight Hundred Twenty Eight");
+  REQUIRE(english_int(374828) ==
+          "Three Hundred Seventy Four Thousand Eight Hundred Twenty Eight");
+  REQUIRE(english_int(19000000) == "Nineteen Million");
+  REQUIRE(english_int(99000000000) == "Ninety Nine Billion");
+  REQUIRE(english_int(421000000000000) == "Four Hundred Twenty One Trillion");
+  REQUIRE(english_int(5000000000000000) == "Five Quadrillion");
+  REQUIRE(english_int(2000000000000000000) == "Two Quintillion");
+  REQUIRE(english_int(0xffffffffffffffff) ==
+          "Eighteen Quintillion Four Hundred Forty Six Quadrillion Seven "
+          "Hundred Forty Four Trillion Seventy Three Billion Seven Hundred "
+          "Nine Million Five Hundred Fifty One Thousand Six Hundred Fifteen");
+}

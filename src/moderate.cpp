@@ -90,3 +90,60 @@ int smallest_difference(std::vector<int> a, const std::vector<int>& b) {
   }
   return min_diff;
 }
+
+std::string english_int(unsigned long long int number) {
+  std::array<std::string, 20> digits{
+      "",        "One",     "Two",       "Three",    "Four",
+      "Five",    "Six",     "Seven",     "Eight",    "Nine",
+      "Ten",     "Eleven",  "Twelve",    "Thirteen", "Fourteen",
+      "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+  std::array<std::string, 10> tens{"",       "",      "Twenty", "Thirty",
+                                   "Forty",  "Fifty", "Sixty",  "Seventy",
+                                   "Eighty", "Ninety"};
+  // assuming ULL int can go up to 2^64-1 < 10^20
+  // can safely express any number in this range with
+  // powers of 1000 up to 7, i.e. 10^21 == Sextillion:
+  // https://simple.wikipedia.org/wiki/Names_for_large_numbers
+  std::array<std::string, 8> thousand_to_nth_power{
+      "",          " Thousand",    " Million",     " Billion",
+      " Trillion", " Quadrillion", " Quintillion", " Sextillion"};
+  auto str_thousand_power = thousand_to_nth_power.begin();
+  std::string int_as_text;
+  while (number > 0) {
+    if (int_as_text.size() > 0) {
+      // add space between previous part and new part
+      int_as_text = " " + int_as_text;
+    }
+    // text for 3rd least significant digit (hundreds)
+    std::string str_ls3;
+    int ls3 = (number % 1000) / 100;
+    int ls2 = number % 100;
+    if (ls3 > 0) {
+      str_ls3 = digits[ls3] + " Hundred";
+      if (ls2 > 0) {
+        // if there is more to come, add a space
+        str_ls3 += " ";
+      }
+    }
+    // text for two least significant digits (0-99)
+    if (ls2 < 20) {
+      // 1-19
+      str_ls3 += digits[ls2];
+    } else {
+      // 20-99
+      str_ls3 += tens[ls2 / 10];
+      if (ls2 % 10 > 0) {
+        str_ls3 += " " + digits[ls2 % 10];
+      }
+    }
+    // add text from these 3 digits to result
+    if (str_ls3.size() > 0) {
+      int_as_text = str_ls3 + *str_thousand_power + int_as_text;
+    }
+    // remove last 3 digits from number
+    number /= 1000;
+    // increment 10^3 factor
+    ++str_thousand_power;
+  }
+  return int_as_text;
+}
