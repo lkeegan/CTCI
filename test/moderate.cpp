@@ -94,3 +94,44 @@ TEST_CASE("tic_tac_win", "[moderate]") {
   REQUIRE(T.cross_wins() == false);
   REQUIRE(T.circle_wins() == true);
 }
+
+TEST_CASE("factorial_trailing_zeros", "[moderate]") {
+  REQUIRE(factorial_trailing_zeros(0) == 0);
+  REQUIRE(factorial_trailing_zeros(1) == 0);
+  REQUIRE(factorial_trailing_zeros(2) == 0);
+  REQUIRE(factorial_trailing_zeros(3) == 0);
+  REQUIRE(factorial_trailing_zeros(4) == 0);
+  REQUIRE(factorial_trailing_zeros(5) == 1);
+  REQUIRE(factorial_trailing_zeros(6) == 1);
+  REQUIRE(factorial_trailing_zeros(7) == 1);
+  REQUIRE(factorial_trailing_zeros(8) == 1);
+  REQUIRE(factorial_trailing_zeros(9) == 1);
+  REQUIRE(factorial_trailing_zeros(10) == 2);
+  REQUIRE(factorial_trailing_zeros(12) == 2);
+  REQUIRE(factorial_trailing_zeros(15) == 3);
+  REQUIRE(factorial_trailing_zeros(20) == 4);
+  REQUIRE(factorial_trailing_zeros(24) == 4);
+  REQUIRE_THROWS(factorial_trailing_zeros(99));
+}
+
+TEST_CASE("smallest_difference", "[moderate]") {
+  std::vector<int> A{1, 4, 16, 5};
+  std::vector<int> B{7, 3, 9, 11};
+  std::vector<int> C{66, 51, 22, 11};
+  REQUIRE(smallest_difference(A, B) == 1);
+  REQUIRE(smallest_difference(B, A) == 2);
+  REQUIRE(smallest_difference(C, A) == 6);
+  REQUIRE(smallest_difference(C, B) == 0);
+  REQUIRE(smallest_difference(B, C) == 0);
+}
+
+TEST_CASE("number_max", "[moderate]") {
+  REQUIRE(number_max(4, 7) == 7);
+  REQUIRE(number_max(11, 1) == 11);
+  REQUIRE(number_max(88, 88) == 88);
+  REQUIRE(number_max(11.234, 1.123) == 11.234);
+  REQUIRE(number_max<double>(11.234, 5) == 11.234);
+  REQUIRE(number_max(-11.234, static_cast<double>(5)) == -11.234);
+  REQUIRE(number_max(4.3f, 4.299f) == 4.3f);
+  REQUIRE(number_max(4.3f, 4.3f) == 4.3f);
+}

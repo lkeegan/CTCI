@@ -1,13 +1,15 @@
 #ifndef LKEEGAN_CTCI_MODERATE_H
 #define LKEEGAN_CTCI_MODERATE_H
+#include <algorithm>
 #include <array>
 #include <cstddef>
 #include <iostream>
+#include <limits>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
-
+#include <vector>
 // 16.1 swap two numbers in-place
 // works for int, unsigned int
 template <class T>
@@ -28,7 +30,6 @@ std::unordered_map<std::string, int> word_frequency_map(
     const std::string& book, const std::string& delims = " ,.;:-?");
 
 // 16.3
-
 namespace MyIntersection {
 
 struct point {
@@ -146,5 +147,29 @@ class tic_tac_toe {
   bool cross_wins() { return winner == +1; }
   bool circle_wins() { return winner == -1; }
 };
+
+// 16.5
+// count trailing zeros in factorial n!
+unsigned int factorial_trailing_zeros(unsigned int n);
+
+// 16.6
+// smallest non-negative difference between pair of values
+// one from each of two supplied integer arrays
+int smallest_difference(std::vector<int> a, const std::vector<int>& b);
+
+// 16.7
+// return max (furthest from zero) of two numbers
+// w/o if, else or comparison operator
+template <typename T>
+T number_max(T a, T b) {
+  // (int)(a/b) = 0        for a <= b
+  //            = non-zero for a  > b
+  int a_factor = static_cast<T>(static_cast<int>(a / b));
+  int b_factor = static_cast<T>(static_cast<int>(b / a));
+  // if a>b: b_factor = 0, return a
+  // if b>a: a_factor = 0, return b
+  // if a==b: a_factor = b_factor, return (a+b)/2 == a == b
+  return (a * a_factor + b * b_factor) / (a_factor + b_factor);
+}
 
 #endif  // LKEEGAN_CTCI_MODERATE_H

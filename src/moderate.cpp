@@ -51,3 +51,42 @@ bool MyIntersection::intersect(const line& a, const line& b,
   }
   return false;
 }
+
+unsigned int factorial_trailing_zeros(unsigned int n) {
+  unsigned long long sig_digits = 1;
+  unsigned int zeros = 0;
+  for (unsigned int i = 1; i <= n; ++i) {
+    unsigned long long old_sig_digits = sig_digits;
+    sig_digits *= i;
+    // if multiplying by i results in a smaller
+    // unsigned long integer, then we have overflow
+    if (sig_digits < old_sig_digits) {
+      throw std::overflow_error("integer overflow in factorial_trailing_zeros");
+    }
+    // remove and count trailing 0's
+    while ((sig_digits % 10) == 0) {
+      sig_digits /= 10;
+      ++zeros;
+    }
+  }
+  return zeros;
+}
+
+int smallest_difference(std::vector<int> a, const std::vector<int>& b) {
+  // brute force: O(n_a n_b) check all pairs - requires no extra storage
+  // this implementation:
+  // -sort array a: O(n_a log(n_a))
+  // -for each value in b, find the closest not-smaller-than-it
+  // value in a and compare resulting difference: O(n_b log(n_a))
+  // -overall: O((n_a + n_b) log(n_a))
+  // -plus O(n_a) storage for sorted copy of a
+  int min_diff = std::numeric_limits<int>::max();
+  std::sort(a.begin(), a.end());
+  for (int b_val : b) {
+    auto a_gtr_than_b = std::lower_bound(a.begin(), a.end(), b_val);
+    if (a_gtr_than_b != a.end()) {
+      min_diff = std::min(min_diff, *a_gtr_than_b - b_val);
+    }
+  }
+  return min_diff;
+}
