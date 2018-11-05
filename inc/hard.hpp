@@ -65,4 +65,15 @@ std::vector<T> sub_set(const std::vector<T>& arr, std::size_t m,
   }
   return subset;
 }
+
+// 17.4
+// array A contains integers 0 to n, except one
+// can only access jth bit of A[i] which takes constant time
+// find missing integer in O(n) time
+inline bool get_bit(unsigned int j, unsigned int i,
+                    const std::vector<unsigned int>& A) {
+  return ((A[i] >> j) & 1) != 0;
+}
+
+unsigned int missing_number(const std::vector<unsigned int>& A);
 #endif  // LKEEGAN_CTCI_HARD_H

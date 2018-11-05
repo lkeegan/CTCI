@@ -26,3 +26,22 @@ unsigned int add_without_plus(unsigned int a, unsigned int b) {
   result |= carry << bit;
   return result;
 }
+
+unsigned int missing_number(const std::vector<unsigned int>& A) {
+  // O(n) - assumes that A is sorted in ascending order
+  for (unsigned int n = 0; n < static_cast<unsigned int>(A.size()); ++n) {
+    // find location of bit that differs for n, n+1
+    unsigned int bit = 0;
+    unsigned int bit_differs = n ^ (n + 1);
+    while ((bit_differs & 1) == 0) {
+      bit_differs >>= 1;
+      ++bit;
+    }
+    // if bit doesn't match for n, we have found missing value
+    if (get_bit(bit, n, A) != (((n >> bit) & 1) != 0)) {
+      return n;
+    }
+  }
+  // if all matched return A.size(), i.e. missing value is n+1
+  return A.size();
+}
