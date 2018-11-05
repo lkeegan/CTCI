@@ -147,3 +147,103 @@ std::string english_int(unsigned long long int number) {
   }
   return int_as_text;
 }
+
+// a - b
+int operations_minus(int a, int b) {
+  if (a < b) {
+    return -operations_minus(b, a);
+  }
+  int result = 0;
+  while (a > b) {
+    ++b;
+    ++result;
+  }
+  return result;
+}
+
+// a * b
+int operations_multiply(int a, int b) {
+  // if a, b have opposite sign, result will be negative
+  bool result_neg = ((a < 0) != (b < 0));
+  // multiply abs(a) and abs(b)
+  int result = 0;
+  for (int i = 0; i < abs(b); ++i) {
+    result += abs(a);
+  }
+  // return result with correct sign
+  return result_neg ? -result : result;
+}
+// a / b
+int operations_divide(int a, int b) {
+  // if a, b have opposite sign, result will be negative
+  bool result_neg = ((a < 0) != (b < 0));
+  int result = 0;
+  int mult = abs(b);
+  // do abs(a) / abs(b)
+  while (mult <= abs(a)) {
+    ++result;
+    mult += abs(b);
+  }
+  // return result with correct sign
+  return result_neg ? -result : result;
+}
+
+int year_with_most_people(
+    const std::vector<std::pair<int, int>>& birth_death_years) {
+  // O(n) for n people
+  constexpr int MIN_YEAR = 1900;
+  constexpr int MAX_YEAR = 2000;
+  constexpr int N_YEARS = MAX_YEAR - MIN_YEAR + 1;
+  // delta[i] = n : change of n in net for year i + MIN_YEAR
+  // e.g. a birth in year y --> +1 at year y
+  // and a death in year z --> -1 at year z+1
+  std::array<int, N_YEARS + 1> delta_people{};
+  for (const auto& p : birth_death_years) {
+    ++delta_people[p.first - MIN_YEAR];       // birth (at start of year)
+    --delta_people[p.second + 1 - MIN_YEAR];  // death (at end of year)
+  }
+  int max_count = 0;
+  int cur_count = 0;
+  std::size_t max_i = 0;
+  for (std::size_t i = 0; i < delta_people.size(); ++i) {
+    cur_count += delta_people[i];
+    if (cur_count > max_count) {
+      max_count = cur_count;
+      max_i = i;
+    }
+  }
+  return static_cast<int>(max_i + MIN_YEAR);
+}
+
+std::unordered_set<int> enumerate_lengths(int k, int shorter, int longer) {
+  std::unordered_set<int> lengths;
+  // s shorter + l longer = length
+  // for all (s,l) such that s + l = k
+  for (int l = 0; l <= k; ++l) {
+    int s = k - l;
+    int length = s * shorter + l * longer;
+    // add to unordered_set to ignore duplicates
+    lengths.insert(length);
+  }
+  return lengths;
+}
+
+int rand7(rand_n& rand5) {
+  // amortised cost = (50/21) ~ 2.5x rand5() calls
+  // stochastically have 21/25 chance of getting a rand7
+  // for each pair of rand5() calls
+  int r7 = 7;
+  while (r7 > 6) {
+    // get flat sample in [0,25)
+    // using 2x rand5 calls:
+    r7 = rand5() + 5 * rand5();
+    // divide by 3
+    r7 /= 3;
+    // {0,1,2}->0, {3,4,5}->1, ..., {18,19,20}->6,
+    // {21,22,23}->7, {24}->8
+    // i.e. flat distrib in [0,7)
+    // plus 4/25 chance of higher number, in which case
+    // we discard it and try again
+  }
+  return r7;
+}

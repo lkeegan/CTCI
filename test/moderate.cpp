@@ -171,3 +171,75 @@ TEST_CASE("english_int", "[moderate]") {
           "Hundred Forty Four Trillion Seventy Three Billion Seven Hundred "
           "Nine Million Five Hundred Fifty One Thousand Six Hundred Fifteen");
 }
+
+TEST_CASE("operations_minus", "[moderate]") {
+  REQUIRE(operations_minus(7, 2) == 7 - 2);
+  REQUIRE(operations_minus(17547, 2312) == 17547 - 2312);
+  REQUIRE(operations_minus(7, -2) == 9);
+  REQUIRE(operations_minus(-7, 2) == -9);
+  REQUIRE(operations_minus(2, 7) == 2 - 7);
+  REQUIRE(operations_minus(-7, -2) == -5);
+  REQUIRE(operations_minus(-2, -7) == 5);
+  REQUIRE(operations_minus(-4, -4) == 0);
+}
+
+TEST_CASE("operations_multiply", "[moderate]") {
+  REQUIRE(operations_multiply(3, 5) == 3 * 5);
+  REQUIRE(operations_multiply(5, 3) == 3 * 5);
+  REQUIRE(operations_multiply(3, -5) == -3 * 5);
+  REQUIRE(operations_multiply(-5, 3) == -3 * 5);
+  REQUIRE(operations_multiply(-5, -3) == 3 * 5);
+}
+
+TEST_CASE("operations_divide", "[moderate]") {
+  REQUIRE(operations_divide(10, 3) == 3);
+  REQUIRE(operations_divide(9, 3) == 3);
+  REQUIRE(operations_divide(8, 3) == 2);
+  REQUIRE(operations_divide(3, 8) == 0);
+  REQUIRE(operations_divide(8, 8) == 1);
+  REQUIRE(operations_divide(-8, 8) == -1);
+  REQUIRE(operations_divide(-8, 2) == -4);
+  REQUIRE(operations_divide(8, -2) == -4);
+  REQUIRE(operations_divide(-8, -2) == 4);
+  REQUIRE(operations_divide(-3, 4) == 0);
+}
+
+TEST_CASE("year_with_most_people", "[moderate]") {
+  std::vector<std::pair<int, int>> years;
+  years.push_back({1900, 2000});
+  REQUIRE(year_with_most_people(years) == 1900);
+  years.push_back({1940, 1960});
+  REQUIRE(year_with_most_people(years) == 1940);
+  years.push_back({1910, 1950});
+  years.push_back({1950, 1980});
+  REQUIRE(year_with_most_people(years) == 1950);
+  years.push_back({1944, 1944});
+  years.push_back({1944, 1944});
+  years.push_back({1944, 1944});
+  REQUIRE(year_with_most_people(years) == 1944);
+}
+
+TEST_CASE("enumerate_lengths", "[moderate]") {
+  using set = std::unordered_set<int>;
+  REQUIRE(enumerate_lengths(1, 1, 1) == set{1});
+  REQUIRE(enumerate_lengths(1, 3, 5) == set{3, 5});
+  REQUIRE(enumerate_lengths(2, 3, 5) == set{6, 8, 10});
+  REQUIRE(enumerate_lengths(2, 5, 5) == set{10});
+  REQUIRE(enumerate_lengths(4, 2, 3) == set{8, 9, 10, 11, 12});
+  REQUIRE(enumerate_lengths(5, 12, 6) == set{30, 36, 42, 48, 54, 60});
+}
+
+TEST_CASE("rand7", "[moderate]") {
+  rand_n rand5(5, 12345);
+  std::array<int, 7> count{};
+  constexpr int N_RAND = 500000;
+  for (int i = 0; i < N_RAND; ++i) {
+    ++count[rand7(rand5)];
+  }
+  for (auto c : count) {
+    double stoch_one =
+        7.0 * static_cast<double>(c) / static_cast<double>(N_RAND);
+    CAPTURE(stoch_one);
+    REQUIRE(stoch_one == Approx(1.0).margin(0.01));
+  }
+}

@@ -5,10 +5,12 @@
 #include <cstddef>
 #include <iostream>
 #include <limits>
+#include <random>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 // 16.1 swap two numbers in-place
 // works for int, unsigned int
@@ -176,4 +178,38 @@ T number_max(T a, T b) {
 // print number as text
 std::string english_int(unsigned long long int number);
 
+// 16.9 implement - * / for integers using only +
+// a - b
+int operations_minus(int a, int b);
+// a * b
+int operations_multiply(int a, int b);
+// a / b
+int operations_divide(int a, int b);
+
+// 16.10 list of birth & death years for people
+// find year with the most people alive
+// all years lie in range [1900, 2000]
+int year_with_most_people(
+    const std::vector<std::pair<int, int>>& birth_death_years);
 #endif  // LKEEGAN_CTCI_MODERATE_H
+
+// 16.11 diving board:
+// k planks end-to-end, two sizes of plank
+// enumerate all possible lengths
+std::unordered_set<int> enumerate_lengths(int k, int shorter, int longer);
+
+// 16.23
+// rand7 from rand5
+class rand_n {
+  // rand_n() provides random int from flat dist in [0,n)
+  // NB: NOT threadsafe
+ private:
+  std::ranlux48 rng;
+  std::uniform_int_distribution<int> int_dist;
+
+ public:
+  explicit rand_n(int n = 2, int seed = 123) : rng(seed), int_dist(0, n - 1) {}
+  inline int operator()() { return int_dist(rng); }
+};
+// rand7 generates one in [0,7) from supplied rand5() function
+int rand7(rand_n& rand5);
