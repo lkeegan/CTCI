@@ -74,6 +74,29 @@ inline bool get_bit(unsigned int j, unsigned int i,
                     const std::vector<unsigned int>& A) {
   return ((A[i] >> j) & 1) != 0;
 }
-
 unsigned int missing_number(const std::vector<unsigned int>& A);
+
+// 17.5
+// Given array (string) of letters & numbers
+// find longest sub-array with even number of letters and numbers
+std::string longest_even_substring(
+    const std::string& str, const std::string& NUMBER_CHARS = "0123456789");
+
+// 17.6
+// count how many times the digit 2 appears in the
+// numbers from 0 to n inclusive
+int count_of_twos(int n) noexcept;
+int count_of_twos_debug(int n) noexcept;
+
+// 17.7 given list of names and frequencies, e.g. [<"Jon",22>,<"John",110>,..]
+// and list of pairs of synonyms (equivalent names e.g. [<"Jon","John">,..])
+// combine synonyms in frequency list
+void merge_synonyms(
+    std::unordered_map<std::string, int>& frequencies,
+    const std::vector<std::pair<std::string, std::string>>& name_pairs);
+
+// 17.10 majority element: makes up > 1/2 elements in array of positive ints
+// find this element in O(n) time and O(1) space
+int majority_element(const std::vector<int>& arr);
+
 #endif  // LKEEGAN_CTCI_HARD_H

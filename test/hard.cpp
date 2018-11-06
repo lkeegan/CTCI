@@ -17,7 +17,7 @@ TEST_CASE("shuffle_cards", "[hard]") {
   // start with ordered deck
   std::array<int, N_CARDS_IN_DECK> deck;
   int index = 0;
-  for (auto &d : deck) {
+  for (auto& d : deck) {
     d = index++;
   }
   // sum card_index at each location for 1000 shuffles
@@ -77,4 +77,61 @@ TEST_CASE("missing_number", "[hard]") {
   std::vector<unsigned int> D{0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
                               10, 11, 12, 14, 15, 16, 17, 18, 19, 20};
   REQUIRE(missing_number(D) == 13);
+}
+
+TEST_CASE("longest_even_substring", "[hard]") {
+  REQUIRE(longest_even_substring("") == "");
+  REQUIRE(longest_even_substring("a") == "");
+  REQUIRE(longest_even_substring("9") == "");
+  REQUIRE(longest_even_substring("a7") == "a7");
+  REQUIRE(longest_even_substring("a7a") == "7a");
+  REQUIRE(longest_even_substring("a77") == "a7");
+  REQUIRE(longest_even_substring("99a7b") == "9a7b");
+  REQUIRE(longest_even_substring("asdf345") == "sdf345");
+  REQUIRE(longest_even_substring("aab") == "");
+  REQUIRE(longest_even_substring("462") == "");
+  REQUIRE(longest_even_substring("aadfsgsdg6fgjjg") == "6f");
+  REQUIRE(longest_even_substring("60aaaaa66") == "60aa");
+}
+
+TEST_CASE("count_of_twos", "[hard]") {
+  std::vector<int> n_vals{0,  1,  2,  4,  11,  12,   19,    20,      21,
+                          22, 31, 32, 99, 341, 4631, 74437, 2345234, 12421312};
+  for (auto n : n_vals) {
+    CAPTURE(n);
+    REQUIRE(count_of_twos(n) == count_of_twos_debug(n));
+  }
+}
+
+TEST_CASE("merge_synonyms", "[hard]") {
+  using string_pair = std::pair<std::string, std::string>;
+  std::unordered_map<std::string, int> frequencies;
+  frequencies["Jon"] = 42;
+  frequencies["John"] = 142;
+  frequencies["Sam"] = 3;
+  frequencies["Samuel"] = 32;
+  std::vector<string_pair> name_pairs;
+  name_pairs.push_back({"Jon", "John"});
+  name_pairs.push_back({"Sam", "Samuel"});
+  merge_synonyms(frequencies, name_pairs);
+  REQUIRE(frequencies["Jon"] == 184);
+  REQUIRE(frequencies["Sam"] == 35);
+  REQUIRE(frequencies["Samuel"] == false);
+  REQUIRE(frequencies["John"] == false);
+}
+
+TEST_CASE("majority_element", "[hard]") {
+  std::vector<int> v;
+  v = {8};
+  REQUIRE(majority_element(v) == 8);
+  v = {8, 1};
+  REQUIRE(majority_element(v) == -1);
+  v = {5, 2, 5};
+  REQUIRE(majority_element(v) == 5);
+  v = {2, 5, 2, 4, 2, 3};
+  REQUIRE(majority_element(v) == -1);
+  v = {2, 5, 2, 4, 2, 3, 2};
+  REQUIRE(majority_element(v) == 2);
+  v = {1, 1, 5, 1, 9, 1, 4, 7, 7, 7, 1, 1, 1};
+  REQUIRE(majority_element(v) == 1);
 }
