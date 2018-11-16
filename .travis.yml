@@ -34,7 +34,7 @@ after_success:
 # gcov files for sonar-scanner
 - mkdir gcov
 - cd gcov
-- gcov ../Debug/CMakeFiles/tests.dir/test/*.gcno
+- gcov ../Debug/CMakeFiles/tests.dir/*/*.gcno
 - cd ../
 - sonar-scanner
 # lcov .info file for codecov
