@@ -19,7 +19,8 @@ addons:
 script:
 - mkdir Debug
 - cd Debug
-- cmake -DCMAKE_BUILD_TYPE=Debug .. && make -j4
+- cp ../sonar-project.properties .
+- cmake -DCMAKE_BUILD_TYPE=Debug ..
 # Wraps the compilation with the Build Wrapper to generate configuration (used
 # later by the SonarQube Scanner) into the "bw-output" folder
 - build-wrapper-linux-x86-64 --out-dir bw-output make all
