@@ -120,6 +120,13 @@ TEST_CASE("merge_synonyms", "[hard]") {
   REQUIRE(frequencies["John"] == false);
 }
 
+TEST_CASE("kth_multiple", "[hard]") {
+  for (int k : {1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 15, 20, 55}) {
+    CAPTURE(k)
+    REQUIRE(kth_multiple(k) == kth_multiple_debug(k));
+  }
+}
+
 TEST_CASE("majority_element", "[hard]") {
   std::vector<int> v;
   v = {8};

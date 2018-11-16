@@ -134,6 +134,118 @@ void merge_synonyms(
     frequencies.erase(name_pair.second);
   }
 }
+/*
+int largest_tower(const std::vector<std::pair<int, int>>& people) {
+  // ignore duplicates for now...
+  // create ordered map with <height,weight> pairs
+  // O(n log[n])
+  std::map<int, int> tower;
+  for (auto p : people) {
+    tower.insert(p);
+  }
+  // for each starting location,
+  // construct increasing chain
+  auto start = tower.cbegin();
+  int prev = *start;
+  auto rhs = std::next(start);
+  while (rhs != tower.cend()) {
+    if (prev.second < *rhs->second) {
+      // in order, can add person to tower
+      ++count;
+      prev = *rhs;
+    } else {
+      // rhs out of order: ignore this person
+      // and start next search here
+      start = rhs;
+    }
+    ++rhs;
+  }
+}
+right = std::next(left);
+if () {
+  // wrong order weights
+  if (*lhs->first == *rhs->first) {
+    // if equal height, can swap them
+
+  } else {
+    // otherwise have to get rid of one of them
+  }
+  ++lhs;
+}
+}
+}
+*/
+std::vector<int> get_primes(int n, int min_prime) {
+  // generate all primes up to n
+  // O(n log[log[n]])
+  // https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+  std::vector<bool> is_prime((n + 1) / 2, true);
+  for (int i = 3; i * i <= n; i += 2) {
+    for (int j = i * i; j <= n; j += 2 * i) {
+      is_prime[(j - 1) / 2] = false;
+    }
+  }
+  std::vector<int> primes;
+  if (min_prime <= 2) {
+    primes.push_back(2);
+  }
+  for (int i = (min_prime - 1) / 2; i <= n / 2; ++i) {
+    if (is_prime[i]) {
+      primes.push_back(2 * i + 1);
+    }
+  }
+  return primes;
+}
+
+std::vector<int> get_multiples_debug(int n) {
+  // get list of primes: 11 <= primes <= n
+  std::vector<int> primes = get_primes(n, 11);
+  // generate list of all numbers <= n whose only
+  // possible prime factors are 3, 5, 7
+  // Start from list of odd numbers,
+  std::vector<bool> is_valid((n + 1) / 2, true);
+  for (auto p = primes.cbegin(); (*p) <= n; ++p) {
+    for (int j = (*p); j <= n; j += 2 * (*p)) {
+      // remove all (odd) multiples of primes starting with 11
+      is_valid[(j - 1) / 2] = false;
+    }
+  }
+  std::vector<int> multiples;
+  for (int i = 0; i <= n / 2; ++i) {
+    if (is_valid[i]) {
+      multiples.push_back(2 * i + 1);
+    }
+  }
+  return multiples;
+}
+
+int kth_multiple_debug(int k) {
+  static int n_max = 1000;
+  static std::vector<int> multiples = get_multiples_debug(n_max);
+  while (k > static_cast<int>(multiples.size())) {
+    n_max *= 2;
+    multiples = get_multiples_debug(n_max);
+  }
+  return multiples[k - 1];
+}
+
+int kth_multiple(int k) {
+  // k'th value
+  int kth = 0;
+  // sorted set of possible (k+1)'th values (initially 1)
+  std::set<int> larger_numbers{1};
+  while (k-- > 0) {
+    // get next value (smallest in set)
+    kth = *(larger_numbers.cbegin());
+    // remove kth from the set of possibles
+    larger_numbers.erase(kth);
+    // replace it with {3, 5, 7} * kth
+    larger_numbers.insert(kth * 3);
+    larger_numbers.insert(kth * 5);
+    larger_numbers.insert(kth * 7);
+  }
+  return kth;
+}
 
 int majority_element(const std::vector<int>& arr) {
   // for N elements, majority element has N_m>N/2 entries

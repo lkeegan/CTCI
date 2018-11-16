@@ -8,6 +8,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra -std=c++11")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -g")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native")
 
+# openMP
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
+
 # make Catch2 unit testing library
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE catch)
@@ -16,12 +23,14 @@ target_include_directories(Catch INTERFACE catch)
 include_directories(inc)
 
 # set common source files
-set (SRCS ${SRCS} src/arrays_and_strings.cpp src/linked_lists.cpp src/stacks_and_queues src/bit_manipulation.cpp src/c_and_cpp.cpp src/moderate.cpp src/hard.cpp)
+set (SRCS ${SRCS} src/arrays_and_strings.cpp src/linked_lists.cpp src/stacks_and_queues src/bit_manipulation.cpp src/c_and_cpp.cpp src/moderate.cpp src/hard.cpp src/concurrency_openmp.cpp)
 
 # make unit test executable
-set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/stacks_and_queues.cpp test/bit_manipulation.cpp test/c_and_cpp.cpp test/moderate.cpp test/hard.cpp)
+set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/stacks_and_queues.cpp test/bit_manipulation.cpp test/c_and_cpp.cpp test/moderate.cpp test/hard.cpp test/concurrency_openmp.cpp)
 add_executable(tests test/main.cpp ${TEST_SRCS})
 target_link_libraries(tests Catch)
+
+add_executable(benchmark benchmark.cpp src/concurrency_openmp.cpp)
 
 # make running the test executable part of the build, so failed test = failed build
 add_custom_command(TARGET tests POST_BUILD COMMAND tests -s -d yes)

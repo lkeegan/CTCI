@@ -3,7 +3,26 @@
 
 // Unit tests
 TEST_CASE("last_k_lines", "[c_and_cpp]") {
-  REQUIRE_NOTHROW(last_k_lines("tmp.txt", 10));
+  // make text file
+  int n_lines = 3;
+  std::string filename("tmp.txt");
+  std::vector<std::string> lines{"123",      "34g5",   "ervgy3y4v wcvt 3qv",
+                                 "(32q4-",   "dfas",   "002148",
+                                 "efvoifh,", "ew8032", "6g r6egnewcv..."};
+  std::ofstream myfile(filename);
+  for (const auto &l : lines) {
+    myfile << l << std::endl;
+  }
+  std::stringstream ss;
+  std::string line;
+  // read last k lines to ss
+  last_k_lines(filename, n_lines, std::cout);
+  // compare to last k lines in vector
+  auto rev_iter = lines.crbegin();
+  rev_iter += n_lines - 1;
+  while (std::getline(ss, line)) {
+    REQUIRE(line == *rev_iter--);
+  }
 }
 
 TEST_CASE("reverse_string", "[c_and_cpp]") {
@@ -162,5 +181,5 @@ TEST_CASE("my_2d_alloc", "[c_and_cpp]") {
   REQUIRE(arr[1][1] == Y + 1);
   REQUIRE(arr[X - 1][0] == (X - 1) * Y);
   REQUIRE(arr[X - 1][Y - 1] == X * Y - 1);
-  my_2d_free(arr);
+  free(arr);
 }

@@ -1,25 +1,22 @@
 #include "c_and_cpp.hpp"
 
-void last_k_lines(const std::string& filename, unsigned int k) {
-  // read file line by line
-  // push each line to back of queue
-  // and pop front of queue if we have more than k items
-  std::queue<std::string> lines;
-  std::string line;
+void last_k_lines(const std::string& filename, unsigned int k,
+                  std::ostream& output) {
   std::ifstream myfile(filename);
   if (!myfile) {
-    std::cout << "ERROR: cannot read file [" << filename << "]" << std::endl;
+    std::cerr << "ERROR: cannot read file [" << filename << "]" << std::endl;
   }
-  while (std::getline(myfile, line)) {
-    lines.push(line);
-    if (lines.size() > k) {
-      lines.pop();
-    }
+  std::vector<std::string> lines(k);
+  std::size_t i = 0;
+  // read file line by line
+  // put each line in vector of k strings
+  // k+1 th line wraps around to overwrite first element of vector
+  while (std::getline(myfile, lines[i])) {
+    i = (i + 1) % k;
   }
   // print out last k lines
-  while (!lines.empty()) {
-    std::cout << lines.front() << std::endl;
-    lines.pop();
+  for (std::size_t j = 0; j < k; ++j) {
+    output << lines[(i + j) % k] << std::endl;
   }
 }
 
@@ -72,22 +69,21 @@ void aligned_free(void* p) {
 }
 
 double** my_2d_alloc(int size_x, int size_y) {
-  // one malloc for an array of pointers to pointers for indexing:
-  // arr[x][y] == *(*(arr + x)+y)
-  double** arr = (double**)malloc(size_x * sizeof(double*));
-  // one malloc for array data
-  double* p = (double*)malloc(size_x * size_y * sizeof(double));
+  // for each x index we need space for
+  // - a pointer to the start of the column: sizeof(T*)
+  // - the column of data: size_y * sizeof(T)
+  int mem_data = size_x * size_y * sizeof(double);
+  int mem_index = size_x * sizeof(double*);
+  double** arr = (double**)malloc(mem_index + mem_data);
+  if (arr == NULL) {
+    return NULL;
+  }
+  // start data after index
+  double* p = (double*)(arr + size_x);
   // set each arr[x] pointer to point to start of column x
   for (int ix = 0; ix < size_x; ++ix) {
     arr[ix] = p;
     p += size_y;
   }
   return arr;
-}
-
-void my_2d_free(double** arr) {
-  // free data
-  free(arr[0]);
-  // free pointers
-  free(arr);
 }

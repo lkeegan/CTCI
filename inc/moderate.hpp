@@ -211,5 +211,5 @@ class rand_n {
   explicit rand_n(int n = 2, int seed = 123) : rng(seed), int_dist(0, n - 1) {}
   inline int operator()() { return int_dist(rng); }
 };
-// rand7 generates one in [0,7) from supplied rand5() function
+// rand7 generates random integer in [0,7) from supplied rand5() function
 int rand7(rand_n& rand5);

@@ -4,10 +4,12 @@
 #include <iostream>
 #include <memory>
 #include <queue>
+#include <sstream>
 #include <string>
 
 // 12.1 print last k lines of filename
-void last_k_lines(const std::string& filename, unsigned int k = 1);
+void last_k_lines(const std::string& filename, unsigned int k = 1,
+                  std::ostream& output = std::cout);
 
 // 12.2 reverse a null-terminated ('\0') string
 void reverse_string(char* str);
@@ -224,5 +226,4 @@ void aligned_free(void* p);
 
 // 12.11 2d vector in C
 double** my_2d_alloc(int size_x, int size_y);
-void my_2d_free(double** arr);
 #endif  // LKEEGAN_CTCI_C_AND_CPP_H

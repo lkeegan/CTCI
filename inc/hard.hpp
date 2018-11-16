@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 #include <random>
+#include <set>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -94,6 +95,20 @@ int count_of_twos_debug(int n) noexcept;
 void merge_synonyms(
     std::unordered_map<std::string, int>& frequencies,
     const std::vector<std::pair<std::string, std::string>>& name_pairs);
+
+// 17.8 circus tower: largest possible tower with descending weight&height
+int largest_tower(const std::vector<std::pair<int, int>>& people);
+
+// 17.9 find kth number with no prime factors except (possibly) 3, 5 or 7
+// only store set of possible next values at each step
+// O(k) time
+// O(k) space
+int kth_multiple(int k);
+// for debugging: first get list of primes, then remove all multiples of primes
+// > 7 from list of odd numbers to leave multiples
+std::vector<int> get_primes(int n, int min_prime = 2);
+std::vector<int> get_multiples_debug(int n);
+int kth_multiple_debug(int k);
 
 // 17.10 majority element: makes up > 1/2 elements in array of positive ints
 // find this element in O(n) time and O(1) space
