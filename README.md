@@ -1,2 +1,2 @@
-# CTCI [![Build Status](https://travis-ci.org/lkeegan/CTCI.svg?branch=master)](https://travis-ci.org/lkeegan/CTCI) [![codecov](https://codecov.io/gh/lkeegan/CTCI/branch/master/graph/badge.svg)](https://codecov.io/gh/lkeegan/CTCI)
+# CTCI [![Build Status](https://travis-ci.org/lkeegan/CTCI.svg?branch=master)](https://travis-ci.org/lkeegan/CTCI) [![codecov](https://codecov.io/gh/lkeegan/CTCI/branch/master/graph/badge.svg)](https://codecov.io/gh/lkeegan/CTCI) [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=lkeegan_CTCI&metric=alert_status)](https://sonarcloud.io/dashboard/index/lkeegan_CTCI)
 Solutions in C++11 to questions from the book [Cracking the Code Interview](http://www.crackingthecodinginterview.com/).
