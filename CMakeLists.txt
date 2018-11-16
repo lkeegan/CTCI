@@ -33,4 +33,4 @@ target_link_libraries(tests Catch)
 add_executable(benchmark benchmark.cpp src/concurrency_openmp.cpp)
 
 # make running the test executable part of the build, so failed test = failed build
-add_custom_command(TARGET tests POST_BUILD COMMAND tests -s -d yes)
+add_custom_command(TARGET tests POST_BUILD COMMAND tests -d yes)

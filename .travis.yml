@@ -25,15 +25,17 @@ script:
 - build-wrapper-linux-x86-64 --out-dir ../bw-output make
 - valgrind ./tests -d yes
 - cd ../
-- sonar-scanner
 - mkdir Release
 - cd Release
 - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j4
 - valgrind ./tests -d yes
 - cd ../
 after_success:
+# gcov files for sonar-scanner
+- gcov Debug/CMakeFiles/tests.dir/test/*.gcno
 - cd Debug
 - lcov --directory . --capture --output-file coverage.info
 - lcov --remove coverage.info '/usr/*' '*/catch/*' '*/test/*' --output-file coverage.info
 - lcov --list coverage.info
+- sonar-scanner
 - bash <(curl -s https://codecov.io/bash) -X gcov
