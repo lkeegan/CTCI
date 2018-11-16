@@ -19,18 +19,17 @@ addons:
 script:
 - mkdir Debug
 - cd Debug
-- cp ../sonar-project.properties .
 - cmake -DCMAKE_BUILD_TYPE=Debug ..
 # Wraps the compilation with the Build Wrapper to generate configuration (used
 # later by the SonarQube Scanner) into the "bw-output" folder
-- build-wrapper-linux-x86-64 --out-dir bw-output make
-- valgrind ./tests -s -d yes
-- sonar-scanner
+- build-wrapper-linux-x86-64 --out-dir ../bw-output make
+- valgrind ./tests -d yes
 - cd ../
+- sonar-scanner
 - mkdir Release
 - cd Release
 - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j4
-- valgrind ./tests -s -d yes
+- valgrind ./tests -d yes
 - cd ../
 after_success:
 - cd Debug
