@@ -40,6 +40,6 @@ after_success:
 # lcov .info file for codecov
 - cd Debug
 - lcov --directory . --capture --output-file coverage.info
-- lcov --remove coverage.info '/usr/*' '*/catch/*' '*/test/*' --output-file coverage.info
+- lcov --remove coverage.info 'catch/*' '/usr/*' '*/catch/*' '*/test/*' --output-file coverage.info
 - lcov --list coverage.info
-- bash <(curl -s https://codecov.io/bash) -X gcov
+- bash <(curl -s https://codecov.io/bash) -X gcov -f "coverage.info"

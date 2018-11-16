@@ -69,7 +69,7 @@ void URLify(std::string &str, int length) {
   // need two extra chars per space
   int buffer = static_cast<int>(str.size()) - length;
   if (buffer < 2 * n_spaces) {
-    throw("STRING_TOO_SMALL");
+    throw std::invalid_argument("STRING_TOO_SMALL");
   }
   // move each char[i] that needs moving
   // directly to its final destination char[i+shift]
