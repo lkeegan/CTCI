@@ -10,15 +10,14 @@
 // e.g. [..N..[j..M..i]..]
 int insertion(int N, int M, int i, int j);
 
-// 5.2
+// 5.2 TODO
 // given double in [0,1)
 // print digits as binary
 // if it doesn't fit in 32 bits, print "ERROR"
 // e.g. 0.17 -> 17 in binary = 16 + 1 = 10001?
 // presumably ignore rounding?
 // (e.g. the double 0.17 is equivalent to 0.1699999999999999999999999)
-// (would the latter be an ERROR?)
-// TODO std::string binary_to_string(double x);
+// (so would the latter be an ERROR?)
 
 // 5.3
 // given (signed) integer, return length of longest possible
@@ -48,6 +47,5 @@ int pairwise_swap(int x);
 // drawline on screen, which represents each pixel as a bit
 // from (x1, y) to (x2, y)
 // assume x-y ordering starts from top-left corner in screen
-// void draw_line(std::vector<char> &screen, int width, int x1, int x2, int y);
 
 #endif  // LKEEGAN_CTCI_BIT_MANIPULATION_H

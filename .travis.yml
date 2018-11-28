@@ -17,7 +17,7 @@ addons:
     - lcov
     - valgrind
 script:
-- export OMP_NUM_THREADS=2
+- export OMP_NUM_THREADS=1
 # install google benchmark library
 - git clone https://github.com/google/benchmark.git google-benchmark
 - cd google-benchmark

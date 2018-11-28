@@ -25,6 +25,7 @@ TEST_CASE("flip_bit_to_win", "[bit_manipulation]") {
   REQUIRE(flip_bit_to_win(8 + 4 + 1) == 4);
   REQUIRE(flip_bit_to_win(128 + 64 + 32 + 8 + 4 + 1) == 6);
   REQUIRE(flip_bit_to_win(1024 + 512 + 128 + 64 + 16 + 8 + 2 + 1) == 5);
+  REQUIRE(flip_bit_to_win(1024 + 512 + 16 + 8 + 1) == 3);
 }
 
 TEST_CASE("next_number", "[bit_manipulation]") {
@@ -66,7 +67,7 @@ TEST_CASE("conversion", "[bit_manipulation]") {
   REQUIRE(conversion(64 + 16 + 4 + 1, 128 + 64 + 32 + 8 + 1) == 5);
 }
 
-// e.g. 1101 -> 1110
+// e.g. [11][01][xy]... -> [11][10][yx]...
 TEST_CASE("pairwise_swap", "[bit_manipulation") {
   REQUIRE(pairwise_swap(0) == 0);
   REQUIRE(pairwise_swap(1) == 2);

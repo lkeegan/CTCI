@@ -22,7 +22,7 @@ TEST_CASE("is_unique_b", "[arrays_and_strings]") {
   REQUIRE(is_unique_b("123 876-x") == true);
   REQUIRE(is_unique_b("abcda") == false);
   REQUIRE(is_unique_b("abcXzX") == false);
-  REQUIRE(is_unique_a(std::string(150, 'a')) == false);
+  REQUIRE(is_unique_b(std::string(150, 'a')) == false);
 }
 
 TEST_CASE("check_permutation", "[arrays_and_strings]") {

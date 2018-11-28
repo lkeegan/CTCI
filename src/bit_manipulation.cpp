@@ -1,8 +1,6 @@
 #include "bit_manipulation.hpp"
 
 int insertion(int N, int M, int i, int j) {
-  std::cerr << "  N: " << std::bitset<32>(N) << std::endl;
-  std::cerr << "  M: " << std::bitset<32>(M) << std::endl;
   // check that M contains j-i+1 bits
   // if not return zero
   int tmpM = M;
@@ -17,42 +15,14 @@ int insertion(int N, int M, int i, int j) {
   // check that bits i through j of N are zero
   // otherwise return zero
   int mask = ((1 << (j - i + 1)) - 1) << i;
-  std::cerr << "msk: " << std::bitset<32>(mask) << std::endl;
   if ((mask & N) != 0) {
     throw std::invalid_argument("N does not have space to insert M");
   }
   // shift M left by i bits, then or with N
-  std::cerr << "N+M: " << std::bitset<32>((N | (M << i))) << std::endl;
   return (N | (M << i));
 }
 
-// TODO
-/*
-std::string binary_to_string(double x) {
-  std::string binary;
-  double tolerance = 1e-13;
-  // 32 bit integer
-  // so floor(log_10(2^32-1)) = 9 base-10 digits of precision
-  // count base-10 significant digits:
-  // (double representing x has ~15 significant digits)
-  x *= 10;
-  tolerance *= 10;
-  double digit = std::floor(x);
-  double remainder = x - digit;
-  // get digits
-  while (remainder > tolerance) {
-    x *= 10;
-    tolerance *= 10;
-    digit = std::floor(x);
-    remainder = x - digit;
-  };
-  binary = "ERROR";
-  return binary;
-}
-*/
-
 int flip_bit_to_win(int input) {
-  std::cerr << "input: " << std::bitset<32>(input) << std::endl;
   int max_length = 0;
   int length_before = 0;
   while (input != 0) {
