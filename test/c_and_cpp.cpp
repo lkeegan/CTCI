@@ -16,7 +16,7 @@ TEST_CASE("last_k_lines", "[c_and_cpp]") {
   std::stringstream ss;
   std::string line;
   // read last k lines to ss
-  last_k_lines(filename, n_lines, std::cout);
+  last_k_lines(filename, n_lines, std::cout);  // TODO: replace cout with ss
   // compare to last k lines in vector
   auto rev_iter = lines.crbegin();
   rev_iter += n_lines - 1;

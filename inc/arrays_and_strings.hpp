@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>  //for debugging
 #include <map>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -12,7 +13,7 @@
 // check if string contains only unique characters
 bool is_unique_a(const std::string &str);
 // 1.1b
-// ditto without additional data structures
+// ditto without using additional data structures
 bool is_unique_b(const std::string &str);
 
 // 1.2

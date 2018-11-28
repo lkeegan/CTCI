@@ -1,7 +1,7 @@
-#include <iostream>
-#include <map>
+#include <benchmark/benchmark.h>
+#include <concurrency_openmp.hpp>
 #include <random>
-#include "concurrency_openmp.hpp"
+#include <string>
 
 template <typename T>
 void setRandom(matrix<T>& mat, std::ranlux48& rng) {
@@ -13,28 +13,36 @@ void setRandom(matrix<T>& mat, std::ranlux48& rng) {
   }
 }
 
-int main() {
-  int n_runs = 4;
-  std::vector<int> n_threads_list = {1, 2, 3, 4, 6};
-  int matrix_size = 2000;
+void BM_StringCopy(benchmark::State& state) {
+  std::string x = "hello";
+  for (auto _ : state) {
+    std::string y;
+    for (int i = 0; i < state.range(0); ++i) {
+      y += x;
+    }
+  }
+  state.SetComplexityN(state.range(0));
+}
+
+static void BM_MatrixMult(benchmark::State& state) {
+  int matrix_size = state.range(0);
   std::ranlux48 rng(123);
-  std::map<int, double> timings;
   matrix<int> A(matrix_size, 0.0);
   setRandom(A, rng);
   matrix<int> B(matrix_size, 0.0);
   setRandom(B, rng);
   matrix<int> C(matrix_size, 0.0);
-  for (int i = 0; i < n_runs; ++i) {
-    for (int n_threads : n_threads_list) {
-      omp_set_num_threads(n_threads);
-      double wtime = omp_get_wtime();
-      C = A * B;
-      double time = omp_get_wtime() - wtime;
-      timings[n_threads] += time;
-    }
+  for (auto _ : state) {
+    C = A * B;
   }
-  for (int n_threads : n_threads_list) {
-    std::cout << n_threads << "/" << omp_get_num_procs() << ": "
-              << timings[n_threads] / static_cast<double>(n_runs) << std::endl;
-  }
+  state.SetComplexityN(state.range(0));
 }
+
+BENCHMARK(BM_StringCopy)->Range(1 << 8, 1 << 18)->Complexity()->UseRealTime();
+
+BENCHMARK(BM_MatrixMult)
+    ->Range(1 << 2, 1 << 10)
+    ->UseRealTime()
+    ->ThreadRange(1, 4);
+
+BENCHMARK_MAIN();

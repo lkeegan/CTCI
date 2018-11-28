@@ -15,7 +15,7 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
-# make Catch2 unit testing library
+# build make Catch2 unit testing library
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE catch)
 
@@ -30,7 +30,11 @@ set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/st
 add_executable(tests test/main.cpp ${TEST_SRCS})
 target_link_libraries(tests Catch)
 
+add_executable(bench benchmark/arrays_and_strings.cpp ${SRCS})
+target_link_libraries(bench -lbenchmark -lpthread)
+
 add_executable(benchmark benchmark.cpp src/concurrency_openmp.cpp)
+target_link_libraries(benchmark -lbenchmark -lpthread)
 
 # make running the test executable part of the build, so failed test = failed build
 add_custom_command(TARGET tests POST_BUILD COMMAND tests -d yes)

@@ -3,6 +3,7 @@
 #include <omp.h>
 #include <cmath>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 // hello world: create n_threads
@@ -58,5 +59,20 @@ std::ostream& operator<<(std::ostream& os, const matrix<T>& mat) {
   }
   return os;
 }
+
+// serial histogram function
+std::vector<int> histogram(const std::vector<double>& dat, int n_bins = 10,
+                           double min = 0.0, double max = 1.0);
+// parallel version using locks to avoid data races
+std::vector<int> histogram_locks(const std::vector<double>& dat, int n_threads,
+                                 int n_bins = 10, double min = 0.0,
+                                 double max = 1.0);
+// parallel version using local histogram for each thread
+// followed by critical section for reduction
+std::vector<int> histogram_critical(const std::vector<double>& dat,
+                                    int n_threads, int n_bins = 10,
+                                    double min = 0.0, double max = 1.0);
+
+void fizz_buzz(int n, std::ostream& os = std::cout, int n_procs = 1);
 
 #endif  // LKEEGAN_CTCI_CONCURRENCY_OPENMP_H

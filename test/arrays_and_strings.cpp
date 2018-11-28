@@ -4,6 +4,8 @@
 // Unit tests
 
 TEST_CASE("is_unique_a", "[arrays_and_strings]") {
+  REQUIRE(is_unique_a("") == true);
+  REQUIRE(is_unique_a("c") == true);
   REQUIRE(is_unique_a("11") == false);
   REQUIRE(is_unique_a("abc") == true);
   REQUIRE(is_unique_a("123 876-x") == true);
@@ -12,6 +14,8 @@ TEST_CASE("is_unique_a", "[arrays_and_strings]") {
 }
 
 TEST_CASE("is_unique_b", "[arrays_and_strings]") {
+  REQUIRE(is_unique_a("") == true);
+  REQUIRE(is_unique_a("c") == true);
   REQUIRE(is_unique_b("11") == false);
   REQUIRE(is_unique_b("abc") == true);
   REQUIRE(is_unique_b("123 876-x") == true);

@@ -1,4 +1,5 @@
 #include "concurrency_openmp.hpp"
+#include <random>
 #include "catch.hpp"
 
 TEST_CASE("count_threads", "[concurrency_openmp]") {
@@ -27,4 +28,27 @@ TEST_CASE("matrix operator*", "[concurrency_openmp]") {
   matrix<int> C = A * B;
   REQUIRE(C == A);
   REQUIRE(C == B);
+}
+
+TEST_CASE("histogram", "[concurrency_openmp]") {
+  constexpr int n_dat = 10000000;
+  std::ranlux48 rng(123);
+  std::uniform_real_distribution<double> dist(0, 1);
+  std::vector<double> dat;
+  dat.reserve(n_dat);
+  for (int i = 0; i < n_dat; ++i) {
+    dat.push_back(dist(rng));
+  }
+  std::vector<int> h = histogram(dat);
+  for (int n_threads : {1, 2, 3, 4, 6}) {
+    REQUIRE(histogram_locks(dat, n_threads) == h);
+    REQUIRE(histogram_critical(dat, n_threads) == h);
+  }
+}
+
+TEST_CASE("fizz_buzz", "[concurrency_openmp]") {
+  std::stringstream ss;
+  int n = 20;
+  fizz_buzz(n, ss, 1);
+  REQUIRE(1 == 1);
 }

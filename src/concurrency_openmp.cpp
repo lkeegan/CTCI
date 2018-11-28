@@ -150,3 +150,96 @@ double compute_pi_atomic(int N, int n_threads) {
             << std::endl;
   return 4.0 * dx * pi_4dx;
 }
+
+std::vector<int> histogram_locks(const std::vector<double> &dat, int n_threads,
+                                 int n_bins, double min, double max) {
+  omp_set_num_threads(n_threads);
+  int actual_n_threads;
+  double wt = omp_get_wtime();
+  std::vector<int> hist(n_bins, 0);
+  std::vector<omp_lock_t> locks(hist.size());
+  for (auto &l : locks) {
+    omp_init_lock(&l);
+  }
+#pragma omp parallel
+  {
+#pragma omp master
+    {
+      // only do this block on master thread
+      actual_n_threads = omp_get_num_threads();
+    }  // no implicit barrier here
+#pragma omp for
+    for (std::size_t i = 0; i < dat.size(); ++i) {
+      int idx = static_cast<int>(n_bins * (dat[i] - min) / (max - min));
+      omp_set_lock(&locks[idx]);
+      ++hist[idx];
+      omp_unset_lock(&locks[idx]);
+    }
+  }
+  for (auto &l : locks) {
+    omp_destroy_lock(&l);
+  }
+  std::cout << "histogram_locks: " << omp_get_wtime() - wt << " ("
+            << actual_n_threads << "/" << omp_get_num_procs() << ")"
+            << std::endl;
+  return hist;
+}
+
+std::vector<int> histogram_critical(const std::vector<double> &dat,
+                                    int n_threads, int n_bins, double min,
+                                    double max) {
+  omp_set_num_threads(n_threads);
+  int actual_n_threads;
+  double wt = omp_get_wtime();
+  std::vector<int> hist(n_bins, 0);
+#pragma omp parallel
+  {
+    std::vector<int> local_hist(n_bins, 0);
+#pragma omp master
+    {
+      // only do this block on master thread
+      actual_n_threads = omp_get_num_threads();
+    }  // no implicit barrier here
+#pragma omp for nowait
+    for (std::size_t i = 0; i < dat.size(); ++i) {
+      int idx = static_cast<int>(n_bins * (dat[i] - min) / (max - min));
+      ++local_hist[idx];
+    }
+#pragma omp critical
+    {
+      for (std::size_t i = 0; i < hist.size(); ++i) {
+        hist[i] += local_hist[i];
+      }
+    }
+  }
+  std::cout << "histogram_critical: " << omp_get_wtime() - wt << " ("
+            << actual_n_threads << "/" << omp_get_num_procs() << ")"
+            << std::endl;
+  return hist;
+}
+
+std::vector<int> histogram(const std::vector<double> &dat, int n_bins,
+                           double min, double max) {
+  double wt = omp_get_wtime();
+  std::vector<int> hist(n_bins, 0);
+  for (std::size_t i = 0; i < dat.size(); ++i) {
+    int idx = static_cast<int>(n_bins * (dat[i] - min) / (max - min));
+    ++hist[idx];
+  }
+  std::cout << "histogram: " << omp_get_wtime() - wt << std::endl;
+  return hist;
+}
+
+void fizz_buzz(int n, std::ostream &os, int n_procs) {
+  for (int i = 1; i <= n; ++i) {
+    if ((i % 3 == 0) && (i % 5 == 0)) {
+      os << "fizzbuzz" << std::endl;
+    } else if (i % 3 == 0) {
+      os << "fizz" << std::endl;
+    } else if (i % 5 == 0) {
+      os << "buzz" << std::endl;
+    } else {
+      os << i << std::endl;
+    }
+  }
+}

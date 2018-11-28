@@ -1,16 +1,20 @@
 #include "arrays_and_strings.hpp"
 
 bool is_unique_a(const std::string &str) {
-  // use hash table to check if char has already been seen.
+  // use look-up table to check if char has already been seen.
+  // NOTE: assume 7-bit ASCII chars
   // best case: O(1)
-  // average: O(N)
-  // worst case: O(N^2)
-  std::unordered_map<char, bool> char_exists;
+  // worst case: O(N) where N is number of unique chars, i.e. max 2^7
+  if (str.size() > 128) {
+    // there are only 128 unique possible chars
+    return false;
+  }
+  std::array<bool, 128> char_exists{};
   for (char c : str) {
-    if (char_exists[c]) {
+    if (char_exists[static_cast<unsigned int>(c)]) {
       return false;
     } else {
-      char_exists[c] = true;
+      char_exists[static_cast<unsigned int>(c)] = true;
     }
   }
   return true;
@@ -21,7 +25,11 @@ bool is_unique_b(const std::string &str) {
   // best case: O(1)
   // average: O(N^2)
   // worst case: O(N^2)
-  for (int i = 0; i < static_cast<int>(str.size() - 1); ++i) {
+  if (str.size() > 128) {
+    // there are only 128 unique possible chars
+    return false;
+  }
+  for (int i = 0; i < static_cast<int>(str.size()) - 1; ++i) {
     if (str.find(str[i], i + 1) != std::string::npos) {
       return false;
     }
@@ -30,26 +38,26 @@ bool is_unique_b(const std::string &str) {
 }
 
 bool check_permutation(const std::string &strA, const std::string &strB) {
+  // assume 7-bit ASCII chars
   // best case: O(1)
-  // average: O(N)
-  // worst case: O(N^2)
+  // worst case: O(N)
   if (strA.size() != strB.size()) {
     // cannot be permutation of each other if different length
     return false;
   }
-  // make hash table of frequency of each char in strA
-  std::unordered_map<char, int> char_count;
+  // frequency count of each char in strA
+  std::array<int, 128> char_count{};
   for (char c : strA) {
-    ++char_count[c];
+    ++char_count[static_cast<std::size_t>(c)];
   }
-  // decrement each char in strB from hash table
+  // decrement each char in strB from frequency count
   for (char c : strB) {
-    --char_count[c];
+    --char_count[static_cast<std::size_t>(c)];
   }
   // if all values are zero then strings made of same set
   // of chars, i.e. they are permutations of each other
-  for (const auto &pair : char_count) {
-    if (pair.second != 0) {
+  for (int count : char_count) {
+    if (count != 0) {
       return false;
     }
   }
@@ -93,23 +101,24 @@ void URLify(std::string &str, int length) {
 }
 
 bool is_permutation_of_palindrome(const std::string &str) {
+  // assume 7-bit ASCII chars
   // best case: O(N)
   // average: O(N)
   // worst case: O(N)
 
-  // get frequency count of chars
-  std::unordered_map<char, int> char_count;
+  // frequency count: is it odd or even for each char
+  std::array<bool, 128> char_odd_count{};
   int n_chars = 0;
   for (char c : str) {
     if (c != ' ') {
-      ++char_count[c];
+      char_odd_count[c] = !char_odd_count[c];
       ++n_chars;
     }
   }
   // count chars with odd frequency counts
   int odd_count_chars = 0;
-  for (const auto &pair : char_count) {
-    if (pair.second % 2 == 1) {
+  for (bool is_odd : char_odd_count) {
+    if (is_odd) {
       ++odd_count_chars;
     }
   }
@@ -124,7 +133,7 @@ bool is_permutation_of_palindrome(const std::string &str) {
 }
 
 bool one_away(const std::string &strA, const std::string &strB) {
-  // best case: O(N)
+  // best case: O(1)
   // average: O(N)
   // worst case: O(N)
 

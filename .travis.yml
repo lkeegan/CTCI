@@ -17,18 +17,31 @@ addons:
     - lcov
     - valgrind
 script:
+# install google benchmark library
+- git clone https://github.com/google/benchmark.git google-benchmark
+- cd google-benchmark
+- mkdir build
+- cd build
+- cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DBENCHMARK_ENABLE_GTEST_TESTS=OFF
+- make -j2
+- sudo make install
+# debug compilation
+- cd ../../
 - mkdir Debug
 - cd Debug
 - cmake -DCMAKE_BUILD_TYPE=Debug ..
 # Wraps the compilation with the Build Wrapper to generate configuration (used
 # later by the SonarQube Scanner) into the "bw-output" folder
 - build-wrapper-linux-x86-64 --out-dir ../bw-output make -j2
+# run tests through valgrind
 - valgrind ./tests -d yes
 - cd ../
+# release compilation
 - mkdir Release
 - cd Release
 - cmake -DCMAKE_BUILD_TYPE=Release .. && make -j2
 - valgrind ./tests -d yes
+- ./benchmark
 - cd ../
 after_success:
 # gcov files for sonar-scanner
