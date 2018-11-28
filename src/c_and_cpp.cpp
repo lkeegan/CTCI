@@ -4,7 +4,7 @@ void last_k_lines(const std::string& filename, unsigned int k,
                   std::ostream& output) {
   std::ifstream myfile(filename);
   if (!myfile) {
-    std::cerr << "ERROR: cannot read file [" << filename << "]" << std::endl;
+    throw std::invalid_argument("ERROR: cannot read file");
   }
   std::vector<std::string> lines(k);
   std::size_t i = 0;
@@ -50,7 +50,7 @@ void* align_malloc(uintptr_t n_bytes, uintptr_t alignment_boundary) {
   void* p;
   if ((p = (void*)malloc(bytes_needed)) == NULL) {
     return NULL;
-  };
+  }
   uintptr_t malloc_address = (uintptr_t)(p);
   // calculate offset to align first byte to boundary
   uintptr_t remainder = malloc_address % alignment_boundary;
@@ -72,8 +72,9 @@ double** my_2d_alloc(int size_x, int size_y) {
   // for each x index we need space for
   // - a pointer to the start of the column: sizeof(T*)
   // - the column of data: size_y * sizeof(T)
-  int mem_data = size_x * size_y * sizeof(double);
-  int mem_index = size_x * sizeof(double*);
+  uintptr_t mem_data = static_cast<uintptr_t>(size_x) *
+                       static_cast<uintptr_t>(size_y) * sizeof(double);
+  uintptr_t mem_index = static_cast<uintptr_t>(size_x) * sizeof(double*);
   double** arr = (double**)malloc(mem_index + mem_data);
   if (arr == NULL) {
     return NULL;

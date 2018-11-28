@@ -3,6 +3,8 @@
 
 // Unit tests
 TEST_CASE("last_k_lines", "[c_and_cpp]") {
+  REQUIRE_THROWS(last_k_lines("non-existing-filename.txt", 1, std::cout));
+
   // make text file
   int n_lines = 3;
   std::string filename("tmp.txt");
@@ -153,6 +155,9 @@ TEST_CASE("SmartPointer", "[c_and_cpp]") {
 }
 
 TEST_CASE("align_malloc", "[c_and_cpp]") {
+  // try to malloc too much memory: should return NULL
+  REQUIRE(align_malloc(1ULL << 63, 4096) == NULL);
+
   constexpr int ALIGNMENT_BOUNDARY = 512;
   double *data =
       (double *)align_malloc(100 * sizeof(double), ALIGNMENT_BOUNDARY);
@@ -167,6 +172,9 @@ TEST_CASE("align_malloc", "[c_and_cpp]") {
 }
 
 TEST_CASE("my_2d_alloc", "[c_and_cpp]") {
+  // try to malloc too much memory: should return NULL
+  REQUIRE(my_2d_alloc(1 << 31, 1 << 31) == NULL);
+
   int X = 3;
   int Y = 5;
   double **arr = my_2d_alloc(X, Y);
