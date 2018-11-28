@@ -44,5 +44,3 @@ BENCHMARK(BM_MatrixMult)
     ->Range(1 << 2, 1 << 10)
     ->UseRealTime()
     ->ThreadRange(1, 4);
-
-BENCHMARK_MAIN();

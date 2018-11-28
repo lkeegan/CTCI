@@ -30,10 +30,9 @@ set (TEST_SRCS ${SRCS} test/arrays_and_strings.cpp test/linked_lists.cpp test/st
 add_executable(tests test/main.cpp ${TEST_SRCS})
 target_link_libraries(tests Catch)
 
-add_executable(bench benchmark/arrays_and_strings.cpp ${SRCS})
-target_link_libraries(bench -lbenchmark -lpthread)
-
-add_executable(benchmark benchmark.cpp src/concurrency_openmp.cpp)
+# make benchmark executable
+set (BENCH_SRCS ${SRCS} benchmark/arrays_and_strings.cpp benchmark/concurrency_openmp.cpp)
+add_executable(benchmark benchmark/main.cpp ${BENCH_SRCS})
 target_link_libraries(benchmark -lbenchmark -lpthread)
 
 # make running the test executable part of the build, so failed test = failed build

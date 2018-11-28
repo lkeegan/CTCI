@@ -112,13 +112,17 @@ class dblvec_deep {
 
 // useful when variable may be changed outside
 // of the code, e.g. waiting for some hardware to be ready:
-// volatile bool not_ready = true;
-// while(not_ready) {};
-
-// without volatile the above may be "optimised"
-// by the compiler to while(true){} and we are stuck
-// in an infinite loop, even if not_ready is changed
-// to false at some point by some external process
+inline void wait_until_ready() {
+  volatile bool ready = false;
+  // wait until ready is set to true
+  while (!ready) {
+    // without "volatile" the above condition may be "optimised"
+    // by the compiler to while(true){} and we are stuck
+    // in an infinite loop, even if ready is changed
+    // to true at some point by some external process
+  };
+  // do something
+}
 
 // 12.8 copy a node structure where each node contains
 // pointers to two other nodes
@@ -165,14 +169,11 @@ class SmartPointer {
   // user must not call delete on this pointer
   explicit SmartPointer(T* ptr = nullptr)
       : reference_count_ptr(ptr ? new int(1) : nullptr),
-        data_ptr(ptr ? ptr : nullptr) {
-    if (ptr) std::cout << "inc" << std::endl;
-  }
+        data_ptr(ptr ? ptr : nullptr) {}
   // copy constructor: copy pointer to data & increment ref count
   SmartPointer(const SmartPointer& other)
       : reference_count_ptr(other.reference_count_ptr),
         data_ptr(other.data_ptr) {
-    std::cout << "inc" << std::endl;
     ++(*reference_count_ptr);
   }
   // move constructor (do not increment reference count)
@@ -210,7 +211,6 @@ class SmartPointer {
   // then delete both data and reference count in destructor
   ~SmartPointer() {
     if (reference_count_ptr) {
-      std::cout << "dec" << std::endl;
       --(*reference_count_ptr);
       if (*reference_count_ptr == 0) {
         delete data_ptr;

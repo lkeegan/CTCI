@@ -11,6 +11,7 @@ TEST_CASE("is_unique_a", "[arrays_and_strings]") {
   REQUIRE(is_unique_a("123 876-x") == true);
   REQUIRE(is_unique_a("abcda") == false);
   REQUIRE(is_unique_a("abcXzX") == false);
+  REQUIRE(is_unique_a(std::string(150, 'a')) == false);
 }
 
 TEST_CASE("is_unique_b", "[arrays_and_strings]") {
@@ -21,6 +22,7 @@ TEST_CASE("is_unique_b", "[arrays_and_strings]") {
   REQUIRE(is_unique_b("123 876-x") == true);
   REQUIRE(is_unique_b("abcda") == false);
   REQUIRE(is_unique_b("abcXzX") == false);
+  REQUIRE(is_unique_a(std::string(150, 'a')) == false);
 }
 
 TEST_CASE("check_permutation", "[arrays_and_strings]") {
@@ -40,6 +42,9 @@ TEST_CASE("URLify", "[arrays_and_strings]") {
   str = "";
   URLify(str, 0);
   REQUIRE(str == "");
+
+  str = "";
+  REQUIRE_THROWS(URLify(str, 1));
 
   str = "   ";
   URLify(str, 1);
@@ -199,6 +204,7 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
 TEST_CASE("is_rotation", "[arrays_and_strings]") {
   REQUIRE(is_rotation("abc", "bca") == true);
   REQUIRE(is_rotation("abc", "acb") == false);
+  REQUIRE(is_rotation("abc", "abca") == false);
   REQUIRE(is_rotation("abcde", "cdeab") == true);
   REQUIRE(is_rotation("abcde", "eacbd") == false);
   REQUIRE(is_rotation("abc-d e", " eabc-d") == true);

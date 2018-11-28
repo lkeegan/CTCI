@@ -74,5 +74,3 @@ BENCHMARK(BM_is_unique_b)->Range(2, 1 << 7)->Complexity();
 BENCHMARK(BM_check_permutation)->Range(2, 1 << 10)->Complexity();
 BENCHMARK(BM_URLify)->Range(1, 1 << 10)->Complexity();
 BENCHMARK(BM_is_permutation_of_palindrome)->Range(1, 1 << 10)->Complexity();
-
-BENCHMARK_MAIN();

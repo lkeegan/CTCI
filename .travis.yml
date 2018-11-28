@@ -17,6 +17,7 @@ addons:
     - lcov
     - valgrind
 script:
+- export OMP_NUM_THREADS=2
 # install google benchmark library
 - git clone https://github.com/google/benchmark.git google-benchmark
 - cd google-benchmark
@@ -34,7 +35,7 @@ script:
 # later by the SonarQube Scanner) into the "bw-output" folder
 - build-wrapper-linux-x86-64 --out-dir ../bw-output make -j2
 # run tests through valgrind
-- valgrind ./tests -d yes
+# - valgrind ./tests -d yes
 - cd ../
 # release compilation
 - mkdir Release
@@ -44,13 +45,13 @@ script:
 - ./benchmark
 - cd ../
 after_success:
-# gcov files for sonar-scanner
+# gcov files for sonarcloud.io
 - mkdir gcov
 - cd gcov
 - gcov -p ../Debug/CMakeFiles/tests.dir/*/*.gcno
 - cd ../
 - sonar-scanner
-# lcov .info file for codecov
+# lcov .info file for codecov.io
 - cd Debug
 - lcov --directory . --capture --output-file coverage.info
 - lcov --remove coverage.info 'catch/*' '/usr/*' '*/catch/*' '*/test/*' --output-file coverage.info
