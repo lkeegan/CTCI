@@ -5,6 +5,9 @@
 #include <iostream>
 #include <stdexcept>
 
+namespace CTCI {
+namespace bit_manipulation {
+
 // 5.1
 // insert M into N starting at bit j and ending at bit i
 // e.g. [..N..[j..M..i]..]
@@ -48,4 +51,6 @@ int pairwise_swap(int x);
 // from (x1, y) to (x2, y)
 // assume x-y ordering starts from top-left corner in screen
 
+}  // namespace bit_manipulation
+}  // namespace CTCI
 #endif  // LKEEGAN_CTCI_BIT_MANIPULATION_H

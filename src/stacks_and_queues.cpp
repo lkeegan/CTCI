@@ -1,4 +1,8 @@
 #include "stacks_and_queues.hpp"
+
+namespace CTCI {
+namespace stacks_and_queues {
+
 using namespace animal_shelter;
 
 void queue::enqueue(const animal& item) {
@@ -21,3 +25,6 @@ animal queue::dequeue(Species species) {
   animal_list.erase_after(prev);
   return item;
 }
+
+}  // namespace stacks_and_queues
+}  // namespace CTCI

@@ -2,6 +2,8 @@
 #include "catch.hpp"
 
 // Unit tests
+using namespace CTCI::c_and_cpp;
+
 TEST_CASE("last_k_lines", "[c_and_cpp]") {
   REQUIRE_THROWS(last_k_lines("non-existing-filename.txt", 1, std::cout));
 

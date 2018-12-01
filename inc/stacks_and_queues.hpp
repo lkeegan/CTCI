@@ -9,6 +9,9 @@
 #include <string>
 #include <vector>
 
+namespace CTCI {
+namespace stacks_and_queues {
+
 // 3.1
 // implement three stacks using a single array
 template <class T>
@@ -256,4 +259,6 @@ class queue {
 };
 }  // namespace animal_shelter
 
+}  // namespace stacks_and_queues
+}  // namespace CTCI
 #endif  // LKEEGAN_CTCI_STACKS_AND_QUEUES_H

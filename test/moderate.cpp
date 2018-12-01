@@ -2,6 +2,8 @@
 #include "catch.hpp"
 
 // Unit tests
+using namespace CTCI::moderate;
+
 TEST_CASE("number_swapper", "[moderate]") {
   int ia = 4;
   int ib = -85;

@@ -1,7 +1,8 @@
 #include <benchmark/benchmark.h>
 #include <arrays_and_strings.hpp>
 #include <random>
-#include <string>
+
+using namespace CTCI::arrays_and_strings;
 
 void BM_is_unique_a(benchmark::State& state) {
   std::string unique_string;

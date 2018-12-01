@@ -1,5 +1,8 @@
 #include "c_and_cpp.hpp"
 
+namespace CTCI {
+namespace c_and_cpp {
+
 void last_k_lines(const std::string& filename, unsigned int k,
                   std::ostream& output) {
   std::ifstream myfile(filename);
@@ -88,3 +91,6 @@ double** my_2d_alloc(int size_x, int size_y) {
   }
   return arr;
 }
+
+}  // namespace c_and_cpp
+}  // namespace CTCI

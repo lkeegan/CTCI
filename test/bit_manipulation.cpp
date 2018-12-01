@@ -2,6 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
+using namespace CTCI::bit_manipulation;
 
 TEST_CASE("insertion", "[bit_manipulation]") {
   int N = 4096 + 1024 + 512 + 8 + 2 + 1;  // 1011000001011

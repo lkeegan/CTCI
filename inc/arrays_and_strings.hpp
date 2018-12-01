@@ -1,13 +1,13 @@
 #ifndef LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H
 #define LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H
 #include <algorithm>
-#include <iostream>  //for debugging
-#include <map>
-#include <set>
+#include <array>
 #include <stdexcept>
 #include <string>
-#include <unordered_map>
 #include <vector>
+
+namespace CTCI {
+namespace arrays_and_strings {
 
 // 1.1a
 // check if string contains only unique characters
@@ -55,12 +55,14 @@ void zero_matrix(matrix &M);
 
 // 1.9
 // check if strA can be rotated (cyclically permuted) into strB
+bool is_rotation(const std::string &strA, const std::string &strB);
 // using one call to is_substring: which determines if a string
-// is a substring of another
+// is a substring of another, e.g.:
 inline bool is_substring(const std::string &strA, const std::string &strB) {
   return strB.find(strA) != std::string::npos;
 }
 
-bool is_rotation(const std::string &strA, const std::string &strB);
+}  // namespace arrays_and_strings
+}  // namespace CTCI
 
 #endif  // LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H

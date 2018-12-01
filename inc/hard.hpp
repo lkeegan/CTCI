@@ -14,6 +14,9 @@
 #include <unordered_set>
 #include <vector>
 
+namespace CTCI {
+namespace hard {
+
 // 17.1
 // add function without +
 unsigned int add_without_plus(unsigned int a, unsigned int b);
@@ -114,4 +117,6 @@ int kth_multiple_debug(int k);
 // find this element in O(n) time and O(1) space
 int majority_element(const std::vector<int>& arr);
 
+}  // namespace hard
+}  // namespace CTCI
 #endif  // LKEEGAN_CTCI_HARD_H

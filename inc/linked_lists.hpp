@@ -6,6 +6,9 @@
 #include <list>
 #include <unordered_map>
 
+namespace CTCI {
+namespace linked_lists {
+
 // 2.1
 // remove duplicates from unsorted doubly-linked list
 template <class T>
@@ -194,4 +197,7 @@ T loop_detection(const typename std::forward_list<T>& lstA) {
   // if not found, return default (i.e. nullptr if T is a pointer)
   return T();
 }
+
+}  // namespace linked_lists
+}  // namespace CTCI
 #endif  // LKEEGAN_CTCI_LINKED_LISTS_H

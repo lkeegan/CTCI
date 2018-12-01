@@ -2,6 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
+using namespace CTCI::linked_lists;
 
 TEST_CASE("remove_dups", "[linked_lists]") {
   for (bool USE_DATA_BUFFER : {true, false}) {

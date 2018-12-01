@@ -2,6 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
+using namespace CTCI::arrays_and_strings;
 
 TEST_CASE("is_unique_a", "[arrays_and_strings]") {
   REQUIRE(is_unique_a("") == true);
@@ -44,7 +45,7 @@ TEST_CASE("URLify", "[arrays_and_strings]") {
   REQUIRE(str == "");
 
   str = "";
-  REQUIRE_THROWS(URLify(str, 1));
+  REQUIRE_THROWS_AS(URLify(str, 1), std::invalid_argument);
 
   str = "   ";
   URLify(str, 1);

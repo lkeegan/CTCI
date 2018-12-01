@@ -1,20 +1,24 @@
 #include "arrays_and_strings.hpp"
 
+namespace CTCI {
+namespace arrays_and_strings {
+
 bool is_unique_a(const std::string &str) {
-  // use look-up table to check if char has already been seen.
-  // NOTE: assume 7-bit ASCII chars
   // best case: O(1)
   // worst case: O(N) where N is number of unique chars, i.e. max 2^7
-  if (str.size() > 128) {
-    // there are only 128 unique possible chars
+  // use look-up table to check if char has already been seen.
+  // NOTE: assuming 7-bit ASCII chars
+  constexpr std::size_t N_CHARS = 128;
+  if (str.size() > N_CHARS) {
+    // cannot be unique if longer than number of unique chars
     return false;
   }
-  std::array<bool, 128> char_exists{};
+  std::array<bool, N_CHARS> char_exists{};
   for (char c : str) {
-    if (char_exists[static_cast<unsigned int>(c)]) {
+    if (char_exists[static_cast<std::size_t>(c)]) {
       return false;
     } else {
-      char_exists[static_cast<unsigned int>(c)] = true;
+      char_exists[static_cast<std::size_t>(c)] = true;
     }
   }
   return true;
@@ -25,8 +29,9 @@ bool is_unique_b(const std::string &str) {
   // best case: O(1)
   // average: O(N^2)
   // worst case: O(N^2)
-  if (str.size() > 128) {
-    // there are only 128 unique possible chars
+  constexpr std::size_t N_CHARS = 128;
+  if (str.size() > N_CHARS) {
+    // cannot be unique if longer than number of unique chars
     return false;
   }
   for (int i = 0; i < static_cast<int>(str.size()) - 1; ++i) {
@@ -39,6 +44,7 @@ bool is_unique_b(const std::string &str) {
 
 bool check_permutation(const std::string &strA, const std::string &strB) {
   // assume 7-bit ASCII chars
+  constexpr std::size_t N_CHARS = 128;
   // best case: O(1)
   // worst case: O(N)
   if (strA.size() != strB.size()) {
@@ -46,7 +52,7 @@ bool check_permutation(const std::string &strA, const std::string &strB) {
     return false;
   }
   // frequency count of each char in strA
-  std::array<int, 128> char_count{};
+  std::array<int, N_CHARS> char_count{};
   for (char c : strA) {
     ++char_count[static_cast<std::size_t>(c)];
   }
@@ -54,7 +60,7 @@ bool check_permutation(const std::string &strA, const std::string &strB) {
   for (char c : strB) {
     --char_count[static_cast<std::size_t>(c)];
   }
-  // if all values are zero then strings made of same set
+  // if all values are zero then strings are made of same set
   // of chars, i.e. they are permutations of each other
   for (int count : char_count) {
     if (count != 0) {
@@ -102,12 +108,13 @@ void URLify(std::string &str, int length) {
 
 bool is_permutation_of_palindrome(const std::string &str) {
   // assume 7-bit ASCII chars
+  constexpr std::size_t N_CHARS = 128;
   // best case: O(N)
   // average: O(N)
   // worst case: O(N)
 
   // frequency count: is it odd or even for each char
-  std::array<bool, 128> char_odd_count{};
+  std::array<bool, N_CHARS> char_odd_count{};
   int n_chars = 0;
   for (char c : str) {
     if (c != ' ') {
@@ -136,7 +143,6 @@ bool one_away(const std::string &strA, const std::string &strB) {
   // best case: O(1)
   // average: O(N)
   // worst case: O(N)
-
   int n_A = static_cast<int>(strA.size());
   int n_B = static_cast<int>(strB.size());
   int diff = n_A - n_B;
@@ -240,3 +246,6 @@ bool is_rotation(const std::string &strA, const std::string &strB) {
   std::string strB_doubled = strB + strB;
   return is_substring(strA, strB_doubled);
 }
+
+}  // namespace arrays_and_strings
+}  // namespace CTCI

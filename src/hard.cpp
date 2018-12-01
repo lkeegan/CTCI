@@ -1,5 +1,8 @@
 #include "hard.hpp"
 
+namespace CTCI {
+namespace hard {
+
 unsigned int add_without_plus(unsigned int a, unsigned int b) {
   unsigned int result = 0;
   unsigned int bit = 0;
@@ -281,3 +284,6 @@ int majority_element(const std::vector<int>& arr) {
     return -1;
   }
 }
+
+}  // namespace hard
+}  // namespace CTCI

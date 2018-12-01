@@ -1,5 +1,8 @@
 #include "linked_lists.hpp"
 
+namespace CTCI {
+namespace linked_lists {
+
 std::list<int> sum_lists_backwards(const std::list<int>& lstA,
                                    const std::list<int>& lstB) {
   // O(N)
@@ -55,3 +58,6 @@ std::list<int> sum_lists_forwards(const std::list<int>& lstA,
   }
   return lstS;
 }
+
+}  // namespace linked_lists
+}  // namespace CTCI

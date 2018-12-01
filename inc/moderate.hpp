@@ -12,6 +12,10 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
+
+namespace CTCI {
+namespace moderate {
+
 // 16.1 swap two numbers in-place
 // works for int, unsigned int
 template <class T>
@@ -191,7 +195,6 @@ int operations_divide(int a, int b);
 // all years lie in range [1900, 2000]
 int year_with_most_people(
     const std::vector<std::pair<int, int>>& birth_death_years);
-#endif  // LKEEGAN_CTCI_MODERATE_H
 
 // 16.11 diving board:
 // k planks end-to-end, two sizes of plank
@@ -199,7 +202,7 @@ int year_with_most_people(
 std::unordered_set<int> enumerate_lengths(int k, int shorter, int longer);
 
 // 16.23
-// rand7 from rand5
+// rand7 generates random integer in [0,7) from supplied rand5() function
 class rand_n {
   // rand_n() provides random int from flat dist in [0,n)
   // NB: NOT threadsafe
@@ -211,5 +214,8 @@ class rand_n {
   explicit rand_n(int n = 2, int seed = 123) : rng(seed), int_dist(0, n - 1) {}
   inline int operator()() { return int_dist(rng); }
 };
-// rand7 generates random integer in [0,7) from supplied rand5() function
 int rand7(rand_n& rand5);
+
+}  // namespace moderate
+}  // namespace CTCI
+#endif  // LKEEGAN_CTCI_MODERATE_H

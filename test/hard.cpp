@@ -1,6 +1,8 @@
 #include "hard.hpp"
 #include "catch.hpp"
 
+using namespace CTCI::hard;
+
 TEST_CASE("add_without_plus", "[hard]") {
   REQUIRE(add_without_plus(0, 0) == 0);
   REQUIRE(add_without_plus(1, 0) == 1);

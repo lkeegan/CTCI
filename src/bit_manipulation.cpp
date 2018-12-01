@@ -1,5 +1,8 @@
 #include "bit_manipulation.hpp"
 
+namespace CTCI {
+namespace bit_manipulation {
+
 int insertion(int N, int M, int i, int j) {
   // check that M contains j-i+1 bits
   // if not return zero
@@ -149,3 +152,5 @@ void draw_line(std::vector<std::uint_8> &screen, int width, int x1, int x2,
     }
 }
 */
+}  // namespace bit_manipulation
+}  // namespace CTCI
