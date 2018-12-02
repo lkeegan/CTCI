@@ -85,9 +85,75 @@ void BM_one_away(benchmark::State& state) {
   state.SetComplexityN(n);
 }
 
+void BM_string_compression(benchmark::State& state) {
+  int n = state.range(0);
+  std::string s16("qqqqccc sppppooo");
+  std::string s1{};
+  for (int i = 0; i < n; ++i) {
+    s1 += s16;
+  }
+  for (auto _ : state) {
+    std::string s2 = string_compression(s1);
+  }
+  state.SetComplexityN(n);
+}
+
+void BM_rotate_matrix(benchmark::State& state) {
+  int n = state.range(0);
+  std::vector<int> vec;
+  vec.reserve(n);
+  for (int i = 0; i < n; ++i) {
+    vec.push_back(i);
+  }
+  matrix mat(n);
+  for (auto& v : mat) {
+    v = vec;
+  }
+  for (auto _ : state) {
+    rotate_matrix(mat);
+  }
+  state.SetComplexityN(n);
+}
+
+void BM_zero_matrix(benchmark::State& state) {
+  int n = state.range(0);
+  std::vector<int> vec;
+  vec.reserve(n);
+  matrix mat(n);
+  int j = 0;
+  for (auto& v : mat) {
+    for (int i = 0; i < n; ++i) {
+      vec.push_back(i - j);
+    }
+    v = vec;
+    ++j;
+  }
+  for (auto _ : state) {
+    zero_matrix(mat);
+  }
+  state.SetComplexityN(n);
+}
+
+void BM_is_rotation(benchmark::State& state) {
+  int n = state.range(0);
+  std::string s16("qqqqccc sppppooo");
+  std::string s1{};
+  for (int i = 0; i < n; ++i) {
+    s1 += s16;
+  }
+  for (auto _ : state) {
+    is_rotation(s1, s1);
+  }
+  state.SetComplexityN(n);
+}
+
 BENCHMARK(BM_is_unique_a)->Range(2, 1 << 7)->Complexity();
 BENCHMARK(BM_is_unique_b)->Range(2, 1 << 7)->Complexity();
-BENCHMARK(BM_check_permutation)->Range(2, 1 << 10)->Complexity();
-BENCHMARK(BM_URLify)->Range(1, 1 << 10)->Complexity();
-BENCHMARK(BM_is_permutation_of_palindrome)->Range(1, 1 << 10)->Complexity();
-BENCHMARK(BM_one_away)->Range(1, 1 << 10)->Complexity();
+BENCHMARK(BM_check_permutation)->Range(2, 1 << 14)->Complexity();
+BENCHMARK(BM_URLify)->Range(1, 1 << 14)->Complexity();
+BENCHMARK(BM_is_permutation_of_palindrome)->Range(1, 1 << 14)->Complexity();
+BENCHMARK(BM_one_away)->Range(1, 1 << 14)->Complexity();
+BENCHMARK(BM_string_compression)->Range(1, 1 << 14)->Complexity();
+BENCHMARK(BM_rotate_matrix)->Range(1, 1 << 8)->Complexity();
+BENCHMARK(BM_zero_matrix)->Range(1, 1 << 8)->Complexity();
+BENCHMARK(BM_is_rotation)->Range(1, 1 << 14)->Complexity();

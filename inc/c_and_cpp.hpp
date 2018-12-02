@@ -120,7 +120,7 @@ inline void wait_until_ready() {
   // wait until ready is set to true
   while (!ready) {
     // without "volatile" the above condition may be "optimised"
-    // by the compiler to while(true) and we get stuck
+    // by the compiler to always evaluate to true and we get stuck
     // in an infinite loop, even if ready is changed
     // to true at some point by some external process
   }

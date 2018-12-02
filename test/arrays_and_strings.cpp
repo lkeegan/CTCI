@@ -121,7 +121,7 @@ TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
   rotate_matrix(m1);
   matrix m1r(1);
   m1r[0] = {1};
-  REQUIRE(m1[0] == m1r[0]);
+  REQUIRE(m1 == m1r);
 
   matrix m2(2);
   m2[0] = {1, 2};
@@ -130,8 +130,12 @@ TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
   matrix m2r(2);
   m2r[0] = {3, 1};
   m2r[1] = {4, 2};
-  REQUIRE(m2[0] == m2r[0]);
-  REQUIRE(m2[1] == m2r[1]);
+  REQUIRE(m2 == m2r);
+  // 4x 90deg rotations should recover original matrix
+  for (int i = 0; i < 4; ++i) {
+    rotate_matrix(m2);
+  }
+  REQUIRE(m2 == m2r);
 
   matrix m3(3);
   m3[0] = {1, 2, 3};
@@ -142,9 +146,25 @@ TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
   m3r[0] = {7, 4, 1};
   m3r[1] = {8, 5, 2};
   m3r[2] = {9, 6, 3};
-  REQUIRE(m3[0] == m3r[0]);
-  REQUIRE(m3[1] == m3r[1]);
-  REQUIRE(m3[2] == m3r[2]);
+  REQUIRE(m3 == m3r);
+  // 4x 90deg rotations should recover original matrix
+  for (int i = 0; i < 4; ++i) {
+    rotate_matrix(m3);
+  }
+  REQUIRE(m3 == m3r);
+
+  matrix m5(5);
+  m5[0] = {1, 21, 3, 34, 5};
+  m5[1] = {4, 5, 6, -5, 4};
+  m5[2] = {7, -8, 9, 5, 1};
+  m5[3] = {4, 5, 906, 5, 4};
+  m5[4] = {-7, 0, 49, 5, 1};
+  matrix m5r(m5);
+  // 4x 90deg rotations should recover original matrix
+  for (int i = 0; i < 4; ++i) {
+    rotate_matrix(m5);
+  }
+  REQUIRE(m5 == m5r);
 }
 
 TEST_CASE("zero_matrix", "[arrays_and_strings]") {
@@ -153,14 +173,14 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
   zero_matrix(m1);
   matrix m1r(1);
   m1r[0] = {1};
-  REQUIRE(m1[0] == m1r[0]);
+  REQUIRE(m1 == m1r);
 
   m1 = matrix(1);
   m1[0] = {0};
   zero_matrix(m1);
   m1r = matrix(1);
   m1r[0] = {0};
-  REQUIRE(m1[0] == m1r[0]);
+  REQUIRE(m1 == m1r);
 
   matrix m2(2);
   m2[0] = {1, 0};
@@ -169,8 +189,7 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
   matrix m2r(2);
   m2r[0] = {0, 0};
   m2r[1] = {3, 0};
-  REQUIRE(m2[0] == m2r[0]);
-  REQUIRE(m2[1] == m2r[1]);
+  REQUIRE(m2 == m2r);
 
   m2 = matrix(2);
   m2[0] = {1, 2};
@@ -179,8 +198,7 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
   m2r = matrix(2);
   m2r[0] = {1, 2};
   m2r[1] = {3, 4};
-  REQUIRE(m2[0] == m2r[0]);
-  REQUIRE(m2[1] == m2r[1]);
+  REQUIRE(m2 == m2r);
 
   matrix m3(5);
   m3[0] = {1, 2, 0};
@@ -195,11 +213,7 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
   m3r[2] = {7, 0, 0};
   m3r[3] = {4, 0, 0};
   m3r[4] = {8, 0, 0};
-  REQUIRE(m3[0] == m3r[0]);
-  REQUIRE(m3[1] == m3r[1]);
-  REQUIRE(m3[2] == m3r[2]);
-  REQUIRE(m3[3] == m3r[3]);
-  REQUIRE(m3[4] == m3r[4]);
+  REQUIRE(m3 == m3r);
 }
 
 TEST_CASE("is_rotation", "[arrays_and_strings]") {

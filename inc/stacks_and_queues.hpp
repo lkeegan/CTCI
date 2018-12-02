@@ -144,7 +144,8 @@ class queue_via_stacks {
   // if front stack is empty pop all items
   // from back stack and push to front stack
  private:
-  std::stack<T> back, front;
+  std::stack<T> back;
+  std::stack<T> front;
 
  public:
   void push(const T& item) { back.push(item); }
@@ -172,7 +173,8 @@ void sort_stack(std::stack<T>& s) {
   // and top half are in t is descending order
   // then combine to give all in s in ascending order
   std::stack<T> t;
-  T lhs, rhs;
+  T lhs;
+  T rhs;
   // NB assuming we do not know the number of items in stack s
   int items_to_sort = std::numeric_limits<int>::max();
   // check for empty stack
