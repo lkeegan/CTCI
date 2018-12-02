@@ -44,15 +44,15 @@ script:
 - ./benchmark
 - cd ../
 after_success:
-# gcov files for sonarcloud.io
+# gcov files for sonarcloud.io (g++ only)
 - mkdir gcov
 - cd gcov
-- gcov -p ../Debug/CMakeFiles/tests.dir/*/*.gcno
+- if [ "$CXX" == "g++" ]; then gcov -p ../Debug/CMakeFiles/tests.dir/*/*.gcno; fi
 - cd ../
-- sonar-scanner
+- if [ "$CXX" == "g++" ]; then sonar-scanner; fi
 # lcov .info file for codecov.io
 - cd Debug
 - lcov --directory . --capture --output-file coverage.info
 - lcov --remove coverage.info 'catch/*' '/usr/*' '*/catch/*' '*/test/*' --output-file coverage.info
 - lcov --list coverage.info
-- bash <(curl -s https://codecov.io/bash) -X gcov -f "coverage.info"
+- if [ "$CXX" == "g++" ]; then bash <(curl -s https://codecov.io/bash) -X gcov -f "coverage.info"; fi
