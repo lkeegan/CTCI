@@ -24,7 +24,7 @@ add_executable(tests test/main.cpp ${TEST_SRCS})
 target_link_libraries(tests Catch)
 
 # make benchmark executable (requires the Google Benchmark library)
-set (BENCH_SRCS ${SRCS} benchmark/arrays_and_strings.cpp)
+set (BENCH_SRCS ${SRCS} benchmark/arrays_and_strings.cpp benchmark/linked_lists.cpp)
 add_executable(benchmark benchmark/main.cpp ${BENCH_SRCS})
 target_link_libraries(benchmark -lbenchmark -lpthread)
 

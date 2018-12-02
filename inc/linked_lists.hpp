@@ -5,6 +5,7 @@
 #include <iostream>  //for debugging
 #include <list>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace ctci {
 namespace linked_lists {
@@ -19,14 +20,14 @@ void remove_dups(std::list<T>& lst, bool USE_DATA_BUFFER = true) {
     // best case: O(N)
     // average: O(N)
     // worst case: O(N^2)
-    std::unordered_map<T, bool> element_exists;
+    std::unordered_set<T> element_exists;
     for (iter i = lst.begin(); i != lst.end();) {
-      if (element_exists[*i]) {
+      if (element_exists.find(*i) != element_exists.end()) {
         // if this element already exists, erase from list
         i = lst.erase(i);
         // erase returns iterator pointing to next item in list
       } else {
-        element_exists[*i] = true;
+        element_exists.insert(*i);
         ++i;
       }
     }
