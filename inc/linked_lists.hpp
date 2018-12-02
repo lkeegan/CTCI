@@ -94,7 +94,6 @@ void delete_middle_node(typename std::forward_list<T>& lst,
   typename std::forward_list<T>::iterator next = i;
   ++next;
   *i = *next;
-  std::cerr << *i << std::endl;
   lst.erase_after(i);
 }
 

@@ -70,8 +70,24 @@ void BM_is_permutation_of_palindrome(benchmark::State& state) {
   state.SetComplexityN(n);
 }
 
+void BM_one_away(benchmark::State& state) {
+  int n = state.range(0);
+  std::string s16("asd dg ww! 1s f.");
+  std::string s1{};
+  for (int i = 0; i < n; ++i) {
+    s1 += s16;
+  }
+  s16 = s1;
+  s16[16 * n / 2] = 'X';
+  for (auto _ : state) {
+    one_away(s1, s16);
+  }
+  state.SetComplexityN(n);
+}
+
 BENCHMARK(BM_is_unique_a)->Range(2, 1 << 7)->Complexity();
 BENCHMARK(BM_is_unique_b)->Range(2, 1 << 7)->Complexity();
 BENCHMARK(BM_check_permutation)->Range(2, 1 << 10)->Complexity();
 BENCHMARK(BM_URLify)->Range(1, 1 << 10)->Complexity();
 BENCHMARK(BM_is_permutation_of_palindrome)->Range(1, 1 << 10)->Complexity();
+BENCHMARK(BM_one_away)->Range(1, 1 << 10)->Complexity();
