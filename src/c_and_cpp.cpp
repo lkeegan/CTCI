@@ -1,25 +1,26 @@
 #include "c_and_cpp.hpp"
 
-namespace CTCI {
+namespace ctci {
 namespace c_and_cpp {
 
 void last_k_lines(const std::string& filename, unsigned int k,
-                  std::ostream& output) {
+                  std::ostream& os) {
   std::ifstream myfile(filename);
   if (!myfile) {
     throw std::invalid_argument("ERROR: cannot read file");
   }
-  std::vector<std::string> lines(k);
+  std::vector<std::string> lines(k + 1);
   std::size_t i = 0;
   // read file line by line
-  // put each line in vector of k strings
-  // k+1 th line wraps around to overwrite first element of vector
+  // put each line in vector of k+1 strings
+  // (k+2)'th line wraps around to overwrite first element of vector
+  // use k+1 since last getline call will overwrite (k+1)'th with empty string
   while (std::getline(myfile, lines[i])) {
-    i = (i + 1) % k;
+    i = (i + 1) % (k + 1);
   }
   // print out last k lines
-  for (std::size_t j = 0; j < k; ++j) {
-    output << lines[(i + j) % k] << std::endl;
+  for (std::size_t j = 1; j <= k; ++j) {
+    os << lines[(i + j) % (k + 1)] << std::endl;
   }
 }
 
@@ -93,4 +94,4 @@ double** my_2d_alloc(int size_x, int size_y) {
 }
 
 }  // namespace c_and_cpp
-}  // namespace CTCI
+}  // namespace ctci

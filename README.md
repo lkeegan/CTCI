@@ -1,5 +1,5 @@
 # CTCI [![Build Status](https://travis-ci.org/lkeegan/CTCI.svg?branch=master)](https://travis-ci.org/lkeegan/CTCI) [![codecov](https://codecov.io/gh/lkeegan/CTCI/branch/master/graph/badge.svg)](https://codecov.io/gh/lkeegan/CTCI) [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=lkeegan_CTCI&metric=alert_status)](https://sonarcloud.io/dashboard/index/lkeegan_CTCI)
-(Partial) C++11 solutions to questions from the book [Cracking the Code Interview](http://www.crackingthecodinginterview.com/).
+(Partial) Set of C++11 solutions to questions from the book [Cracking the Code Interview](http://www.crackingthecodinginterview.com/).
 
 The solutions to a given chapter X are declared in inc/X.hpp and implemented in src/X.cpp.
 

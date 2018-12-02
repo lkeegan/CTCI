@@ -7,12 +7,12 @@
 #include <sstream>
 #include <string>
 
-namespace CTCI {
+namespace ctci {
 namespace c_and_cpp {
 
 // 12.1 print last k lines of filename
-void last_k_lines(const std::string& filename, unsigned int k = 1,
-                  std::ostream& output = std::cout);
+void last_k_lines(const std::string& filename, unsigned int k,
+                  std::ostream& output);
 
 // 12.2 reverse a null-terminated ('\0') string
 void reverse_string(char* str);
@@ -120,11 +120,11 @@ inline void wait_until_ready() {
   // wait until ready is set to true
   while (!ready) {
     // without "volatile" the above condition may be "optimised"
-    // by the compiler to while(true){} and we are stuck
+    // by the compiler to while(true) and we get stuck
     // in an infinite loop, even if ready is changed
     // to true at some point by some external process
-  };
-  // do something
+  }
+  // now ready to do something
 }
 
 // 12.8 copy a node structure where each node contains
@@ -231,5 +231,5 @@ void aligned_free(void* p);
 double** my_2d_alloc(int size_x, int size_y);
 
 }  // namespace c_and_cpp
-}  // namespace CTCI
+}  // namespace ctci
 #endif  // LKEEGAN_CTCI_C_AND_CPP_H

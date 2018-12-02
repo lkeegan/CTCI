@@ -6,7 +6,7 @@
 #include <list>
 #include <unordered_map>
 
-namespace CTCI {
+namespace ctci {
 namespace linked_lists {
 
 // 2.1
@@ -199,5 +199,5 @@ T loop_detection(const typename std::forward_list<T>& lstA) {
 }
 
 }  // namespace linked_lists
-}  // namespace CTCI
+}  // namespace ctci
 #endif  // LKEEGAN_CTCI_LINKED_LISTS_H

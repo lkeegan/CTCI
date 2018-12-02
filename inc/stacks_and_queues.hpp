@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace CTCI {
+namespace ctci {
 namespace stacks_and_queues {
 
 // 3.1
@@ -260,5 +260,5 @@ class queue {
 }  // namespace animal_shelter
 
 }  // namespace stacks_and_queues
-}  // namespace CTCI
+}  // namespace ctci
 #endif  // LKEEGAN_CTCI_STACKS_AND_QUEUES_H

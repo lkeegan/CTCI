@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
-using namespace CTCI::stacks_and_queues;
+using namespace ctci::stacks_and_queues;
 
 TEST_CASE("three_in_one", "[stacks_and_queues]") {
   n_in_one<double> s(3);

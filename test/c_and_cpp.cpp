@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
-using namespace CTCI::c_and_cpp;
+using namespace ctci::c_and_cpp;
 
 TEST_CASE("last_k_lines", "[c_and_cpp]") {
   REQUIRE_THROWS(last_k_lines("non-existing-filename.txt", 1, std::cout));
@@ -20,11 +20,13 @@ TEST_CASE("last_k_lines", "[c_and_cpp]") {
   std::stringstream ss;
   std::string line;
   // read last k lines to ss
-  last_k_lines(filename, n_lines, std::cout);  // TODO: replace cout with ss
+  last_k_lines(filename, n_lines, ss);
   // compare to last k lines in vector
   auto rev_iter = lines.crbegin();
   rev_iter += n_lines - 1;
   while (std::getline(ss, line)) {
+    CAPTURE(line);
+    CAPTURE(*rev_iter);
     REQUIRE(line == *rev_iter--);
   }
 }

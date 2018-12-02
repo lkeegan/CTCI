@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
-using namespace CTCI::arrays_and_strings;
+using namespace ctci::arrays_and_strings;
 
 TEST_CASE("is_unique_a", "[arrays_and_strings]") {
   REQUIRE(is_unique_a("") == true);

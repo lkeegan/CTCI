@@ -13,7 +13,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace CTCI {
+namespace ctci {
 namespace moderate {
 
 // 16.1 swap two numbers in-place
@@ -217,5 +217,5 @@ class rand_n {
 int rand7(rand_n& rand5);
 
 }  // namespace moderate
-}  // namespace CTCI
+}  // namespace ctci
 #endif  // LKEEGAN_CTCI_MODERATE_H

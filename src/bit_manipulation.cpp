@@ -1,6 +1,6 @@
 #include "bit_manipulation.hpp"
 
-namespace CTCI {
+namespace ctci {
 namespace bit_manipulation {
 
 int insertion(int N, int M, int i, int j) {
@@ -129,28 +129,8 @@ int pairwise_swap(int x) {
   int mask_odd = 0x55555555;  // repeating 01 pairs
   // 1010 = A in hex
   int mask_even = 0xAAAAAAAA;  // repeating 10 pairs
-  return ((x & mask_odd) << 1) + ((x & mask_even) >> 1);
+  return ((x & mask_odd) << 1) | ((x & mask_even) >> 1);
 }
 
-// TODO
-/*
-void draw_line(std::vector<std::uint_8> &screen, int width, int x1, int x2,
-               int y) {
-  // ...[x1].....[x2].... -> ...1111111....
-  int screen_size = static_cast<int>(screen.size()) * 8;
-  int height = screen_size / width;
-  int line_width = x2 - x1 + 1;
-  int lsb = (screen_size - 1) - ((y - 1) * width + x1);
-  for (int bit = lsb; bit>=lsb-line_width; --bit){
-      int index = bit / 8;
-
-  } (lsb >= msb) {
-      int bit = (screen_size - 8) - lsb;
-      int local_bit = lsb % 8;
-      screen[index] = ;
-      ++lsb;
-    }
-}
-*/
 }  // namespace bit_manipulation
-}  // namespace CTCI
+}  // namespace ctci

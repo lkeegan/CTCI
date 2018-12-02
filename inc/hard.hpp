@@ -14,7 +14,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace CTCI {
+namespace ctci {
 namespace hard {
 
 // 17.1
@@ -118,5 +118,5 @@ int kth_multiple_debug(int k);
 int majority_element(const std::vector<int>& arr);
 
 }  // namespace hard
-}  // namespace CTCI
+}  // namespace ctci
 #endif  // LKEEGAN_CTCI_HARD_H

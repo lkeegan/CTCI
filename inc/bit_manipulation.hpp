@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 
-namespace CTCI {
+namespace ctci {
 namespace bit_manipulation {
 
 // 5.1
@@ -52,5 +52,5 @@ int pairwise_swap(int x);
 // assume x-y ordering starts from top-left corner in screen
 
 }  // namespace bit_manipulation
-}  // namespace CTCI
+}  // namespace ctci
 #endif  // LKEEGAN_CTCI_BIT_MANIPULATION_H

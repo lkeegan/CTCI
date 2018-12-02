@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
-using namespace CTCI::moderate;
+using namespace ctci::moderate;
 
 TEST_CASE("number_swapper", "[moderate]") {
   int ia = 4;
@@ -82,19 +82,19 @@ TEST_CASE("tic_tac_win", "[moderate]") {
   REQUIRE(T.cross_wins() == false);
   REQUIRE(T.circle_wins() == false);
   T.cross(2, 2);
+  CAPTURE(T);
   REQUIRE(T.cross_wins() == true);
   REQUIRE(T.circle_wins() == false);
-  std::cout << T << std::endl;
 
-  T = tic_tac_toe<3>("xxoooxxxo");
-  std::cout << T << std::endl;
-  REQUIRE(T.cross_wins() == false);
-  REQUIRE(T.circle_wins() == false);
+  auto T2 = tic_tac_toe<3>("xxoooxxxo");
+  CAPTURE(T2);
+  REQUIRE(T2.cross_wins() == false);
+  REQUIRE(T2.circle_wins() == false);
 
-  T = tic_tac_toe<3>("xxoooxoxo");
-  std::cout << T << std::endl;
-  REQUIRE(T.cross_wins() == false);
-  REQUIRE(T.circle_wins() == true);
+  auto T3 = tic_tac_toe<3>("xxoooxoxo");
+  CAPTURE(T3);
+  REQUIRE(T3.cross_wins() == false);
+  REQUIRE(T3.circle_wins() == true);
 }
 
 TEST_CASE("factorial_trailing_zeros", "[moderate]") {

@@ -1,6 +1,6 @@
 #include "stacks_and_queues.hpp"
 
-namespace CTCI {
+namespace ctci {
 namespace stacks_and_queues {
 
 using namespace animal_shelter;
@@ -27,4 +27,4 @@ animal queue::dequeue(Species species) {
 }
 
 }  // namespace stacks_and_queues
-}  // namespace CTCI
+}  // namespace ctci

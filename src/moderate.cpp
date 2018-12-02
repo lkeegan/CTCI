@@ -1,6 +1,6 @@
 #include "moderate.hpp"
 
-namespace CTCI {
+namespace ctci {
 namespace moderate {
 
 int word_frequency(const std::string& word, const std::string& book,
@@ -252,4 +252,4 @@ int rand7(rand_n& rand5) {
 }
 
 }  // namespace moderate
-}  // namespace CTCI
+}  // namespace ctci

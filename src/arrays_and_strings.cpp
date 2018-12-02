@@ -1,6 +1,6 @@
 #include "arrays_and_strings.hpp"
 
-namespace CTCI {
+namespace ctci {
 namespace arrays_and_strings {
 
 bool is_unique_a(const std::string &str) {
@@ -248,4 +248,4 @@ bool is_rotation(const std::string &strA, const std::string &strB) {
 }
 
 }  // namespace arrays_and_strings
-}  // namespace CTCI
+}  // namespace ctci

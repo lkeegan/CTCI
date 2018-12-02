@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 // Unit tests
-using namespace CTCI::bit_manipulation;
+using namespace ctci::bit_manipulation;
 
 TEST_CASE("insertion", "[bit_manipulation]") {
   int N = 4096 + 1024 + 512 + 8 + 2 + 1;  // 1011000001011
@@ -30,7 +30,8 @@ TEST_CASE("flip_bit_to_win", "[bit_manipulation]") {
 }
 
 TEST_CASE("next_number", "[bit_manipulation]") {
-  int smaller, larger;
+  int smaller;
+  int larger;
   REQUIRE_THROWS_AS(next_number(0, smaller, larger), std::invalid_argument);
   REQUIRE_THROWS_AS(next_number(1, smaller, larger), std::invalid_argument);
   REQUIRE_THROWS_AS(next_number(16 + 8 + 4 + 2 + 1, smaller, larger),

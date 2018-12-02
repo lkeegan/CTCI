@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace CTCI {
+namespace ctci {
 namespace arrays_and_strings {
 
 // 1.1a
@@ -63,6 +63,6 @@ inline bool is_substring(const std::string &strA, const std::string &strB) {
 }
 
 }  // namespace arrays_and_strings
-}  // namespace CTCI
+}  // namespace ctci
 
 #endif  // LKEEGAN_CTCI_ARRAYS_AND_STRINGS_H
