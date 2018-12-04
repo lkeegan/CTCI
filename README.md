@@ -6,10 +6,11 @@
 - benchmarks (using the [Google Benchmark](https://github.com/google/benchmark) library, not included) are in 'benchmark/X.cpp'.
 
 ## Status
-| Chapter | Solutions | Unit tests | Benchmarks |
-| :------ | :-------: | :--------: | :--------: |
+| Chapter               | Solutions          | Unit tests         | Benchmarks         |
+| :-------------------- | :----------------: | :----------------: | :----------------: |
 | 1. Arrays and Strings | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| 2. Linked Lists | | | |
+| 2. Linked Lists       | :heavy_check_mark: | :heavy_check_mark: | |
+| 3. Stacks and Queues  |  |  | |
 
 ## Use
 To compile and run the tests in debug mode to check everything is working:
