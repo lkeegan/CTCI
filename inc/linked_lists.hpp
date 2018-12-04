@@ -2,13 +2,51 @@
 #define LKEEGAN_CTCI_LINKED_LISTS_H
 #include <algorithm>
 #include <forward_list>
-#include <iostream>  //for debugging
 #include <list>
+#include <memory>
 #include <unordered_map>
 #include <unordered_set>
 
 namespace ctci {
 namespace linked_lists {
+
+// simple single-linked list implementation
+// each node contains a unique pointer to the next node
+// and a value of type T
+template <class T>
+class single_list {
+ private:
+  T data;
+
+ public:
+  // this would normally be private:
+  // made public to allow 2.3 to modify pointer (temporary hack)
+  std::unique_ptr<single_list> next_node = nullptr;
+  explicit single_list(const T& new_data = T()) : data(new_data) {}
+  single_list(const single_list&) = delete;
+  single_list& operator=(const single_list&) = delete;
+  ~single_list() = default;
+  void delete_next() {
+    // if there is a next node to delete..
+    if (next_node) {
+      // then set the next node to the next-to-next one
+      next_node.reset(*next_node->next());
+      // the node that next used to point to
+      // will have it's destructor called
+    }
+  }
+  void insert_after(const T& data) {
+    // create a new node which contains the supplied data
+    // and set it's next node to point to next_node
+    // then set next_node to point to this new node
+    std::unique_ptr<single_list> new_node(new single_list(data));
+    new_node->next_node = std::move(next_node);
+    next_node = std::move(new_node);
+  }
+  const T& get_value() const { return data; }
+  void set_value(const T& new_data) { data = new_data; }
+  single_list* next() const { return next_node.get(); }
+};
 
 // 2.1
 // remove duplicates from unsorted doubly-linked list
@@ -16,7 +54,7 @@ template <class T>
 void remove_dups(std::list<T>& lst, bool USE_DATA_BUFFER = true) {
   using iter = typename std::list<T>::iterator;
   if (USE_DATA_BUFFER) {
-    // use hash table to check if char has already been seen.
+    // use hash table to check if element has already been seen.
     // best case: O(N)
     // average: O(N)
     // worst case: O(N^2)
@@ -86,16 +124,14 @@ T kth_to_last(const std::forward_list<T>& lst, int k = 0) {
 // 2.3
 // "delete" given node without altering any other nodes
 // if we can't modify the previous one that points to this one
-// then put data from next one here and set this one to point to the one after?
-// might be missing the point of this one?
+// then put data from next one here and set this one to point to the one after
 template <class T>
-void delete_middle_node(typename std::forward_list<T>& lst,
-                        const typename std::forward_list<T>::iterator& i) {
-  // O(1)
-  typename std::forward_list<T>::iterator next = i;
-  ++next;
-  *i = *next;
-  lst.erase_after(i);
+void delete_middle_node(single_list<T>* lst) {
+  single_list<T>* nxt = lst->next();
+  // set value of this node to value of next node
+  lst->set_value(nxt->get_value());
+  // set next node of this node to next-to-next node
+  lst->next_node = std::move(nxt->next_node);
 }
 
 // 2.4

@@ -42,30 +42,49 @@ TEST_CASE("kth_to_last", "[linked_lists]") {
   REQUIRE(kth_to_last(l, 0) == 10);
   REQUIRE(kth_to_last(l, 1) == 9);
   REQUIRE(kth_to_last(l, 5) == 5);
-  REQUIRE(kth_to_last(l, -5) == 5);  // treats -k as k
+  // treats -k as k
+  REQUIRE(kth_to_last(l, -5) == 5);
   REQUIRE(kth_to_last(l, 10) == 0);
-  REQUIRE(kth_to_last(l, 11) == 0);  // for k too large returns first item
+  // for k too large returns first item
+  REQUIRE(kth_to_last(l, 11) == 0);
   REQUIRE(kth_to_last(l, 200) == 0);
 }
 
 TEST_CASE("delete_middle_node", "[linked_lists]") {
-  std::forward_list<int> l{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  std::forward_list<int>::iterator i = l.begin();
-  ++i;
-  delete_middle_node(l, i);
-  REQUIRE(l == std::forward_list<int>{0, 2, 3, 4, 5, 6, 7, 8, 9, 10});
-  i = l.begin();
-  ++i;
-  ++i;
-  delete_middle_node(l, i);
-  REQUIRE(l == std::forward_list<int>{0, 2, 4, 5, 6, 7, 8, 9, 10});
-  i = l.begin();
-  ++i;
-  ++i;
-  ++i;
-  ++i;
-  delete_middle_node(l, i);
-  REQUIRE(l == std::forward_list<int>{0, 2, 4, 5, 7, 8, 9, 10});
+  // make list of numbers from 0 to 9
+  single_list<int> l(0);
+  single_list<int>* node = &l;
+  for (int i = 1; i < 10; ++i) {
+    node->insert_after(i);
+    node = node->next();
+  }
+  node = &l;
+  for (int i : {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}) {
+    REQUIRE(node->get_value() == i);
+    node = (*node).next();
+  }
+  REQUIRE(node == nullptr);
+  // delete 2 from list
+  node = l.next()->next();
+  delete_middle_node(node);
+  // check it worked
+  node = &l;
+  for (int i : {0, 1, 3, 4, 5, 6, 7, 8, 9}) {
+    REQUIRE(node->get_value() == i);
+    node = (*node).next();
+  }
+  REQUIRE(node == nullptr);
+
+  // delete 5 from list
+  node = l.next()->next()->next()->next();
+  delete_middle_node(node);
+  // check it worked
+  node = &l;
+  for (int i : {0, 1, 3, 4, 6, 7, 8, 9}) {
+    REQUIRE(node->get_value() == i);
+    node = (*node).next();
+  }
+  REQUIRE(node == nullptr);
 }
 
 TEST_CASE("partition", "[linked_lists]") {
