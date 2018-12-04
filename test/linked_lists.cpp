@@ -166,11 +166,25 @@ TEST_CASE("intersection", "[linked_lists]") {
 }
 
 TEST_CASE("loop_detection", "[linked_lists]") {
-  double a = 1.0;
-  double b = 3.0;
-  double c = 5.0;
-  double d = 8.0;
-  double e = 8.0;
-  std::forward_list<double*> lst{&a, &b, &c, &d, &e, &b};
-  REQUIRE(loop_detection(lst) == &b);
+  dumb_list<int> head;
+  dumb_list<int> n1;
+  dumb_list<int> n2;
+  dumb_list<int> n3;
+  head.next = &n1;
+  n1.next = &n2;
+  n2.next = &n3;
+  n3.next = nullptr;
+  REQUIRE(loop_detection(&head) == nullptr);
+  REQUIRE(loop_detection(&n3) == nullptr);
+  n3.next = &head;
+  REQUIRE(loop_detection(&head) == &head);
+  REQUIRE(loop_detection(&n1) == &n1);
+  REQUIRE(loop_detection(&n3) == &n3);
+  n3.next = &n1;
+  REQUIRE(loop_detection(&head) == &n1);
+  n2.next = &n1;
+  REQUIRE(loop_detection(&head) == &n1);
+  REQUIRE(loop_detection(&n1) == &n1);
+  head.next = &head;
+  REQUIRE(loop_detection(&head) == &head);
 }

@@ -4,48 +4,48 @@
 #include <forward_list>
 #include <list>
 #include <memory>
-#include <unordered_map>
 #include <unordered_set>
 
 namespace ctci {
 namespace linked_lists {
+
+template <class T>
+struct dumb_list {
+  T data;
+  dumb_list* next = nullptr;
+};
 
 // simple single-linked list implementation
 // each node contains a unique pointer to the next node
 // and a value of type T
 template <class T>
 class single_list {
+  typedef std::unique_ptr<single_list> list_uptr;
+
  private:
   T data;
+  list_uptr next_node;
 
  public:
-  // this would normally be private:
-  // made public to allow 2.3 to modify pointer (temporary hack)
-  std::unique_ptr<single_list> next_node = nullptr;
-  explicit single_list(const T& new_data = T()) : data(new_data) {}
+  explicit single_list(const T& d = T(), list_uptr n = list_uptr())
+      : data(d), next_node(std::move(n)) {}
   single_list(const single_list&) = delete;
   single_list& operator=(const single_list&) = delete;
   ~single_list() = default;
   void delete_next() {
-    // if there is a next node to delete..
     if (next_node) {
-      // then set the next node to the next-to-next one
-      next_node.reset(*next_node->next());
-      // the node that next used to point to
-      // will have it's destructor called
+      next_node = std::move(*next_node->next_node);
     }
   }
   void insert_after(const T& data) {
-    // create a new node which contains the supplied data
-    // and set it's next node to point to next_node
-    // then set next_node to point to this new node
-    std::unique_ptr<single_list> new_node(new single_list(data));
-    new_node->next_node = std::move(next_node);
-    next_node = std::move(new_node);
+    next_node = list_uptr(new single_list(data, std::move(next_node)));
   }
   const T& get_value() const { return data; }
   void set_value(const T& new_data) { data = new_data; }
   single_list* next() const { return next_node.get(); }
+  // give solution to 2.3 direct access to next_node pointer
+  template <class S>
+  friend void delete_middle_node(single_list<S>* lst);
 };
 
 // 2.1
@@ -200,13 +200,13 @@ T intersection(const typename std::forward_list<T>& lstA,
   // average: O(N)
   // worst case: O(N^2)
   // hash map of pointers in A
-  std::unordered_map<T, bool> seen_pointer;
+  std::unordered_set<T> seen_pointer;
   for (T a : lstA) {
-    seen_pointer[a] = true;
+    seen_pointer.insert(a);
   }
   // iterate through B, checking if each item was in A
   for (T b : lstB) {
-    if (seen_pointer[b]) {
+    if (seen_pointer.find(b) != seen_pointer.end()) {
       return b;
     }
   }
@@ -214,24 +214,24 @@ T intersection(const typename std::forward_list<T>& lstA,
   return T();
 }
 
-// 2.7
-// check if two single-link lists (of pointers) intersect, i.e.
-// both contain a pointer to the same address,
-// and return this address
+// 2.8
+// check if single linked list contains a cycle
+// if so return node at beginning of loop
 template <class T>
-T loop_detection(const typename std::forward_list<T>& lstA) {
+dumb_list<T>* loop_detection(dumb_list<T>* node) {
   // average: O(N)
   // worst case: O(N^2)
   // hash map of pointers in A
-  std::unordered_map<T, int> pointer_count;
-  for (T a : lstA) {
-    ++pointer_count[a];
-    if (pointer_count[a] > 1) {
-      return a;
+  std::unordered_set<dumb_list<T>*> nodes{node};
+  while (node->next) {
+    node = node->next;
+    if (nodes.find(node) != nodes.end()) {
+      return node;
+    } else {
+      nodes.insert(node);
     }
   }
-  // if not found, return default (i.e. nullptr if T is a pointer)
-  return T();
+  return nullptr;
 }
 
 }  // namespace linked_lists
