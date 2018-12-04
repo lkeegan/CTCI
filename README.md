@@ -10,7 +10,8 @@
 | :-------------------- | :----------------: | :----------------: | :----------------: |
 | 1. Arrays and Strings | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | 2. Linked Lists       | :heavy_check_mark: | :heavy_check_mark: | |
-| 3. Stacks and Queues  |  |  | |
+| 3. Stacks and Queues  | :heavy_check_mark: | :heavy_check_mark: | |
+| 4. Trees and Graphs   | | | |
 
 ## Use
 To compile and run the tests in debug mode to check everything is working:

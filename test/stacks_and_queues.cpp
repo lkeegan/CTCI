@@ -214,4 +214,10 @@ TEST_CASE("animal_shelter", "stacks_and_queues") {
   dq = shelter.dequeue(CAT);
   REQUIRE(dq.species == CAT);
   REQUIRE(dq.name == "pog");
+  dq = shelter.dequeue_any();
+  REQUIRE(dq.species == DOG);
+  REQUIRE(dq.name == "rex");
+  dq = shelter.dequeue_any();
+  REQUIRE(dq.species == DOG);
+  REQUIRE(dq.name == "bill");
 }

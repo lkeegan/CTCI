@@ -54,7 +54,7 @@ class n_in_one {
     stack[top_index(stack_index)] = item;
   }
   // return read-only top item from stack (in constant time)
-  T peek(int stack_index) const { return stack[top_index(stack_index)]; }
+  const T& peek(int stack_index) const { return stack[top_index(stack_index)]; }
   // return and remove top item from stack (in constant time)
   T pop(int stack_index) {
     T tmp = stack[top_index(stack_index)];
