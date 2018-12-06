@@ -50,28 +50,35 @@ void reverse_string(T& str) {
 
 // 12.4, 12.7: Virtual functions
 namespace virtual_functions {
+
 class animal {
  public:
+  std::ostream& os;
   std::string food() { return "animal.food()"; }
-  ~animal() { std::cout << "~animal()" << std::endl; }
+  explicit animal(std::ostream& output_stream) : os(output_stream) {}
+  ~animal() { os << "~animal()" << std::endl; }
 };
 
 class dog : public animal {
  public:
+  using animal::animal;  // inherit constructor
   std::string food() { return "dog.food()"; }
-  ~dog() { std::cout << "~dog()" << std::endl; }
+  ~dog() { os << "~dog()" << std::endl; }
 };
 
 class v_animal {
  public:
+  std::ostream& os;
+  explicit v_animal(std::ostream& output_stream) : os(output_stream) {}
   virtual std::string food() { return "v_animal.food()"; }
-  virtual ~v_animal() { std::cout << "~v_animal()" << std::endl; }
+  virtual ~v_animal() { os << "~v_animal()" << std::endl; }
 };
 
 class v_dog : public v_animal {
  public:
+  using v_animal::v_animal;  // inherit constructor
   std::string food() { return "v_dog.food()"; }
-  ~v_dog() { std::cout << "~v_dog()" << std::endl; }
+  ~v_dog() { os << "~v_dog()" << std::endl; }
 };
 }  // namespace virtual_functions
 

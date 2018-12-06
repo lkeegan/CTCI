@@ -6,12 +6,26 @@
 - benchmarks (using the [Google Benchmark](https://github.com/google/benchmark) library, not included) are in 'benchmark/X.cpp'.
 
 ## Status
-| Chapter               | Solutions          | Unit tests         | Benchmarks         |
-| :-------------------- | :----------------: | :----------------: | :----------------: |
-| 1. Arrays and Strings | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| 2. Linked Lists       | :heavy_check_mark: | :heavy_check_mark: | |
-| 3. Stacks and Queues  | :heavy_check_mark: | :heavy_check_mark: | |
-| 4. Trees and Graphs   | | | |
+| Chapter                   | Solutions          | Unit tests         | Benchmarks         |
+| :------------------------ | :----------------: | :----------------: | :----------------: |
+| 1. Arrays and Strings     | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| 2. Linked Lists           | :heavy_check_mark: | :heavy_check_mark: | |
+| 3. Stacks and Queues      | :heavy_check_mark: | :heavy_check_mark: | |
+| 4. Trees and Graphs       | | | |
+| 5. Bit manipulation       | | | |
+| 6. Math & Logic Puzzles   | | | |
+| 7. Object-Oriented Design | | | |
+| 8. Recursion & Dynamic Programming | | | |
+| 9. System Design and Scalability | | | |
+| 10. Sorting and Searching | | | |
+| 11. Testing               | | | |
+| 12. C and C++             | | | |
+| 13. Java                  | | | |
+| 14. Databases             | | | |
+| 15. Threads and Locks     | | | |
+| 16. Moderate              | | | |
+| 17. Hard                  | | | |
+
 
 ## Use
 To compile and run the tests in debug mode to check everything is working:

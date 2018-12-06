@@ -52,27 +52,35 @@ TEST_CASE("reverse_string", "[c_and_cpp]") {
 TEST_CASE("virtual_functions", "[c_and_cpp]") {
   using namespace virtual_functions;
   // issue that arises from inheritance
-  // have class "dog" that inherits from "animal"
+  // e.g. have class "dog" that inherits from "animal"
   // non-virtual:
   // compile-time binding of function food()
-  dog *d = new dog();
-  animal *a = new dog();
+  std::ostringstream os;
+  dog *d = new dog(os);
+  animal *a = new dog(os);
   REQUIRE(d->food() == "dog.food()");
   REQUIRE(a->food() == "animal.food()");  // NOT dog.food()
   delete d;
-  // also of destructor which can leak memory
-  // if any is allocated in dog() that needs to be cleaned up
+  // d is of type dog, so calls dog destructor, then animal destructor
+  REQUIRE(os.str() == "~dog()\n~animal()\n");
+  os = std::ostringstream("");
   delete a;  // only calls ~animal(), NOT ~dog()
+  REQUIRE(os.str() == "~animal()\n");
 
   // virtual:
   // run-time binding of function food()
-  v_dog *v_d = new v_dog();
-  v_animal *v_a = new v_dog();
+  // even if compile type is v_animal, at run-time v_dog.food() is called
+  v_dog *v_d = new v_dog(os);
+  v_animal *v_a = new v_dog(os);
   REQUIRE(v_d->food() == "v_dog.food()");
   REQUIRE(v_a->food() == "v_dog.food()");
+  os = std::ostringstream("");
   delete v_d;
-  // and destructor
+  REQUIRE(os.str() == "~v_dog()\n~v_animal()\n");
+  // and similarly for destructor
+  os = std::ostringstream("");
   delete v_a;  // calls ~v_dog(), then ~v_animal()
+  REQUIRE(os.str() == "~v_dog()\n~v_animal()\n");
 }
 
 TEST_CASE("shallow_vs_deep_copy", "[c_and_cpp]") {
