@@ -21,7 +21,7 @@ animal queue::dequeue(Species species) {
     ++current;
     ++prev;
   }
-  animal item = (*current);
+  animal item = *current;
   animal_list.erase_after(prev);
   return item;
 }

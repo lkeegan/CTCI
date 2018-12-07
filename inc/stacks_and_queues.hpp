@@ -99,19 +99,17 @@ class stack_min {
 // implemented as a vector of stacks
 template <class T>
 class set_of_stacks {
-  using stack = std::stack<T>;
-
  private:
-  std::vector<stack> s;
-  typename stack::size_type max_stack_size;
+  std::vector<std::stack<T>> s;
+  typename std::stack<T>::size_type max_stack_size;
   int element_count = 0;
 
  public:
-  explicit set_of_stacks(typename stack::size_type max_size = 1024)
+  explicit set_of_stacks(typename std::stack<T>::size_type max_size = 1024)
       : max_stack_size(max_size) {}
   void push(const T& item) {
     if (empty() || s.back().size() == max_stack_size) {
-      s.push_back(stack());
+      s.push_back(std::stack<T>());
     }
     s.back().push(item);
     ++element_count;
@@ -120,11 +118,10 @@ class set_of_stacks {
   const T& peekAt(int index) { return s[index].top(); }
   T pop() { return popAt(s.size() - 1); }
   T popAt(int index) {
-    typename std::vector<stack>::iterator it = s.begin() + index;
-    T temp = (*it).top();
-    (*it).pop();
-    if ((*it).empty()) {
-      s.erase(it);
+    T temp = s[index].top();
+    s[index].pop();
+    if (s[index].empty()) {
+      s.erase(s.begin() + index);
     }
     --element_count;
     return temp;
