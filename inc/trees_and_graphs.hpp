@@ -1,6 +1,7 @@
 #ifndef LKEEGAN_CTCI_TREES_AND_GRAPHS_H
 #define LKEEGAN_CTCI_TREES_AND_GRAPHS_H
 #include <forward_list>
+#include <limits>
 #include <memory>
 #include <queue>
 #include <vector>
@@ -23,6 +24,25 @@ struct nary_tree_node {
   std::vector<std::unique_ptr<nary_tree_node>> children;
   explicit nary_tree_node(const T& data) : data(data) {}
 };
+
+// 4.2
+// given array of unique values sorted in ascending order
+// create binary search tree with minimal height
+template <class T>
+std::unique_ptr<binary_tree_node<T>> minimal_tree(
+    const std::vector<T>& a, std::size_t first = 0,
+    std::size_t last = std::numeric_limits<std::size_t>::max()) {
+  last = std::min(last, a.size() - 1);
+  std::size_t middle = (first + last) / 2;
+  std::unique_ptr<binary_tree_node<T>> n(new binary_tree_node<T>(a[middle]));
+  if (middle > first) {
+    n.get()->left = minimal_tree(a, first, middle - 1);
+  }
+  if (last > middle) {
+    n.get()->right = minimal_tree(a, middle + 1, last);
+  }
+  return n;
+}
 
 // 4.3
 // Given binary tree, create linked list of all nodes

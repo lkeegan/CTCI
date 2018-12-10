@@ -4,6 +4,73 @@
 // Unit tests
 using namespace ctci::trees_and_graphs;
 
+// do BF traversal of tree, append node data in order traversed to vector
+// for ascending binary search tree, resulting vector is also ascending
+void bfs_flatten_tree(binary_tree_node<int>* n, std::vector<int>& flat) {
+  if (n->left) {
+    bfs_flatten_tree(n->left.get(), flat);
+  }
+  flat.push_back(n->data);
+  if (n->right) {
+    bfs_flatten_tree(n->right.get(), flat);
+  }
+}
+std::vector<int> vec_from_tree(binary_tree_node<int>* n) {
+  std::vector<int> vec;
+  bfs_flatten_tree(n, vec);
+  return vec;
+}
+
+TEST_CASE("minimal_tree", "[trees_and_graphs]") {
+  typedef binary_tree_node<int> tree;
+  std::vector<int> ascending_ints{0};
+  std::unique_ptr<tree> min_tree = minimal_tree(ascending_ints);
+  REQUIRE(min_tree->data == 0);
+  REQUIRE(min_tree->left == nullptr);
+  REQUIRE(min_tree->right == nullptr);
+  REQUIRE(vec_from_tree(min_tree.get()) == ascending_ints);
+  REQUIRE(depth_dfs(min_tree.get()) == 0);
+
+  ascending_ints = std::vector<int>{0, 2};
+  min_tree = minimal_tree(ascending_ints);
+  REQUIRE(min_tree->data == 0);
+  REQUIRE(min_tree->left == nullptr);
+  REQUIRE(min_tree->right->data == 2);
+  REQUIRE(min_tree->right->left == nullptr);
+  REQUIRE(min_tree->right->right == nullptr);
+  REQUIRE(vec_from_tree(min_tree.get()) == ascending_ints);
+  REQUIRE(depth_dfs(min_tree.get()) == 1);
+
+  ascending_ints = std::vector<int>{0, 2, 7};
+  min_tree = minimal_tree(ascending_ints);
+  REQUIRE(min_tree->data == 2);
+  REQUIRE(min_tree->left->data == 0);
+  REQUIRE(min_tree->right->data == 7);
+  REQUIRE(min_tree->left->left == nullptr);
+  REQUIRE(min_tree->left->right == nullptr);
+  REQUIRE(min_tree->right->left == nullptr);
+  REQUIRE(min_tree->right->right == nullptr);
+  REQUIRE(vec_from_tree(min_tree.get()) == ascending_ints);
+  REQUIRE(depth_dfs(min_tree.get()) == 1);
+
+  ascending_ints = std::vector<int>{1, 2, 3, 4, 5, 6, 7};
+  min_tree = minimal_tree(ascending_ints);
+  REQUIRE(vec_from_tree(min_tree.get()) == ascending_ints);
+  REQUIRE(depth_dfs(min_tree.get()) == 2);
+
+  ascending_ints = std::vector<int>{1, 2, 3, 4, 5, 16, 27, 99};
+  min_tree = minimal_tree(ascending_ints);
+  REQUIRE(vec_from_tree(min_tree.get()) == ascending_ints);
+  REQUIRE(depth_dfs(min_tree.get()) == 3);
+
+  ascending_ints = std::vector<int>{
+      -928287, -324, -12, -7, -2, 0,  1,   2,     3,        4,         5,
+      16,      27,   44,  67, 87, 99, 126, 45234, 52345234, 1242523532};
+  min_tree = minimal_tree(ascending_ints);
+  REQUIRE(vec_from_tree(min_tree.get()) == ascending_ints);
+  REQUIRE(depth_dfs(min_tree.get()) == 4);
+}
+
 TEST_CASE("list_of_depths", "[trees_and_graphs]") {
   typedef binary_tree_node<int> tree;
   tree t(0);
