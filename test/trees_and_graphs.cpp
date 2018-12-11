@@ -117,6 +117,54 @@ TEST_CASE("4.4 check_balanced", "[trees_and_graphs]") {
   REQUIRE(check_balanced(node) == false);
   node->right->right->left = std::unique_ptr<tree>(new tree(3));
   REQUIRE(check_balanced(node) == true);
+  node->left->right->right.reset();
+  REQUIRE(check_balanced(node) == true);
+  node->left->right->left.reset();
+  REQUIRE(check_balanced(node) == false);
+  node->left->right.reset();
+  REQUIRE(check_balanced(node) == true);
+  node->right->right.reset();
+  REQUIRE(check_balanced(node) == false);
+}
+
+TEST_CASE("4.5 validate_bst", "[trees_and_graphs]") {
+  std::vector<int> ints{1, 2, 3, 4, 5, 16, 27, 99};
+  auto tree = minimal_tree(ints);
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+  tree->data = 6;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == false);
+  tree->data = 5;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+  tree->data = 3;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+  tree->data = 2;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == false);
+  tree->left->right->data = 2;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+
+  ints = std::vector<int>{-121, -55, -8, 0,  0,  1,  2,  3,  4,  5,  16,
+                          17,   20,  21, 25, 27, 55, 55, 55, 55, 55, 99};
+  tree = minimal_tree(ints);
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+  tree->left->right->data = 4;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+  tree->left->right->data = 2;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == true);
+  tree->left->right->data = 1;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == false);
+  tree->left->right->data = 5;
+  CAPTURE(vec_from_tree(tree.get()));
+  REQUIRE(validate_bst(tree.get()) == false);
 }
 
 // data structure tests

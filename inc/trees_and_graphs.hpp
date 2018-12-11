@@ -1,6 +1,7 @@
 #ifndef LKEEGAN_CTCI_TREES_AND_GRAPHS_H
 #define LKEEGAN_CTCI_TREES_AND_GRAPHS_H
 #include <forward_list>
+#include <iostream>
 #include <limits>
 #include <memory>
 #include <queue>
@@ -127,6 +128,31 @@ bool check_balanced(binary_tree_node<T>* node, int max_allowed_difference = 1) {
     }
   }
   return true;
+}
+
+// 4.5
+// Check if binary tree is a binary search tree
+// i.e. all lhs children <= node <= all rhs children
+// using in order traversal of nodes
+template <class T>
+bool validate_bst(binary_tree_node<T>* node) {
+  T prev_min{std::numeric_limits<T>::min()};
+  return traverse_bst(node, prev_min);
+}
+template <class T>
+bool traverse_bst(binary_tree_node<T>* node, T& prev_min) {
+  bool IN_ORDER = true;
+  if (node->left) {
+    IN_ORDER &= traverse_bst(node->left.get(), prev_min);
+  }
+  if (node->data < prev_min) {
+    return false;
+  }
+  prev_min = node->data;
+  if (node->right) {
+    IN_ORDER &= traverse_bst(node->right.get(), prev_min);
+  }
+  return IN_ORDER;
 }
 
 // some simple routines to test the data structures
