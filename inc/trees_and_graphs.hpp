@@ -20,10 +20,57 @@ struct binary_tree_node {
 };
 
 template <class T>
+struct two_way_bt_node {
+  T data;
+  std::unique_ptr<two_way_bt_node> left;
+  std::unique_ptr<two_way_bt_node> right;
+  two_way_bt_node* parent = nullptr;
+  explicit two_way_bt_node(const T& data) : data(data) {}
+};
+
+template <class T>
 struct nary_tree_node {
   T data;
   std::vector<std::unique_ptr<nary_tree_node>> children;
   explicit nary_tree_node(const T& data) : data(data) {}
+};
+
+// binary search tree, where each node has a pointer to its parent
+template <class T>
+struct two_way_bst {
+  std::unique_ptr<two_way_bt_node<T>> head;
+  explicit two_way_bst(const T& data)
+      : head(
+            std::unique_ptr<two_way_bt_node<T>>(new two_way_bt_node<T>(data))) {
+  }
+  void insert(const T& data) {
+    two_way_bt_node<T>* new_node = head.get();
+    while (new_node) {
+      if (data > new_node->data) {
+        // if value is larger, it goes to the right
+        if (!new_node->right) {
+          // insert here if there is space
+          new_node->right =
+              std::unique_ptr<two_way_bt_node<T>>(new two_way_bt_node<T>(data));
+          new_node->right->parent = new_node;
+          new_node = nullptr;
+        } else {
+          // otherwise go to right child and repeat
+          new_node = new_node->right.get();
+        }
+      } else {
+        // same on left side if value is smaller
+        if (!new_node->left) {
+          new_node->left =
+              std::unique_ptr<two_way_bt_node<T>>(new two_way_bt_node<T>(data));
+          new_node->left->parent = new_node;
+          new_node = nullptr;
+        } else {
+          new_node = new_node->left.get();
+        }
+      }
+    }
+  }
 };
 
 // 4.2
@@ -155,7 +202,36 @@ bool traverse_bst(binary_tree_node<T>* node, T& prev_min) {
   return IN_ORDER;
 }
 
-// some simple routines to test the data structures
+// 4.6
+// find sucessor of given node in BST (next value in order)
+// where we can assume that each node has a link to its parent
+
+template <class T>
+two_way_bt_node<T>* successor(two_way_bt_node<T>* node) {
+  if (node) {
+    if (node->right) {
+      // if we have a right child it will be larger
+      node = node->right.get();
+      // then take all available left nodes to find smallest
+      // value in this subtree
+      while (node->left) {
+        node = node->left.get();
+      }
+    } else {
+      // otherwise climb tree until we have a larger parent
+      // i.e. one whose right child is not the one we just climbed up from
+      while (node->parent && (node->parent->right.get() == node)) {
+        node = node->parent;
+      }
+      node = node->parent;
+    }
+  }
+  return node;
+}
+
+// some simple convenience routines for creating tests using the data
+// structures
+
 // count elements in tree (DFS)
 // using in order traversal (left child, node, right child)
 template <class T>

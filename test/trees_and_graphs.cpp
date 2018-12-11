@@ -167,6 +167,49 @@ TEST_CASE("4.5 validate_bst", "[trees_and_graphs]") {
   REQUIRE(validate_bst(tree.get()) == false);
 }
 
+TEST_CASE("4.6 successor", "[trees_and_graphs]") {
+  two_way_bst<int> tree(30);
+  tree.insert(10);
+  tree.insert(50);
+  tree.insert(3);
+  tree.insert(6);
+  tree.insert(2);
+  tree.insert(2);
+  tree.insert(18);
+  tree.insert(51);
+  tree.insert(49);
+  tree.insert(99);
+  tree.insert(0);
+  tree.insert(1);
+  tree.insert(5);
+  tree.insert(7);
+  tree.insert(8);
+  tree.insert(8);
+  tree.insert(9);
+  two_way_bt_node<int>* head = nullptr;
+  REQUIRE(successor(head) == nullptr);
+  head = tree.head.get();
+  // 10 -> 18
+  REQUIRE(successor(head->left.get()) == head->left->right.get());
+  // 30 -> 49
+  REQUIRE(successor(head) == head->right->left.get());
+  // 18 -> 30
+  REQUIRE(successor(head->left->right.get()) == head);
+  // 2 -> 3
+  REQUIRE(successor(head->left->left->left.get()) == head->left->left.get());
+  // 2 -> 2
+  REQUIRE(successor(head->left->left->left->left.get()) ==
+          head->left->left->left.get());
+  // 1 -> 2
+  REQUIRE(successor(head->left->left->left->left->left->right.get()) ==
+          head->left->left->left->left.get());
+  // 9 -> 10
+  REQUIRE(successor(head->left->left->right->right->right->right.get()) ==
+          head->left.get());
+  // 99 -> null
+  REQUIRE(successor(head->right->right->right.get()) == nullptr);
+}
+
 // data structure tests
 TEST_CASE("binary_tree_node", "[trees_and_graphs]") {
   typedef binary_tree_node<int> tree;
