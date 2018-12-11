@@ -78,6 +78,57 @@ std::vector<list_node_ptrs<T>> list_of_depths(binary_tree_node<T>* node) {
   return depth_list;
 }
 
+// 4.4
+// check if binary tree is balanced
+// i.e. heights of two sub-trees do not differ by more than one
+// BFS: find first level containing a leaf
+// then go down max_allowed_difference levels
+// and check if any nodes have children: if so not balanced
+template <class T>
+bool check_balanced(binary_tree_node<T>* node, int max_allowed_difference = 1) {
+  std::queue<binary_tree_node<T>*> curr_level;
+  std::queue<binary_tree_node<T>*> next_level;
+  next_level.push(node);
+  // set this flag once we see a leaf node
+  bool SEEN_LEAF = false;
+  while (!next_level.empty()) {
+    // go to next level
+    std::swap(next_level, curr_level);
+    while (!curr_level.empty()) {
+      // process each node in level
+      node = curr_level.front();
+      curr_level.pop();
+      if (node->left) {
+        // add left child to next level
+        next_level.push(node->left.get());
+      } else if (!node->right) {
+        // check if node is a leaf node
+        SEEN_LEAF = true;
+      }
+      if (node->right) {
+        // add right child to next level
+        next_level.push(node->right.get());
+      }
+    }
+    if (SEEN_LEAF) {
+      --max_allowed_difference;
+      if (max_allowed_difference == 0) {
+        // next level is the last one allowed for a balanced tree
+        while (!next_level.empty()) {
+          // process each node in next level
+          node = next_level.front();
+          next_level.pop();
+          if (node->left || node->right) {
+            // if node has a child, tree is not balanced
+            return false;
+          }
+        }
+      }
+    }
+  }
+  return true;
+}
+
 // some simple routines to test the data structures
 // count elements in tree (DFS)
 // using in order traversal (left child, node, right child)

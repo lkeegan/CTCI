@@ -21,7 +21,7 @@ std::vector<int> vec_from_tree(binary_tree_node<int>* n) {
   return vec;
 }
 
-TEST_CASE("minimal_tree", "[trees_and_graphs]") {
+TEST_CASE("4.2 minimal_tree", "[trees_and_graphs]") {
   typedef binary_tree_node<int> tree;
   std::vector<int> ascending_ints{0};
   std::unique_ptr<tree> min_tree = minimal_tree(ascending_ints);
@@ -71,7 +71,7 @@ TEST_CASE("minimal_tree", "[trees_and_graphs]") {
   REQUIRE(depth_dfs(min_tree.get()) == 4);
 }
 
-TEST_CASE("list_of_depths", "[trees_and_graphs]") {
+TEST_CASE("4.3 list_of_depths", "[trees_and_graphs]") {
   typedef binary_tree_node<int> tree;
   tree t(0);
   tree* node = &t;
@@ -88,6 +88,35 @@ TEST_CASE("list_of_depths", "[trees_and_graphs]") {
   REQUIRE(depth_list[2] == list_node_ptrs<int>{t.left->right.get(),
                                                t.right->left.get(),
                                                t.right->right.get()});
+}
+
+TEST_CASE("4.4 check_balanced", "[trees_and_graphs]") {
+  typedef binary_tree_node<int> tree;
+  tree t(0);
+  tree* node = &t;
+  REQUIRE(check_balanced(node) == true);
+  node->left = std::unique_ptr<tree>(new tree(1));
+  REQUIRE(check_balanced(node) == true);
+  node->left->left = std::unique_ptr<tree>(new tree(2));
+  REQUIRE(check_balanced(node) == true);
+  node->left->left->left = std::unique_ptr<tree>(new tree(3));
+  REQUIRE(check_balanced(node) == true);
+  node->right = std::unique_ptr<tree>(new tree(1));
+  REQUIRE(check_balanced(node) == false);
+  node->left->right = std::unique_ptr<tree>(new tree(2));
+  REQUIRE(check_balanced(node) == false);
+  node->right->right = std::unique_ptr<tree>(new tree(2));
+  REQUIRE(check_balanced(node) == true);
+  node->left->right->right = std::unique_ptr<tree>(new tree(3));
+  REQUIRE(check_balanced(node) == true);
+  node->left->right->left = std::unique_ptr<tree>(new tree(3));
+  REQUIRE(check_balanced(node) == true);
+  node->left->right->left->right = std::unique_ptr<tree>(new tree(4));
+  REQUIRE(check_balanced(node) == false);
+  node->left->left->left->right = std::unique_ptr<tree>(new tree(4));
+  REQUIRE(check_balanced(node) == false);
+  node->right->right->left = std::unique_ptr<tree>(new tree(3));
+  REQUIRE(check_balanced(node) == true);
 }
 
 // data structure tests
