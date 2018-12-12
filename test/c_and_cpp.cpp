@@ -4,7 +4,7 @@
 // Unit tests
 using namespace ctci::c_and_cpp;
 
-TEST_CASE("last_k_lines", "[c_and_cpp]") {
+TEST_CASE("12.1 last_k_lines", "[c_and_cpp]") {
   REQUIRE_THROWS(last_k_lines("non-existing-filename.txt", 1, std::cout));
 
   // make text file
@@ -31,7 +31,7 @@ TEST_CASE("last_k_lines", "[c_and_cpp]") {
   }
 }
 
-TEST_CASE("reverse_string", "[c_and_cpp]") {
+TEST_CASE("12.2 reverse_string", "[c_and_cpp]") {
   char str[5] = "Test";
   reverse_string(str);
   REQUIRE(str[0] == 't');
@@ -49,7 +49,7 @@ TEST_CASE("reverse_string", "[c_and_cpp]") {
   REQUIRE(cpp_str1 == "lkjhgfdsA");
 }
 
-TEST_CASE("virtual_functions", "[c_and_cpp]") {
+TEST_CASE("12.4 virtual_functions", "[c_and_cpp]") {
   using namespace virtual_functions;
   // issue that arises from inheritance
   // e.g. have class "dog" that inherits from "animal"
@@ -83,7 +83,7 @@ TEST_CASE("virtual_functions", "[c_and_cpp]") {
   REQUIRE(os.str() == "~v_dog()\n~v_animal()\n");
 }
 
-TEST_CASE("shallow_vs_deep_copy", "[c_and_cpp]") {
+TEST_CASE("12.5 shallow_vs_deep_copy", "[c_and_cpp]") {
   // dblvec_* classes are a (bad) implementation of
   // a vector of doubles,
   // with shallow copy:
@@ -111,7 +111,7 @@ TEST_CASE("shallow_vs_deep_copy", "[c_and_cpp]") {
   REQUIRE(d2[2] == 3.0);
 }
 
-TEST_CASE("copy_node", "[c_and_cpp]") {
+TEST_CASE("12.8 copy_node", "[c_and_cpp]") {
   std::unique_ptr<node<double>> head(new node<double>);
   head->data = 0.354;
   head->left.reset(new node<double>);
@@ -130,7 +130,7 @@ TEST_CASE("copy_node", "[c_and_cpp]") {
   REQUIRE(copy->left->right == nullptr);
 }
 
-TEST_CASE("SmartPointer", "[c_and_cpp]") {
+TEST_CASE("12.9 SmartPointer", "[c_and_cpp]") {
   SmartPointer<double> p1(new double(4.0));
   REQUIRE(*p1 == 4.0);
   REQUIRE(p1.reference_count() == 1);
@@ -166,7 +166,7 @@ TEST_CASE("SmartPointer", "[c_and_cpp]") {
   REQUIRE(p1.reference_count() == 1);
 }
 
-TEST_CASE("align_malloc", "[c_and_cpp]") {
+TEST_CASE("12.10 align_malloc", "[c_and_cpp]") {
   // try to malloc too much memory: should return NULL
   REQUIRE(align_malloc(1ULL << 63, 4096) == NULL);
 
@@ -183,7 +183,7 @@ TEST_CASE("align_malloc", "[c_and_cpp]") {
   aligned_free(data);
 }
 
-TEST_CASE("my_2d_alloc", "[c_and_cpp]") {
+TEST_CASE("12.11 my_2d_alloc", "[c_and_cpp]") {
   // try to malloc too much memory: should return NULL
   REQUIRE(my_2d_alloc(1 << 31, 1 << 31) == NULL);
 

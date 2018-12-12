@@ -4,9 +4,9 @@
 // Unit tests
 using namespace ctci::linked_lists;
 
-TEST_CASE("remove_dups", "[linked_lists]") {
+TEST_CASE("2.1 remove_dups", "[linked_lists]") {
   for (bool USE_DATA_BUFFER : {true, false}) {
-    SECTION("USE_DATA_BUFFER = " + std::to_string(USE_DATA_BUFFER)) {
+    SECTION("2.1 [USE_DATA_BUFFER = " + std::to_string(USE_DATA_BUFFER) + "]") {
       std::list<int> l_dups, l_no_dups;
 
       l_dups = std::list<int>{};
@@ -37,7 +37,7 @@ TEST_CASE("remove_dups", "[linked_lists]") {
   }
 }
 
-TEST_CASE("kth_to_last", "[linked_lists]") {
+TEST_CASE("2.2 kth_to_last", "[linked_lists]") {
   std::forward_list<int> l{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   REQUIRE(kth_to_last(l, 0) == 10);
   REQUIRE(kth_to_last(l, 1) == 9);
@@ -50,7 +50,7 @@ TEST_CASE("kth_to_last", "[linked_lists]") {
   REQUIRE(kth_to_last(l, 200) == 0);
 }
 
-TEST_CASE("delete_middle_node", "[linked_lists]") {
+TEST_CASE("2.3 delete_middle_node", "[linked_lists]") {
   // make list of numbers from 0 to 9
   single_list<int> l(0);
   single_list<int>* node = &l;
@@ -87,7 +87,7 @@ TEST_CASE("delete_middle_node", "[linked_lists]") {
   REQUIRE(node == nullptr);
 }
 
-TEST_CASE("partition", "[linked_lists]") {
+TEST_CASE("2.4 partition", "[linked_lists]") {
   std::list<int> l{-4, 12, 6, 2, 5, 0, 10, 5, 7, 6, 2, -1, 66, 7, 6, -21, 1};
   partition(l, 6);
   std::list<int>::const_iterator i = l.begin();
@@ -101,7 +101,7 @@ TEST_CASE("partition", "[linked_lists]") {
   }
 }
 
-TEST_CASE("sum_lists", "[linked_lists]") {
+TEST_CASE("2.5 sum_lists", "[linked_lists]") {
   std::list<int> lstA{9, 3, 5, 7};
   std::list<int> lstB{3, 2, 1, 4};
   std::list<int> lstS_b{2, 6, 6, 1, 1};
@@ -139,7 +139,7 @@ TEST_CASE("sum_lists", "[linked_lists]") {
   REQUIRE(sum_lists_forwards(lstB, lstA) == lstS_f);
 }
 
-TEST_CASE("palindrome", "[linked_lists]") {
+TEST_CASE("2.6 palindrome", "[linked_lists]") {
   REQUIRE(palindrome(std::list<char>{}) == true);
   REQUIRE(palindrome(std::list<char>{'a'}) == true);
   REQUIRE(palindrome(std::list<char>{'a', 'a'}) == true);
@@ -151,7 +151,7 @@ TEST_CASE("palindrome", "[linked_lists]") {
   REQUIRE(palindrome(std::list<char>{'a', 'a', 'b'}) == false);
 }
 
-TEST_CASE("intersection", "[linked_lists]") {
+TEST_CASE("2.7 intersection", "[linked_lists]") {
   double a = 1.0;
   double b = 3.0;
   double c = 5.0;
@@ -165,7 +165,7 @@ TEST_CASE("intersection", "[linked_lists]") {
   REQUIRE(intersection(lstB, lstC) == nullptr);
 }
 
-TEST_CASE("loop_detection", "[linked_lists]") {
+TEST_CASE("2.8 loop_detection", "[linked_lists]") {
   dumb_list<int> head;
   dumb_list<int> n1;
   dumb_list<int> n2;

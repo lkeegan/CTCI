@@ -4,7 +4,7 @@
 // Unit tests
 using namespace ctci::arrays_and_strings;
 
-TEST_CASE("is_unique_a", "[arrays_and_strings]") {
+TEST_CASE("1.1 is_unique_a", "[arrays_and_strings]") {
   REQUIRE(is_unique_a("") == true);
   REQUIRE(is_unique_a("c") == true);
   REQUIRE(is_unique_a("11") == false);
@@ -15,7 +15,7 @@ TEST_CASE("is_unique_a", "[arrays_and_strings]") {
   REQUIRE(is_unique_a(std::string(150, 'a')) == false);
 }
 
-TEST_CASE("is_unique_b", "[arrays_and_strings]") {
+TEST_CASE("1.1 is_unique_b", "[arrays_and_strings]") {
   REQUIRE(is_unique_a("") == true);
   REQUIRE(is_unique_a("c") == true);
   REQUIRE(is_unique_b("11") == false);
@@ -26,7 +26,7 @@ TEST_CASE("is_unique_b", "[arrays_and_strings]") {
   REQUIRE(is_unique_b(std::string(150, 'a')) == false);
 }
 
-TEST_CASE("check_permutation", "[arrays_and_strings]") {
+TEST_CASE("1.2 check_permutation", "[arrays_and_strings]") {
   REQUIRE(check_permutation("aa", "ab") == false);
   REQUIRE(check_permutation("abc", "bca") == true);
   REQUIRE(check_permutation("aab", "aba") == true);
@@ -37,7 +37,7 @@ TEST_CASE("check_permutation", "[arrays_and_strings]") {
   REQUIRE(check_permutation("Abesg", "gesbA") == true);
 }
 
-TEST_CASE("URLify", "[arrays_and_strings]") {
+TEST_CASE("1.3 URLify", "[arrays_and_strings]") {
   std::string str;
 
   str = "";
@@ -72,7 +72,7 @@ TEST_CASE("URLify", "[arrays_and_strings]") {
   REQUIRE(str == "a%20%20%20b           ");
 }
 
-TEST_CASE("is_permutation_of_palindrome", "[arrays_and_strings]") {
+TEST_CASE("1.4 is_permutation_of_palindrome", "[arrays_and_strings]") {
   REQUIRE(is_permutation_of_palindrome("") == true);
   REQUIRE(is_permutation_of_palindrome("a") == true);
   REQUIRE(is_permutation_of_palindrome("aa") == true);
@@ -85,7 +85,7 @@ TEST_CASE("is_permutation_of_palindrome", "[arrays_and_strings]") {
   REQUIRE(is_permutation_of_palindrome("ksjdhf") == false);
 }
 
-TEST_CASE("one_away", "[arrays_and_strings]") {
+TEST_CASE("1.5 one_away", "[arrays_and_strings]") {
   REQUIRE(one_away("", "") == true);
   REQUIRE(one_away("abc", "abc") == true);
   REQUIRE(one_away("abc", "abd") == true);
@@ -108,14 +108,14 @@ TEST_CASE("one_away", "[arrays_and_strings]") {
   REQUIRE(one_away("cd", " cd ") == false);
 }
 
-TEST_CASE("string_compression", "[arrays_and_strings]") {
+TEST_CASE("1.6 string_compression", "[arrays_and_strings]") {
   REQUIRE(string_compression("abc") == "abc");
   REQUIRE(string_compression("aaabbc") == "aaabbc");
   REQUIRE(string_compression("aaabbbc") == "a3b3c1");
   REQUIRE(string_compression("aaaaabbbcCCC") == "a5b3c1C3");
 }
 
-TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
+TEST_CASE("1.7 rotate_matrix", "[arrays_and_strings]") {
   matrix m1(1);
   m1[0] = {1};
   rotate_matrix(m1);
@@ -167,7 +167,7 @@ TEST_CASE("rotate_matrix", "[arrays_and_strings]") {
   REQUIRE(m5 == m5r);
 }
 
-TEST_CASE("zero_matrix", "[arrays_and_strings]") {
+TEST_CASE("1.8 zero_matrix", "[arrays_and_strings]") {
   matrix m1(1);
   m1[0] = {1};
   zero_matrix(m1);
@@ -216,7 +216,7 @@ TEST_CASE("zero_matrix", "[arrays_and_strings]") {
   REQUIRE(m3 == m3r);
 }
 
-TEST_CASE("is_rotation", "[arrays_and_strings]") {
+TEST_CASE("1.9 is_rotation", "[arrays_and_strings]") {
   REQUIRE(is_rotation("abc", "bca") == true);
   REQUIRE(is_rotation("abc", "acb") == false);
   REQUIRE(is_rotation("abc", "abca") == false);

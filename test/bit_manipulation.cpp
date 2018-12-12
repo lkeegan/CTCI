@@ -4,7 +4,7 @@
 // Unit tests
 using namespace ctci::bit_manipulation;
 
-TEST_CASE("insertion", "[bit_manipulation]") {
+TEST_CASE("5.1 insertion", "[bit_manipulation]") {
   int N = 4096 + 1024 + 512 + 8 + 2 + 1;  // 1011000001011
   int M = 8 + 4 + 1;                      // [1101]
   int answer = N + M * (1 << 5);          // 1011[1101]01011
@@ -18,7 +18,7 @@ TEST_CASE("insertion", "[bit_manipulation]") {
   REQUIRE_THROWS_AS(insertion(N, M, 6, 9), std::invalid_argument);
 }
 
-TEST_CASE("flip_bit_to_win", "[bit_manipulation]") {
+TEST_CASE("5.3 flip_bit_to_win", "[bit_manipulation]") {
   REQUIRE(flip_bit_to_win(0) == 1);
   REQUIRE(flip_bit_to_win(1) == 2);
   REQUIRE(flip_bit_to_win(2 + 1) == 3);
@@ -29,7 +29,7 @@ TEST_CASE("flip_bit_to_win", "[bit_manipulation]") {
   REQUIRE(flip_bit_to_win(1024 + 512 + 16 + 8 + 1) == 3);
 }
 
-TEST_CASE("next_number", "[bit_manipulation]") {
+TEST_CASE("5.4 next_number", "[bit_manipulation]") {
   int smaller;
   int larger;
   REQUIRE_THROWS_AS(next_number(0, smaller, larger), std::invalid_argument);
@@ -44,7 +44,7 @@ TEST_CASE("next_number", "[bit_manipulation]") {
   REQUIRE(larger == 16 + 8 + 4);
 }
 
-TEST_CASE("debugger", "[bit_manipulation]") {
+TEST_CASE("5.5 debugger", "[bit_manipulation]") {
   REQUIRE(debugger(0) == true);
   REQUIRE(debugger(1) == true);
   REQUIRE(debugger(2) == true);
@@ -62,7 +62,7 @@ TEST_CASE("debugger", "[bit_manipulation]") {
   REQUIRE(debugger(-2) == false);
 }
 
-TEST_CASE("conversion", "[bit_manipulation]") {
+TEST_CASE("5.6 conversion", "[bit_manipulation]") {
   REQUIRE(conversion(29, 15) == 2);
   REQUIRE(conversion(15, 29) == 2);
   REQUIRE(conversion(16 + 8 + 4 + 2, 1) == 5);
@@ -70,7 +70,7 @@ TEST_CASE("conversion", "[bit_manipulation]") {
 }
 
 // e.g. [11][01][xy]... -> [11][10][yx]...
-TEST_CASE("pairwise_swap", "[bit_manipulation") {
+TEST_CASE("5.7 pairwise_swap", "[bit_manipulation") {
   REQUIRE(pairwise_swap(0) == 0);
   REQUIRE(pairwise_swap(1) == 2);
   REQUIRE(pairwise_swap(2) == 1);

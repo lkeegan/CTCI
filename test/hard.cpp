@@ -4,7 +4,7 @@
 // Unit tests
 using namespace ctci::hard;
 
-TEST_CASE("add_without_plus", "[hard]") {
+TEST_CASE("17.1 add_without_plus", "[hard]") {
   REQUIRE(add_without_plus(0, 0) == 0);
   REQUIRE(add_without_plus(1, 0) == 1);
   REQUIRE(add_without_plus(0, 1) == 1);
@@ -13,7 +13,7 @@ TEST_CASE("add_without_plus", "[hard]") {
   REQUIRE(add_without_plus(127647543, 2423) == 127647543 + 2423);
 }
 
-TEST_CASE("shuffle_cards", "[hard]") {
+TEST_CASE("17.2 shuffle_cards", "[hard]") {
   constexpr int N_CARDS_IN_DECK = 52;
   int N_SAMPLES = 10000;
 
@@ -49,7 +49,7 @@ TEST_CASE("shuffle_cards", "[hard]") {
   REQUIRE(sum == N_SAMPLES * N_CARDS_IN_DECK * average_index);
 }
 
-TEST_CASE("sub_set", "[hard]") {
+TEST_CASE("17.3 sub_set", "[hard]") {
   std::vector<int> v1{1, -3, 9, 14, 833, 71, 732, 10};
   int set_size = 3;
   int N_SAMPLES = 10000 * v1.size();
@@ -70,7 +70,7 @@ TEST_CASE("sub_set", "[hard]") {
   }
 }
 
-TEST_CASE("missing_number", "[hard]") {
+TEST_CASE("17.4 missing_number", "[hard]") {
   std::vector<unsigned int> A{0, 1, 2, 4, 5, 6};
   REQUIRE(missing_number(A) == 3);
   std::vector<unsigned int> B{1, 2, 3, 4};
@@ -82,7 +82,7 @@ TEST_CASE("missing_number", "[hard]") {
   REQUIRE(missing_number(D) == 13);
 }
 
-TEST_CASE("longest_even_substring", "[hard]") {
+TEST_CASE("17.5 longest_even_substring", "[hard]") {
   REQUIRE(longest_even_substring("") == "");
   REQUIRE(longest_even_substring("a") == "");
   REQUIRE(longest_even_substring("9") == "");
@@ -97,7 +97,7 @@ TEST_CASE("longest_even_substring", "[hard]") {
   REQUIRE(longest_even_substring("60aaaaa66") == "60aa");
 }
 
-TEST_CASE("count_of_twos", "[hard]") {
+TEST_CASE("17.6 count_of_twos", "[hard]") {
   std::vector<int> n_vals{0,  1,  2,  4,  11,  12,   19,    20,      21,
                           22, 31, 32, 99, 341, 4631, 74437, 2345234, 12421312};
   for (auto n : n_vals) {
@@ -106,7 +106,7 @@ TEST_CASE("count_of_twos", "[hard]") {
   }
 }
 
-TEST_CASE("merge_synonyms", "[hard]") {
+TEST_CASE("17.7 merge_synonyms", "[hard]") {
   using string_pair = std::pair<std::string, std::string>;
   std::unordered_map<std::string, int> frequencies;
   frequencies["Jon"] = 42;
@@ -123,14 +123,14 @@ TEST_CASE("merge_synonyms", "[hard]") {
   REQUIRE(frequencies["John"] == false);
 }
 
-TEST_CASE("kth_multiple", "[hard]") {
+TEST_CASE("17.9 kth_multiple", "[hard]") {
   for (int k : {1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 15, 20, 55}) {
     CAPTURE(k)
     REQUIRE(kth_multiple(k) == kth_multiple_debug(k));
   }
 }
 
-TEST_CASE("majority_element", "[hard]") {
+TEST_CASE("17.10 majority_element", "[hard]") {
   std::vector<int> v;
   v = {8};
   REQUIRE(majority_element(v) == 8);

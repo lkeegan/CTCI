@@ -229,6 +229,65 @@ two_way_bt_node<T>* successor(two_way_bt_node<T>* node) {
   return node;
 }
 
+// 4.8
+// find first common ancestor of two nodes in a binary tree
+// without storing nodes in an additional data structure
+// equivalently: find head of smallest sub-tree that contains the two nodes
+template <class T>
+binary_tree_node<T>* first_common_ancestor(
+    binary_tree_node<T>* head, const std::vector<binary_tree_node<T>*>& nodes) {
+  // DFS count matching nodes in left and right sub-trees starting
+  // from head, then recurse on sub-tree containing all nodes
+  // O(n_nodes_to_match n_nodes_in_tree^2) time, O(1) space
+  // Alternatively, could use
+  // O(n_nodes_in_tree) time and O(n_nodes_in_tree) space to make a copy of tree
+  // including a link to parent in each node, then ascend tree from each of the
+  // desired nodes until they converge on the common ancestor.
+  std::size_t right_count = 0;
+  std::size_t left_count = 0;
+  if (head->right) {
+    // count matching nodes in right sub-tree
+    right_count = count_matching_nodes(head->right.get(), nodes);
+  }
+  if (right_count == nodes.size()) {
+    // if right sub-tree contains all nodes, set as new head
+    return first_common_ancestor(head->right.get(), nodes);
+  } else {
+    if (head->left) {
+      // otherwise count matching nodes in left sub-tree
+      left_count = count_matching_nodes(head->left.get(), nodes);
+    }
+    if (left_count == nodes.size()) {
+      // if left sub-tree contains all nodes, set as new head
+      return first_common_ancestor(head->left.get(), nodes);
+    }
+  }
+  if (left_count + right_count == nodes.size()) {
+    // otherwise we are either at the head of the smallest sub-tree
+    // that contains all nodes, in which case return it
+    return head;
+  } else {
+    // or the tree doesn't contain the desired nodes, so return null
+    return nullptr;
+  }
+}
+template <class T>
+std::size_t count_matching_nodes(
+    binary_tree_node<T>* head, const std::vector<binary_tree_node<T>*>& nodes) {
+  std::size_t nodes_found = 0;
+  if (head->right) {
+    nodes_found += count_matching_nodes(head->right.get(), nodes);
+  }
+  for (binary_tree_node<T>* node : nodes) {
+    if (head == node) {
+      ++nodes_found;
+    }
+  }
+  if (head->left) {
+    nodes_found += count_matching_nodes(head->left.get(), nodes);
+  }
+  return nodes_found;
+}
 // some simple convenience routines for creating tests using the data
 // structures
 

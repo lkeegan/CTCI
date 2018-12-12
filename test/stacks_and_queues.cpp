@@ -4,7 +4,7 @@
 // Unit tests
 using namespace ctci::stacks_and_queues;
 
-TEST_CASE("three_in_one", "[stacks_and_queues]") {
+TEST_CASE("3.1 three_in_one", "[stacks_and_queues]") {
   n_in_one<double> s(3);
   s.push(1.0, 0);
   s.push(2.0, 0);
@@ -23,7 +23,7 @@ TEST_CASE("three_in_one", "[stacks_and_queues]") {
   REQUIRE(s.is_empty(2) == true);
 }
 
-TEST_CASE("stack_min", "[stacks_and_queues]") {
+TEST_CASE("3.2 stack_min", "[stacks_and_queues]") {
   stack_min<int> s;
   REQUIRE(s.empty() == true);
   s.push(2);
@@ -63,7 +63,7 @@ TEST_CASE("stack_min", "[stacks_and_queues]") {
   REQUIRE(s.empty() == true);
 }
 
-TEST_CASE("set_of_stacks", "[stacks_and_queues]") {
+TEST_CASE("3.3 set_of_stacks", "[stacks_and_queues]") {
   // stack which is internally a vector of stacks of size 2
   // behaves like normal stack: push, pop, peek, empty
   // additionally can popAt(index) from a sub-stack
@@ -112,7 +112,7 @@ TEST_CASE("set_of_stacks", "[stacks_and_queues]") {
   REQUIRE(s.empty() == true);
 }
 
-TEST_CASE("queue_via_stacks", "[stacks_and_queues]") {
+TEST_CASE("3.4 queue_via_stacks", "[stacks_and_queues]") {
   queue_via_stacks<int> q;
   REQUIRE(q.empty() == true);
   q.push(1);
@@ -131,7 +131,7 @@ TEST_CASE("queue_via_stacks", "[stacks_and_queues]") {
   REQUIRE(q.empty() == true);
 }
 
-TEST_CASE("sort_stack", "[stacks_and_queues]") {
+TEST_CASE("3.5 sort_stack", "[stacks_and_queues]") {
   // sort stack using only another stack as temp storage
   std::stack<int> s;
 
@@ -184,7 +184,7 @@ TEST_CASE("sort_stack", "[stacks_and_queues]") {
   REQUIRE(s.empty() == true);
 }
 
-TEST_CASE("animal_shelter", "stacks_and_queues") {
+TEST_CASE("3.6 animal_shelter", "stacks_and_queues") {
   using namespace animal_shelter;
   queue shelter;
   animal dq;

@@ -4,7 +4,7 @@
 // Unit tests
 using namespace ctci::moderate;
 
-TEST_CASE("number_swapper", "[moderate]") {
+TEST_CASE("16.1 number_swapper", "[moderate]") {
   int ia = 4;
   int ib = -85;
   number_swapper(ia, ib);
@@ -18,7 +18,7 @@ TEST_CASE("number_swapper", "[moderate]") {
   REQUIRE(db == 12);
 }
 
-TEST_CASE("word_frequency", "[moderate]") {
+TEST_CASE("16.2 word_frequency", "[moderate]") {
   std::string book =
       "Call me Ishmael. Some years ago- never mind how long precisely- "
       "having little or no money in my purse, and nothing particular to "
@@ -48,7 +48,7 @@ TEST_CASE("word_frequency", "[moderate]") {
   REQUIRE(counts["the"] == 10);
 }
 
-TEST_CASE("Intersection", "[moderate]") {
+TEST_CASE("16.3 Intersection", "[moderate]") {
   using namespace MyIntersection;
   point intersect_point;
   line l1({0.0, 0.0}, {5.0, 5.0});
@@ -65,7 +65,7 @@ TEST_CASE("Intersection", "[moderate]") {
   REQUIRE(intersect(l1, l2, &intersect_point) == true);
 }
 
-TEST_CASE("tic_tac_win", "[moderate]") {
+TEST_CASE("16.4 tic_tac_win", "[moderate]") {
   tic_tac_toe<3> T;
   REQUIRE(T.cross_wins() == false);
   REQUIRE(T.circle_wins() == false);
@@ -97,7 +97,7 @@ TEST_CASE("tic_tac_win", "[moderate]") {
   REQUIRE(T3.circle_wins() == true);
 }
 
-TEST_CASE("factorial_trailing_zeros", "[moderate]") {
+TEST_CASE("16.5 factorial_trailing_zeros", "[moderate]") {
   REQUIRE(factorial_trailing_zeros(0) == 0);
   REQUIRE(factorial_trailing_zeros(1) == 0);
   REQUIRE(factorial_trailing_zeros(2) == 0);
@@ -116,7 +116,7 @@ TEST_CASE("factorial_trailing_zeros", "[moderate]") {
   REQUIRE_THROWS(factorial_trailing_zeros(99));
 }
 
-TEST_CASE("smallest_difference", "[moderate]") {
+TEST_CASE("16.6 smallest_difference", "[moderate]") {
   std::vector<int> A{1, 4, 16, 5};
   std::vector<int> B{7, 3, 9, 11};
   std::vector<int> C{66, 51, 22, 11};
@@ -127,7 +127,7 @@ TEST_CASE("smallest_difference", "[moderate]") {
   REQUIRE(smallest_difference(B, C) == 0);
 }
 
-TEST_CASE("number_max", "[moderate]") {
+TEST_CASE("16.7 number_max", "[moderate]") {
   REQUIRE(number_max(4, 7) == 7);
   REQUIRE(number_max(11, 1) == 11);
   REQUIRE(number_max(88, 88) == 88);
@@ -138,7 +138,7 @@ TEST_CASE("number_max", "[moderate]") {
   REQUIRE(number_max(4.3f, 4.3f) == 4.3f);
 }
 
-TEST_CASE("english_int", "[moderate]") {
+TEST_CASE("16.8 english_int", "[moderate]") {
   REQUIRE(english_int(1) == "One");
   REQUIRE(english_int(6) == "Six");
   REQUIRE(english_int(12) == "Twelve");
@@ -174,7 +174,7 @@ TEST_CASE("english_int", "[moderate]") {
           "Nine Million Five Hundred Fifty One Thousand Six Hundred Fifteen");
 }
 
-TEST_CASE("operations_minus", "[moderate]") {
+TEST_CASE("16.9 operations_minus", "[moderate]") {
   REQUIRE(operations_minus(7, 2) == 7 - 2);
   REQUIRE(operations_minus(17547, 2312) == 17547 - 2312);
   REQUIRE(operations_minus(7, -2) == 9);
@@ -185,7 +185,7 @@ TEST_CASE("operations_minus", "[moderate]") {
   REQUIRE(operations_minus(-4, -4) == 0);
 }
 
-TEST_CASE("operations_multiply", "[moderate]") {
+TEST_CASE("16.9 operations_multiply", "[moderate]") {
   REQUIRE(operations_multiply(3, 5) == 3 * 5);
   REQUIRE(operations_multiply(5, 3) == 3 * 5);
   REQUIRE(operations_multiply(3, -5) == -3 * 5);
@@ -193,7 +193,7 @@ TEST_CASE("operations_multiply", "[moderate]") {
   REQUIRE(operations_multiply(-5, -3) == 3 * 5);
 }
 
-TEST_CASE("operations_divide", "[moderate]") {
+TEST_CASE("16.9 operations_divide", "[moderate]") {
   REQUIRE(operations_divide(10, 3) == 3);
   REQUIRE(operations_divide(9, 3) == 3);
   REQUIRE(operations_divide(8, 3) == 2);
@@ -206,7 +206,7 @@ TEST_CASE("operations_divide", "[moderate]") {
   REQUIRE(operations_divide(-3, 4) == 0);
 }
 
-TEST_CASE("year_with_most_people", "[moderate]") {
+TEST_CASE("16.10 year_with_most_people", "[moderate]") {
   std::vector<std::pair<int, int>> years;
   years.push_back({1900, 2000});
   REQUIRE(year_with_most_people(years) == 1900);
@@ -221,7 +221,7 @@ TEST_CASE("year_with_most_people", "[moderate]") {
   REQUIRE(year_with_most_people(years) == 1944);
 }
 
-TEST_CASE("enumerate_lengths", "[moderate]") {
+TEST_CASE("16.11 enumerate_lengths", "[moderate]") {
   using set = std::unordered_set<int>;
   REQUIRE(enumerate_lengths(1, 1, 1) == set{1});
   REQUIRE(enumerate_lengths(1, 3, 5) == set{3, 5});
@@ -231,7 +231,7 @@ TEST_CASE("enumerate_lengths", "[moderate]") {
   REQUIRE(enumerate_lengths(5, 12, 6) == set{30, 36, 42, 48, 54, 60});
 }
 
-TEST_CASE("rand7", "[moderate]") {
+TEST_CASE("16.23 rand7", "[moderate]") {
   rand_n rand5(5, 12345);
   std::array<int, 7> count{};
   constexpr int N_RAND = 100000;

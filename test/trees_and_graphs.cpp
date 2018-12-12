@@ -169,23 +169,9 @@ TEST_CASE("4.5 validate_bst", "[trees_and_graphs]") {
 
 TEST_CASE("4.6 successor", "[trees_and_graphs]") {
   two_way_bst<int> tree(30);
-  tree.insert(10);
-  tree.insert(50);
-  tree.insert(3);
-  tree.insert(6);
-  tree.insert(2);
-  tree.insert(2);
-  tree.insert(18);
-  tree.insert(51);
-  tree.insert(49);
-  tree.insert(99);
-  tree.insert(0);
-  tree.insert(1);
-  tree.insert(5);
-  tree.insert(7);
-  tree.insert(8);
-  tree.insert(8);
-  tree.insert(9);
+  for (int i : {10, 50, 3, 6, 2, 2, 18, 51, 49, 99, 0, 1, 5, 7, 8, 8, 9}) {
+    tree.insert(i);
+  }
   two_way_bt_node<int>* head = nullptr;
   REQUIRE(successor(head) == nullptr);
   head = tree.head.get();
@@ -208,6 +194,34 @@ TEST_CASE("4.6 successor", "[trees_and_graphs]") {
           head->left.get());
   // 99 -> null
   REQUIRE(successor(head->right->right->right.get()) == nullptr);
+}
+
+TEST_CASE("4.8 first_common_ancestor", "[trees_and_graphs]") {
+  typedef binary_tree_node<int> tree;
+  tree t(0);
+  tree* node = &t;
+  node->left = std::unique_ptr<tree>(new tree(1));
+  node->right = std::unique_ptr<tree>(new tree(1));
+  REQUIRE(first_common_ancestor(node, {node->left.get(), node->right.get()}) ==
+          node);
+  REQUIRE(first_common_ancestor(node, {node->left.get(), node}) == nullptr);
+  REQUIRE(first_common_ancestor(node, {node->left.get(), nullptr}) == nullptr);
+  node->left->left = std::unique_ptr<tree>(new tree(1));
+  node->left->right = std::unique_ptr<tree>(new tree(1));
+  node->left->left->left = std::unique_ptr<tree>(new tree(1));
+  node->left->left->right = std::unique_ptr<tree>(new tree(1));
+  node->left->left->left->right = std::unique_ptr<tree>(new tree(1));
+  node->left->right->left = std::unique_ptr<tree>(new tree(1));
+  node->right->left = std::unique_ptr<tree>(new tree(1));
+  node->right->left->right = std::unique_ptr<tree>(new tree(1));
+  REQUIRE(first_common_ancestor(node, {node->left->left->left->right.get(),
+                                       node->right.get()}) == node);
+  REQUIRE(first_common_ancestor(node, {node->left->left->left->right.get(),
+                                       node->left->right.get()}) ==
+          node->left.get());
+  REQUIRE(first_common_ancestor(node, {node->left->left->left->right.get(),
+                                       node->left->left->right.get()}) ==
+          node->left->left.get());
 }
 
 // data structure tests
